@@ -179,8 +179,14 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                 # Crucial Fix: Standard Headers matching the polymarket webapp
                 headers = {
                     "Content-Type": "application/json",
-                    "poly-relayer-api-key": config.RELAYER_API_KEY, 
+                    "poly-relayer-api-key": str(config.RELAYER_API_KEY).strip(),
                 }
+                if hasattr(config, 'RELAYER_API_KEY_ADDRESS') and config.RELAYER_API_KEY_ADDRESS:
+                    headers["poly-relayer-api-key-address"] = str(config.RELAYER_API_KEY_ADDRESS).strip()
+
+                # Non logghiamo la chiave intera, ma verifichiamo che ci sia
+                key_preview = str(config.RELAYER_API_KEY).strip()[:5] + "..." if config.RELAYER_API_KEY else "None"
+                # log.debug(f"Headers inviati al relayer: poly-relayer-api-key={key_preview}")
                 
                 body = {
                     "type": tx_type,
@@ -198,6 +204,12 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
 
                 resp = requests.post(f"{RELAYER_URL}/submit", json=body, headers=headers, timeout=20)
                 
+                if resp.status_code == 429:
+                    log.warning(f"Rate limit (429) dal relayer per {tx_type}. Pausa di 5 secondi...")
+                    time.sleep(5)
+                    # riprova 1 volta in caso di 429
+                    resp = requests.post(f"{RELAYER_URL}/submit", json=body, headers=headers, timeout=20)
+
                 if resp.status_code in (200, 201):
                     log.info(f"✅ Redeem gasless accettato ({tx_type})! ID: {resp.json().get('transactionID')}")
                     return True
@@ -209,6 +221,13 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
             except Exception as e:
                 log.debug(f"Errore tentativo Relayer {tx_type}: {e}")
                 continue
+
+            # Anti-rate limit: un po' di respiro tra un tentativo e l'altro
+            time.sleep(2.5)
+
+            # Aggiungiamo un ritardo tra i tentativi per evitare l'errore 429 (Too Many Requests)
+            import time
+            time.sleep(2)
                 
     return False
 
