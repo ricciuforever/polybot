@@ -238,40 +238,6 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
     return False
 
 
-def _execute_redeem_on_chain(cond_id: str, idx_sets: list, collateral_token=None) -> bool:
-    try:
-        signer = Account.from_key(config.PRIVATE_KEY)
-        w3 = Web3(Web3.HTTPProvider(RPC_URLS[0]))
-        ctf = w3.eth.contract(address=CTF_CONTRACT, abi=CTF_ABI)
-        token = collateral_token if collateral_token else USDC_NATIVE
-        parent_id = b'\x00' * 32
-        cond_id_bytes = bytes.fromhex(cond_id.replace("0x", "")) if isinstance(cond_id, str) else cond_id
-
-        # Build transaction
-        tx = ctf.functions.redeemPositions(
-            token, parent_id, cond_id_bytes, [int(i) for i in idx_sets]
-        ).build_transaction({
-            'from': signer.address,
-            'nonce': w3.eth.get_transaction_count(signer.address),
-            'gas': 300000,
-            'gasPrice': w3.eth.gas_price
-        })
-
-        signed_tx = w3.eth.account.sign_transaction(tx, private_key=config.PRIVATE_KEY)
-        tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
-        log.info(f"🚀 Transazione On-Chain inviata! Hash: {w3.to_hex(tx_hash)}")
-
-        # Wait for receipt
-        receipt = w3.eth.wait_for_transaction_receipt(tx_hash, timeout=120)
-        if receipt.status == 1:
-            return True
-        else:
-            log.warning("❌ Transazione fallita on-chain.")
-            return False
-    except Exception as e:
-        log.error(f"Errore redeem on-chain: {e}")
-        return False
-
 def sync_external_winnings():
     if not config.POLY_PROXY_ADDRESS: return
     proxy_addr = Web3.to_checksum_address(config.POLY_PROXY_ADDRESS)
@@ -297,16 +263,7 @@ def sync_external_winnings():
         if success:
             log.info(f"✅ Claim completato via Relayer per: {title}")
         else:
-            log.info(f"Relayer ha rifiutato, forzo la transazione on-chain per {title}...")
-            # For Polymarket, the assets might be held by the Proxy, but sometimes by the EOA
-            # The function `redeemPositions` doesn't take a "from" parameter to redeem FOR someone else.
-            # So if tokens are in the Proxy, the Proxy MUST call it. If tokens are in EOA, EOA calls it.
-            # Since the ClobClient SDK handles proxy stuff, let's just use the `_execute_redeem_on_chain` and see if it works for this user setup.
-            success_on_chain = _execute_redeem_on_chain(cond_id, idx_sets)
-            if success_on_chain:
-                log.info(f"✅ Claim completato On-Chain per: {title}")
-            else:
-                log.warning(f"⏳ Entrambi i claim (Relayer e On-Chain) falliti per: {title}.")
+            log.warning(f"⏳ Relayer fallito per: {title}. Riproverò al prossimo giro.")
         time.sleep(2)
 
 def check_winnings(proxy_address: str) -> float:
@@ -379,17 +336,10 @@ def auto_redeem():
             t["status"] = "claimed"
             updated = True
         else:
-            log.info(f"Relayer ha rifiutato, forzo la transazione on-chain per {t.get('slug')}...")
-            success_on_chain = _execute_redeem_on_chain(t["conditionId"], idx_sets)
-            if success_on_chain:
-                log.info(f"✅ Auto-redeem completato On-Chain per {t.get('slug')}")
-                t["status"] = "claimed"
-                updated = True
-            else:
-                log.warning(f"⏳ Relayer e On-Chain falliti per {t.get('slug')}.")
-                if t.get("redeem_attempts", 0) >= 10:
-                    t["status"] = "failed"
-                updated = True
+            log.warning(f"⏳ Relayer fallito per {t.get('slug')}.")
+            if t.get("redeem_attempts", 0) >= 10:
+                t["status"] = "failed"
+            updated = True
 
     if updated:
         save_trades_robust(trades)
