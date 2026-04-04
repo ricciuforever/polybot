@@ -1,0 +1,1266 @@
+[
+    {
+        "slug": "btc-updown-5m-1775253000",
+        "conditionId": "0xfde53db99955cb7ad6ee6ee5cae59e3a0fa161eda8d412e3ca0f95a82083c683",
+        "action": "BUY_DOWN",
+        "timestamp": 1775253115.8142252,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775253300",
+        "conditionId": "0xf4a4c93d1aeae0942bd05b7bbe3c72122d60395f2cb457ce884ee04fe703974a",
+        "action": "BUY_UP",
+        "timestamp": 1775253577.1389272,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775253300",
+        "conditionId": "0xf4a4c93d1aeae0942bd05b7bbe3c72122d60395f2cb457ce884ee04fe703974a",
+        "action": "BUY_UP",
+        "timestamp": 1775253584.9781294,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775253600",
+        "conditionId": "0x04f2bcf35bd77c8acc0a2aca10571929c863f1c7a2cddce326c3baffed4201e8",
+        "action": "BUY_DOWN",
+        "timestamp": 1775253626.1397684,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775253600",
+        "conditionId": "0x04f2bcf35bd77c8acc0a2aca10571929c863f1c7a2cddce326c3baffed4201e8",
+        "action": "BUY_DOWN",
+        "timestamp": 1775253648.4338427,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775253600",
+        "conditionId": "0x04f2bcf35bd77c8acc0a2aca10571929c863f1c7a2cddce326c3baffed4201e8",
+        "action": "BUY_UP",
+        "timestamp": 1775253697.587425,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775253600",
+        "conditionId": "0x04f2bcf35bd77c8acc0a2aca10571929c863f1c7a2cddce326c3baffed4201e8",
+        "action": "BUY_UP",
+        "timestamp": 1775253712.6492465,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775253600",
+        "conditionId": "0x04f2bcf35bd77c8acc0a2aca10571929c863f1c7a2cddce326c3baffed4201e8",
+        "action": "BUY_UP",
+        "timestamp": 1775253721.3857546,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775253600",
+        "conditionId": "0x04f2bcf35bd77c8acc0a2aca10571929c863f1c7a2cddce326c3baffed4201e8",
+        "action": "BUY_UP",
+        "timestamp": 1775253732.6927314,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775258400",
+        "conditionId": "0x6dee255d372c64bee16c347ae4823a7de202111e9571858579eee4b1f49cf8af",
+        "action": "BUY_UP",
+        "timestamp": 1775258405.8116605,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775258700",
+        "conditionId": "0xa62e154e06b70d7e47c809a4d7d0ed5cf8b185b9c6c6667b5bab0ff1373d855e",
+        "action": "BUY_UP",
+        "timestamp": 1775258925.2910197,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775259000",
+        "conditionId": "0x78b71e747aa71f82e10560a109aaff2747cd1a566391f63fe78090719e4a5e21",
+        "action": "BUY_UP",
+        "timestamp": 1775259023.0588381,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775259000",
+        "conditionId": "0x78b71e747aa71f82e10560a109aaff2747cd1a566391f63fe78090719e4a5e21",
+        "action": "BUY_UP",
+        "timestamp": 1775259029.9161706,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775259000",
+        "conditionId": "0x78b71e747aa71f82e10560a109aaff2747cd1a566391f63fe78090719e4a5e21",
+        "action": "BUY_UP",
+        "timestamp": 1775259036.935037,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775259000",
+        "conditionId": "0x78b71e747aa71f82e10560a109aaff2747cd1a566391f63fe78090719e4a5e21",
+        "action": "BUY_DOWN",
+        "timestamp": 1775259133.850932,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775259000",
+        "conditionId": "0x78b71e747aa71f82e10560a109aaff2747cd1a566391f63fe78090719e4a5e21",
+        "action": "BUY_DOWN",
+        "timestamp": 1775259141.032664,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775261100",
+        "conditionId": "0xf4be3e63c655aa8c572936626879865325534dd8c2ad68d8f7b98c8b7b02b7c8",
+        "action": "BUY_DOWN",
+        "timestamp": 1775261117.1299968,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775261400",
+        "conditionId": "0x53b93c341dda68d9cbc1ff750f413cd3bf793e54c7ec4e51c24f33d275c2e0cd",
+        "action": "BUY_DOWN",
+        "timestamp": 1775261465.522473,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775261400",
+        "conditionId": "0x53b93c341dda68d9cbc1ff750f413cd3bf793e54c7ec4e51c24f33d275c2e0cd",
+        "action": "BUY_DOWN",
+        "timestamp": 1775261472.3314202,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775261400",
+        "conditionId": "0x53b93c341dda68d9cbc1ff750f413cd3bf793e54c7ec4e51c24f33d275c2e0cd",
+        "action": "BUY_UP",
+        "timestamp": 1775261514.181127,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775261700",
+        "conditionId": "0xf587e0f5241d209cd80ddcd315e286b5555b7396596d866ee8e180cf9fdbb275",
+        "action": "BUY_DOWN",
+        "timestamp": 1775261780.7305708,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775262600",
+        "conditionId": "0xaf2f45f926c657b416957c2a665007d4d9128b325ce6029fcfa754e3a4190368",
+        "action": "BUY_DOWN",
+        "timestamp": 1775262885.6279843,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775262900",
+        "conditionId": "0xd09139836659c5ad92e597c458e20eb1e8bd3473a98364e29f614d512ae5dd46",
+        "action": "BUY_UP",
+        "timestamp": 1775263027.4279761,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775264400",
+        "conditionId": "0xb3c9a9fa6b9c35972f0695e3023e81fdd36fff19adb1886a5c0db2ecd09d8286",
+        "action": "BUY_DOWN",
+        "timestamp": 1775264528.9005518,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775264400",
+        "conditionId": "0xb3c9a9fa6b9c35972f0695e3023e81fdd36fff19adb1886a5c0db2ecd09d8286",
+        "action": "BUY_DOWN",
+        "timestamp": 1775264535.3081996,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775264400",
+        "conditionId": "0xb3c9a9fa6b9c35972f0695e3023e81fdd36fff19adb1886a5c0db2ecd09d8286",
+        "action": "BUY_UP",
+        "timestamp": 1775264593.7885592,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775264400",
+        "conditionId": "0xb3c9a9fa6b9c35972f0695e3023e81fdd36fff19adb1886a5c0db2ecd09d8286",
+        "action": "BUY_UP",
+        "timestamp": 1775264601.1595004,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775265600",
+        "conditionId": "0xfc59d5b75a86535bbe0ba73e9ed68e248d290883129360c402d449fe7ddd8544",
+        "action": "BUY_UP",
+        "timestamp": 1775265901.2369602,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775265900",
+        "conditionId": "0x5f4e709a5aad44d05fd2ce43fde9e3f22067fd6d428ea68ef71339bee8e4d9a8",
+        "action": "BUY_DOWN",
+        "timestamp": 1775265936.4077775,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775265900",
+        "conditionId": "0x5f4e709a5aad44d05fd2ce43fde9e3f22067fd6d428ea68ef71339bee8e4d9a8",
+        "action": "BUY_UP",
+        "timestamp": 1775266013.3104079,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775265900",
+        "conditionId": "0x5f4e709a5aad44d05fd2ce43fde9e3f22067fd6d428ea68ef71339bee8e4d9a8",
+        "action": "BUY_UP",
+        "timestamp": 1775266131.2297268,
+        "status": "pending"
+    },
+    {
+        "slug": "btc-updown-5m-1775267100",
+        "conditionId": "0xed8c649b32d64e202a55b37e1e9c31c071b82097bd11084d36d6dfd04a944a99",
+        "action": "BUY_DOWN",
+        "timestamp": 1775267291.9140098,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775298900",
+        "conditionId": "0x3f7313e72fd0755222fd454d23e203b99e9faf1ecbb43bca0bc47c9d42cb12ec",
+        "action": "BUY_UP",
+        "timestamp": 1775299168.2867672,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775298900",
+        "conditionId": "0xeb99ae21c6f23a52a584b8a8e2fe28bee5d44f067d86cb04633f74231aec6283",
+        "action": "BUY_UP",
+        "timestamp": 1775299169.381198,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775298900",
+        "conditionId": "0x7ffba8a7d3c4a02d13b0da30d6cb6c8ab1429365a902590a4c09b238f470190c",
+        "action": "BUY_UP",
+        "timestamp": 1775299170.4754117,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775298900",
+        "conditionId": "0xfba2b600a432402dcae7041a0276d3cd11c3de1b73f519b2d105162153bbac3f",
+        "action": "BUY_UP",
+        "timestamp": 1775299172.2571936,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775298900",
+        "conditionId": "0x3f7313e72fd0755222fd454d23e203b99e9faf1ecbb43bca0bc47c9d42cb12ec",
+        "action": "BUY_UP",
+        "timestamp": 1775299182.0166047,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775298900",
+        "conditionId": "0xeb99ae21c6f23a52a584b8a8e2fe28bee5d44f067d86cb04633f74231aec6283",
+        "action": "BUY_UP",
+        "timestamp": 1775299182.8445408,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775298900",
+        "conditionId": "0x7ffba8a7d3c4a02d13b0da30d6cb6c8ab1429365a902590a4c09b238f470190c",
+        "action": "BUY_UP",
+        "timestamp": 1775299183.6841047,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775299200",
+        "conditionId": "0x37d0266851344487cf21d6bbb7d91b802926a3be063adbfcebc14fde66d819d2",
+        "action": "BUY_UP",
+        "timestamp": 1775299240.0841792,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775299200",
+        "conditionId": "0xb2a27c22b34f78fac5aaf3e159a69b0c3bfb04fae85464316d2ca6c7f9e69a7b",
+        "action": "BUY_UP",
+        "timestamp": 1775299292.7929635,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775299200",
+        "conditionId": "0x37d0266851344487cf21d6bbb7d91b802926a3be063adbfcebc14fde66d819d2",
+        "action": "BUY_UP",
+        "timestamp": 1775299293.9821224,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775299200",
+        "conditionId": "0xbb6e76ebb003f545de60513e6c9808ad494a42ce2d79f0a4b13876b33ea5b5a8",
+        "action": "BUY_UP",
+        "timestamp": 1775299295.291915,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775299200",
+        "conditionId": "0xe968072214225679633f171d2f5e1aaca3a1720ef668d661cc1ec5a633d07246",
+        "action": "BUY_UP",
+        "timestamp": 1775299296.4924426,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775299200",
+        "conditionId": "0xb2a27c22b34f78fac5aaf3e159a69b0c3bfb04fae85464316d2ca6c7f9e69a7b",
+        "action": "BUY_UP",
+        "timestamp": 1775299307.6718442,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775299200",
+        "conditionId": "0x37d0266851344487cf21d6bbb7d91b802926a3be063adbfcebc14fde66d819d2",
+        "action": "BUY_UP",
+        "timestamp": 1775299308.5834913,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775299200",
+        "conditionId": "0xbb6e76ebb003f545de60513e6c9808ad494a42ce2d79f0a4b13876b33ea5b5a8",
+        "action": "BUY_UP",
+        "timestamp": 1775299309.4688053,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775299200",
+        "conditionId": "0xe968072214225679633f171d2f5e1aaca3a1720ef668d661cc1ec5a633d07246",
+        "action": "BUY_UP",
+        "timestamp": 1775299310.3682024,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775299200",
+        "conditionId": "0xb2a27c22b34f78fac5aaf3e159a69b0c3bfb04fae85464316d2ca6c7f9e69a7b",
+        "action": "BUY_UP",
+        "timestamp": 1775299321.4707541,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775299200",
+        "conditionId": "0x37d0266851344487cf21d6bbb7d91b802926a3be063adbfcebc14fde66d819d2",
+        "action": "BUY_UP",
+        "timestamp": 1775299322.4187958,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775299200",
+        "conditionId": "0xbb6e76ebb003f545de60513e6c9808ad494a42ce2d79f0a4b13876b33ea5b5a8",
+        "action": "BUY_UP",
+        "timestamp": 1775299323.406695,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775299200",
+        "conditionId": "0xe968072214225679633f171d2f5e1aaca3a1720ef668d661cc1ec5a633d07246",
+        "action": "BUY_UP",
+        "timestamp": 1775299324.440949,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775299200",
+        "conditionId": "0xe968072214225679633f171d2f5e1aaca3a1720ef668d661cc1ec5a633d07246",
+        "action": "BUY_DOWN",
+        "timestamp": 1775299449.0772698,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775299200",
+        "conditionId": "0xe968072214225679633f171d2f5e1aaca3a1720ef668d661cc1ec5a633d07246",
+        "action": "BUY_DOWN",
+        "timestamp": 1775299463.0076284,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775299500",
+        "conditionId": "0xd78d67ec5ede0d0d21e2adfd4b095d2e9ed2a60e3878c7b10e93eab240e39ece",
+        "action": "BUY_UP",
+        "timestamp": 1775299755.1556551,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775299500",
+        "conditionId": "0xadcba4278cb49b2e8f56262984b15fa6f2264852ab3ac2c899cdb41646696363",
+        "action": "BUY_UP",
+        "timestamp": 1775299812.101432,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775299800",
+        "conditionId": "0xd3eaafd2a00dbec81396636126aafb01214497dba3423ba8fa5b872aeb6ea834",
+        "action": "BUY_UP",
+        "timestamp": 1775299944.1503038,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775299800",
+        "conditionId": "0xd3eaafd2a00dbec81396636126aafb01214497dba3423ba8fa5b872aeb6ea834",
+        "action": "BUY_UP",
+        "timestamp": 1775299957.2298436,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775299800",
+        "conditionId": "0x7e0fe46ef7b9d409ed4fdf5c7ffaa0afb1c3246657a00120d5eb6c5175b97a1a",
+        "action": "BUY_UP",
+        "timestamp": 1775299958.2801757,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775299800",
+        "conditionId": "0x07e508c9a7c097945fe242e9b2e9dd895aaa65c3b4be1a58d290161bac6671c2",
+        "action": "BUY_UP",
+        "timestamp": 1775299959.3279305,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775299800",
+        "conditionId": "0xd3eaafd2a00dbec81396636126aafb01214497dba3423ba8fa5b872aeb6ea834",
+        "action": "BUY_UP",
+        "timestamp": 1775299970.3252904,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775299800",
+        "conditionId": "0x7e0fe46ef7b9d409ed4fdf5c7ffaa0afb1c3246657a00120d5eb6c5175b97a1a",
+        "action": "BUY_UP",
+        "timestamp": 1775299971.1198702,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775299800",
+        "conditionId": "0x7e0fe46ef7b9d409ed4fdf5c7ffaa0afb1c3246657a00120d5eb6c5175b97a1a",
+        "action": "BUY_UP",
+        "timestamp": 1775299983.9023938,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775300100",
+        "conditionId": "0xe73f3fae1543be1c726ac2e08b0086ea2ca1b2e5561c625d787013ca19f4d2ea",
+        "action": "BUY_UP",
+        "timestamp": 1775300371.5803773,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775300100",
+        "conditionId": "0xe73f3fae1543be1c726ac2e08b0086ea2ca1b2e5561c625d787013ca19f4d2ea",
+        "action": "BUY_UP",
+        "timestamp": 1775300384.6802392,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775300400",
+        "conditionId": "0xd1d6d40d4286aa2d90bb6eda7dd0146320d12802081dfd071a6903dce530eb6a",
+        "action": "BUY_UP",
+        "timestamp": 1775300478.4520955,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775300400",
+        "conditionId": "0x8888ffd87bf24863e74500dfcfbd5916965c1386aae4cf7d3e9713a044948d1a",
+        "action": "BUY_UP",
+        "timestamp": 1775300480.6693678,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775300400",
+        "conditionId": "0xd1d6d40d4286aa2d90bb6eda7dd0146320d12802081dfd071a6903dce530eb6a",
+        "action": "BUY_UP",
+        "timestamp": 1775300492.0090854,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775300400",
+        "conditionId": "0x614409bac8124eee2de00d291641997784bc1fa3ecb3cc832b29588fb2c2f99a",
+        "action": "BUY_UP",
+        "timestamp": 1775300493.0626693,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775300400",
+        "conditionId": "0x8888ffd87bf24863e74500dfcfbd5916965c1386aae4cf7d3e9713a044948d1a",
+        "action": "BUY_UP",
+        "timestamp": 1775300493.9061592,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775300400",
+        "conditionId": "0xd1d6d40d4286aa2d90bb6eda7dd0146320d12802081dfd071a6903dce530eb6a",
+        "action": "BUY_UP",
+        "timestamp": 1775300505.1301663,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775300400",
+        "conditionId": "0x8888ffd87bf24863e74500dfcfbd5916965c1386aae4cf7d3e9713a044948d1a",
+        "action": "BUY_DOWN",
+        "timestamp": 1775300672.456767,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775300700",
+        "conditionId": "0x4c4ff498fb35900a1f104023549e9db8c098b35ab84db00112f21265d056b47d",
+        "action": "BUY_DOWN",
+        "timestamp": 1775300943.0102563,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775300700",
+        "conditionId": "0x4c4ff498fb35900a1f104023549e9db8c098b35ab84db00112f21265d056b47d",
+        "action": "BUY_DOWN",
+        "timestamp": 1775301059.2119782,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775301000",
+        "conditionId": "0xa37a0676878879c8a5b7adae0fdca16bc67a71adf8ed3a872b834f966f0f2506",
+        "action": "BUY_DOWN",
+        "timestamp": 1775301079.732182,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775301300",
+        "conditionId": "0xb90d0ea36af0a08aec6be47c90397f3225ee5aeac6cb11fd9193cf53b444bf15",
+        "action": "BUY_DOWN",
+        "timestamp": 1775301443.7430422,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775301300",
+        "conditionId": "0xd67db8d8a3ae9e4b3461ac5e47c01279d328e3af6fe0c8347e61f08f122d4e67",
+        "action": "BUY_DOWN",
+        "timestamp": 1775301445.811506,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775301600",
+        "conditionId": "0xc5bf7a869f3ec0ee840cdae3eb7a45fcb875fdc60fcd595bad457c8e783c2a95",
+        "action": "BUY_DOWN",
+        "timestamp": 1775301726.2326326,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775301600",
+        "conditionId": "0x79c9a004057b4e680a1a4be15be4af9279bd4091f7e86fd37fb57e8f8b757996",
+        "action": "BUY_DOWN",
+        "timestamp": 1775301754.0284452,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775301900",
+        "conditionId": "0x5359e9e76aa2eae4e608e7e026bad3012e3d85110ff0f9262ce6475e4306feb0",
+        "action": "BUY_UP",
+        "timestamp": 1775302063.7382493,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775301900",
+        "conditionId": "0x5359e9e76aa2eae4e608e7e026bad3012e3d85110ff0f9262ce6475e4306feb0",
+        "action": "BUY_UP",
+        "timestamp": 1775302076.9942446,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775301900",
+        "conditionId": "0x5359e9e76aa2eae4e608e7e026bad3012e3d85110ff0f9262ce6475e4306feb0",
+        "action": "BUY_UP",
+        "timestamp": 1775302089.2302547,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775302500",
+        "conditionId": "0x77e4ff13fcf355ce5ce984a366c7037d36f8c918b98dbef7d6486082d3a5fe25",
+        "action": "BUY_DOWN",
+        "timestamp": 1775302678.4659388,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775304300",
+        "conditionId": "0xa8c70239925d1cdc77faa7a1dafd49466355d84e558bee5f81dca74e65cc8fe8",
+        "action": "BUY_DOWN",
+        "timestamp": 1775304528.870038,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775304300",
+        "conditionId": "0x1d631c7dee3e64b5925e7cf15b3f42d0a41d23d60c28bfd3b5ff0e625654941d",
+        "action": "BUY_DOWN",
+        "timestamp": 1775304529.9144018,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775304300",
+        "conditionId": "0xa8c70239925d1cdc77faa7a1dafd49466355d84e558bee5f81dca74e65cc8fe8",
+        "action": "BUY_DOWN",
+        "timestamp": 1775304541.1178434,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775304300",
+        "conditionId": "0x1d631c7dee3e64b5925e7cf15b3f42d0a41d23d60c28bfd3b5ff0e625654941d",
+        "action": "BUY_DOWN",
+        "timestamp": 1775304541.9479725,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775304300",
+        "conditionId": "0xa8c70239925d1cdc77faa7a1dafd49466355d84e558bee5f81dca74e65cc8fe8",
+        "action": "BUY_DOWN",
+        "timestamp": 1775304554.2021642,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775304300",
+        "conditionId": "0x1d631c7dee3e64b5925e7cf15b3f42d0a41d23d60c28bfd3b5ff0e625654941d",
+        "action": "BUY_DOWN",
+        "timestamp": 1775304555.5505009,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775304300",
+        "conditionId": "0xd71067689ee7809c942677b0653032fe9ef8eec366affe8f3ea33ba74606a6f1",
+        "action": "BUY_DOWN",
+        "timestamp": 1775304556.9679186,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775304300",
+        "conditionId": "0xa8c70239925d1cdc77faa7a1dafd49466355d84e558bee5f81dca74e65cc8fe8",
+        "action": "BUY_DOWN",
+        "timestamp": 1775304569.3890362,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775304300",
+        "conditionId": "0x1d631c7dee3e64b5925e7cf15b3f42d0a41d23d60c28bfd3b5ff0e625654941d",
+        "action": "BUY_DOWN",
+        "timestamp": 1775304570.343714,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775304600",
+        "conditionId": "0xfa38fad831973754443b2b3c47b5da63e4765b8bb7bb435fe70751d372f3af89",
+        "action": "BUY_UP",
+        "timestamp": 1775304732.535665,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775304600",
+        "conditionId": "0xfa38fad831973754443b2b3c47b5da63e4765b8bb7bb435fe70751d372f3af89",
+        "action": "BUY_UP",
+        "timestamp": 1775304748.0678768,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775304600",
+        "conditionId": "0xfa38fad831973754443b2b3c47b5da63e4765b8bb7bb435fe70751d372f3af89",
+        "action": "BUY_UP",
+        "timestamp": 1775304761.9232132,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775305500",
+        "conditionId": "0x5933eb467617dd09e317798ab7db9b58a28b9f614152c6ff61a8caf03f0f79a2",
+        "action": "BUY_DOWN",
+        "timestamp": 1775305702.824646,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775306400",
+        "conditionId": "0x06dba496a4adfb36441837a713eb91296b3ea098da290302a1224c52fb798474",
+        "action": "BUY_DOWN",
+        "timestamp": 1775306447.4899871,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775306400",
+        "conditionId": "0x06dba496a4adfb36441837a713eb91296b3ea098da290302a1224c52fb798474",
+        "action": "BUY_DOWN",
+        "timestamp": 1775306459.3160808,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775306400",
+        "conditionId": "0x06dba496a4adfb36441837a713eb91296b3ea098da290302a1224c52fb798474",
+        "action": "BUY_DOWN",
+        "timestamp": 1775306471.4037206,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775306700",
+        "conditionId": "0x3f6527212d6dca6ae9a1f595512e75b58122aa0eb8c02cea5d05b5f8f185e088",
+        "action": "BUY_UP",
+        "timestamp": 1775306837.427716,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775306700",
+        "conditionId": "0x3f6527212d6dca6ae9a1f595512e75b58122aa0eb8c02cea5d05b5f8f185e088",
+        "action": "BUY_UP",
+        "timestamp": 1775306849.8352122,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775306700",
+        "conditionId": "0xf9c0185316c1416fdfbcce8a01e89a7c062f3418249f7070e07b5dc61797f60a",
+        "action": "BUY_UP",
+        "timestamp": 1775306850.8913443,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775307600",
+        "conditionId": "0xa4fbe93376f3d7283ca934ad1c635fee39baaf736d237e48c5816d5e7b18c14a",
+        "action": "BUY_DOWN",
+        "timestamp": 1775307666.221727,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775307600",
+        "conditionId": "0x34d531f4af91bc928f0d1e7b2066319ba3659d1f3e9f2afff8519de2579dcd92",
+        "action": "BUY_DOWN",
+        "timestamp": 1775307754.1155922,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775307600",
+        "conditionId": "0x34d531f4af91bc928f0d1e7b2066319ba3659d1f3e9f2afff8519de2579dcd92",
+        "action": "BUY_DOWN",
+        "timestamp": 1775307770.8675387,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775307900",
+        "conditionId": "0xd8bb414989265189649fbb6896141cca82feb6d9e92d52f6fdde19e1dffdd52c",
+        "action": "BUY_UP",
+        "timestamp": 1775308183.236291,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775308200",
+        "conditionId": "0x57d21b19f7469463e5fb4f45e87273987065320b30197f3478b4e1e2bf01bff5",
+        "action": "BUY_UP",
+        "timestamp": 1775308456.409481,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775308500",
+        "conditionId": "0xd997101601641660bbb20a2a39090642af526c9d45a69af0e1b15e5450d7ef77",
+        "action": "BUY_DOWN",
+        "timestamp": 1775308612.0408733,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775308500",
+        "conditionId": "0xd997101601641660bbb20a2a39090642af526c9d45a69af0e1b15e5450d7ef77",
+        "action": "BUY_DOWN",
+        "timestamp": 1775308623.9265578,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775308800",
+        "conditionId": "0xd7894e83bda2d7f40d40f8558e4a911603c6a39248e3e0d9daed27191ebd22bc",
+        "action": "BUY_DOWN",
+        "timestamp": 1775308923.206039,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775308800",
+        "conditionId": "0x0d264abec3be09612652135d4d6d4bc0de7480302be6eef3d721fbbb44848b4d",
+        "action": "BUY_DOWN",
+        "timestamp": 1775308924.2719734,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775308800",
+        "conditionId": "0x0d264abec3be09612652135d4d6d4bc0de7480302be6eef3d721fbbb44848b4d",
+        "action": "BUY_DOWN",
+        "timestamp": 1775308940.4565818,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775308800",
+        "conditionId": "0xe05d14cad5fc73a8c62501b9c8c8b5e9f74b76ebd7da6b260df1f8545f6a5ca1",
+        "action": "BUY_DOWN",
+        "timestamp": 1775308953.7463634,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775308800",
+        "conditionId": "0x0d264abec3be09612652135d4d6d4bc0de7480302be6eef3d721fbbb44848b4d",
+        "action": "BUY_DOWN",
+        "timestamp": 1775308957.651798,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775309400",
+        "conditionId": "0x70fa57d1092158b6c32f5272ea678ddcacd0c680367b006cb08ec7aa58eb1929",
+        "action": "BUY_DOWN",
+        "timestamp": 1775309518.668396,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775309700",
+        "conditionId": "0xc8ce2312aecbfdb1a02a2874dc937bee99cf6bdc20760d7d51e56cace03cceea",
+        "action": "BUY_UP",
+        "timestamp": 1775309791.839481,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775309700",
+        "conditionId": "0x7f44e37b53472614dc75c55d1f523737a0c84c0ffd33480334af1bdb89c3c70a",
+        "action": "BUY_UP",
+        "timestamp": 1775309793.4511397,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775309700",
+        "conditionId": "0xa4b3fc03926c005985c31c25776cdedbe6089abd4ebf02111ccb6d75c7323482",
+        "action": "BUY_UP",
+        "timestamp": 1775309794.7017572,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775309700",
+        "conditionId": "0xc8ce2312aecbfdb1a02a2874dc937bee99cf6bdc20760d7d51e56cace03cceea",
+        "action": "BUY_UP",
+        "timestamp": 1775309807.6023564,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775309700",
+        "conditionId": "0x53c6a7b90826d8a1aaa211c773d82910ca554305e666cf5ee19e11107b7d6d1e",
+        "action": "BUY_UP",
+        "timestamp": 1775309809.3044918,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775309700",
+        "conditionId": "0xa4b3fc03926c005985c31c25776cdedbe6089abd4ebf02111ccb6d75c7323482",
+        "action": "BUY_UP",
+        "timestamp": 1775309812.1005864,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775309700",
+        "conditionId": "0xc8ce2312aecbfdb1a02a2874dc937bee99cf6bdc20760d7d51e56cace03cceea",
+        "action": "BUY_UP",
+        "timestamp": 1775309824.9012892,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775309700",
+        "conditionId": "0x53c6a7b90826d8a1aaa211c773d82910ca554305e666cf5ee19e11107b7d6d1e",
+        "action": "BUY_UP",
+        "timestamp": 1775309826.0713155,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775309700",
+        "conditionId": "0x7f44e37b53472614dc75c55d1f523737a0c84c0ffd33480334af1bdb89c3c70a",
+        "action": "BUY_UP",
+        "timestamp": 1775309827.3182132,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775309700",
+        "conditionId": "0xa4b3fc03926c005985c31c25776cdedbe6089abd4ebf02111ccb6d75c7323482",
+        "action": "BUY_UP",
+        "timestamp": 1775309828.4271624,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775309700",
+        "conditionId": "0x70d57a8f418697f82669e10b79f31a0d98601fbd0dc5301cf8f26f5a9cfdb95d",
+        "action": "BUY_UP",
+        "timestamp": 1775309829.9945076,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775309700",
+        "conditionId": "0xc8ce2312aecbfdb1a02a2874dc937bee99cf6bdc20760d7d51e56cace03cceea",
+        "action": "BUY_UP",
+        "timestamp": 1775309842.4034104,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775309700",
+        "conditionId": "0x53c6a7b90826d8a1aaa211c773d82910ca554305e666cf5ee19e11107b7d6d1e",
+        "action": "BUY_UP",
+        "timestamp": 1775309843.6762264,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775309700",
+        "conditionId": "0x7f44e37b53472614dc75c55d1f523737a0c84c0ffd33480334af1bdb89c3c70a",
+        "action": "BUY_UP",
+        "timestamp": 1775309844.6593447,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775309700",
+        "conditionId": "0x70d57a8f418697f82669e10b79f31a0d98601fbd0dc5301cf8f26f5a9cfdb95d",
+        "action": "BUY_UP",
+        "timestamp": 1775309846.4014874,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775309700",
+        "conditionId": "0x53c6a7b90826d8a1aaa211c773d82910ca554305e666cf5ee19e11107b7d6d1e",
+        "action": "BUY_UP",
+        "timestamp": 1775309858.1979077,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775309700",
+        "conditionId": "0x7f44e37b53472614dc75c55d1f523737a0c84c0ffd33480334af1bdb89c3c70a",
+        "action": "BUY_UP",
+        "timestamp": 1775309858.9982557,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775309700",
+        "conditionId": "0xa4b3fc03926c005985c31c25776cdedbe6089abd4ebf02111ccb6d75c7323482",
+        "action": "BUY_UP",
+        "timestamp": 1775309859.8111856,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775309700",
+        "conditionId": "0x70d57a8f418697f82669e10b79f31a0d98601fbd0dc5301cf8f26f5a9cfdb95d",
+        "action": "BUY_UP",
+        "timestamp": 1775309861.0068011,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775309700",
+        "conditionId": "0x70d57a8f418697f82669e10b79f31a0d98601fbd0dc5301cf8f26f5a9cfdb95d",
+        "action": "BUY_UP",
+        "timestamp": 1775309877.5471501,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775310000",
+        "conditionId": "0xc213dd59f0bcb248737d0b775136b4c17da2ca52e6b432b9c5e58f33f37d6b99",
+        "action": "BUY_UP",
+        "timestamp": 1775310135.0465982,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775310300",
+        "conditionId": "0xfa33e456eaa9a8702d5d9ddf7449820d92c61a47f006b0805e2238225a83bfd1",
+        "action": "BUY_DOWN",
+        "timestamp": 1775310338.118865,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775310300",
+        "conditionId": "0xfa33e456eaa9a8702d5d9ddf7449820d92c61a47f006b0805e2238225a83bfd1",
+        "action": "BUY_DOWN",
+        "timestamp": 1775310353.824502,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775310300",
+        "conditionId": "0x470be00ab512b77117036466dad3acdddfd79c3f49004cb63118595eff9884cf",
+        "action": "BUY_DOWN",
+        "timestamp": 1775310499.8381472,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775310300",
+        "conditionId": "0x470be00ab512b77117036466dad3acdddfd79c3f49004cb63118595eff9884cf",
+        "action": "BUY_DOWN",
+        "timestamp": 1775310513.6697257,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775310300",
+        "conditionId": "0x470be00ab512b77117036466dad3acdddfd79c3f49004cb63118595eff9884cf",
+        "action": "BUY_DOWN",
+        "timestamp": 1775310530.5056407,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775310600",
+        "conditionId": "0x063c056852f496791e470d7aa986a68a3bf1ef5c2ca4bb613bbb961f59e345b1",
+        "action": "BUY_DOWN",
+        "timestamp": 1775310752.0497446,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775310600",
+        "conditionId": "0x3ef371b2da1517dfaff57ded4a27994cdd76b330341c79b6653cde00d7ee92a3",
+        "action": "BUY_DOWN",
+        "timestamp": 1775310812.4303339,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775310600",
+        "conditionId": "0x3ef371b2da1517dfaff57ded4a27994cdd76b330341c79b6653cde00d7ee92a3",
+        "action": "BUY_DOWN",
+        "timestamp": 1775310828.7689152,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775310600",
+        "conditionId": "0x3ef371b2da1517dfaff57ded4a27994cdd76b330341c79b6653cde00d7ee92a3",
+        "action": "BUY_DOWN",
+        "timestamp": 1775310844.4644992,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775310600",
+        "conditionId": "0xa4ea3eb967cbe373231de038c797601416d13235b844d9ef85bc8ee23545fcb9",
+        "action": "BUY_DOWN",
+        "timestamp": 1775310846.9031765,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775310600",
+        "conditionId": "0x60b461db630f4a7d37f71dfbbd02bd346457f675f7a8551351bb9ef905560516",
+        "action": "BUY_DOWN",
+        "timestamp": 1775310869.180398,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775310900",
+        "conditionId": "0x20e66054df79622ed8d1b05f5778b185a13e43d8cc74394119d1d5b6c0d66e81",
+        "action": "BUY_UP",
+        "timestamp": 1775310949.0483992,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775310900",
+        "conditionId": "0x15cb9d1de041fe2efd29eb7f911adc40b0670511753e5ee1cec6b36b20cf008b",
+        "action": "BUY_UP",
+        "timestamp": 1775310950.4793952,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775310900",
+        "conditionId": "0xef9286c5048597eee3cd6bd3213e9f9c46b2c350c67c869644f38f9d63581e12",
+        "action": "BUY_UP",
+        "timestamp": 1775310951.913028,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775310900",
+        "conditionId": "0x39a34b15e7d3205b9f1104e97bc477487fa0dabeefb3ef9e7718ee42cfffbeec",
+        "action": "BUY_UP",
+        "timestamp": 1775310965.2742867,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775310900",
+        "conditionId": "0xedf95deac5a4890d6ae79b846dd60e9cd8fdfa30c7d1330fd61d939585704174",
+        "action": "BUY_UP",
+        "timestamp": 1775310966.6345034,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775310900",
+        "conditionId": "0x20e66054df79622ed8d1b05f5778b185a13e43d8cc74394119d1d5b6c0d66e81",
+        "action": "BUY_UP",
+        "timestamp": 1775310967.6779854,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775310900",
+        "conditionId": "0x15cb9d1de041fe2efd29eb7f911adc40b0670511753e5ee1cec6b36b20cf008b",
+        "action": "BUY_UP",
+        "timestamp": 1775310968.9179964,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775310900",
+        "conditionId": "0xef9286c5048597eee3cd6bd3213e9f9c46b2c350c67c869644f38f9d63581e12",
+        "action": "BUY_UP",
+        "timestamp": 1775310970.524469,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "slug": "btc-updown-5m-1775310900",
+        "conditionId": "0x39a34b15e7d3205b9f1104e97bc477487fa0dabeefb3ef9e7718ee42cfffbeec",
+        "action": "BUY_UP",
+        "timestamp": 1775310984.1320636,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775310900",
+        "conditionId": "0xedf95deac5a4890d6ae79b846dd60e9cd8fdfa30c7d1330fd61d939585704174",
+        "action": "BUY_UP",
+        "timestamp": 1775310985.5120146,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "slug": "sol-updown-5m-1775310900",
+        "conditionId": "0x20e66054df79622ed8d1b05f5778b185a13e43d8cc74394119d1d5b6c0d66e81",
+        "action": "BUY_UP",
+        "timestamp": 1775310986.8774242,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775310900",
+        "conditionId": "0x15cb9d1de041fe2efd29eb7f911adc40b0670511753e5ee1cec6b36b20cf008b",
+        "action": "BUY_UP",
+        "timestamp": 1775310988.0612707,
+        "status": "pending"
+    },
+    {
+        "asset": "DOGE",
+        "slug": "doge-updown-5m-1775310900",
+        "conditionId": "0xef9286c5048597eee3cd6bd3213e9f9c46b2c350c67c869644f38f9d63581e12",
+        "action": "BUY_UP",
+        "timestamp": 1775310989.1281092,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "slug": "eth-updown-5m-1775310900",
+        "conditionId": "0xedf95deac5a4890d6ae79b846dd60e9cd8fdfa30c7d1330fd61d939585704174",
+        "action": "BUY_UP",
+        "timestamp": 1775311000.556378,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "slug": "xrp-updown-5m-1775311800",
+        "conditionId": "0xb670eb41b2d61b37ba2c36fe601286e27e58d6ee59c404aa29e97932f803c5c5",
+        "action": "BUY_DOWN",
+        "timestamp": 1775311922.2424483,
+        "status": "pending"
+    }
+]

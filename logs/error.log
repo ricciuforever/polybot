@@ -1,0 +1,733 @@
+2026-04-03 21:22:24 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:22:34 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:22:44 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:22:54 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:23:04 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:23:14 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:23:24 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:23:34 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:23:44 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:23:54 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:24:04 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:24:14 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:24:24 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:24:34 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:24:44 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:24:54 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:25:10 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:25:20 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:25:30 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:25:40 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:25:50 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:26:00 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:26:11 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:26:21 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:26:31 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:26:41 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:26:51 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:27:01 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:27:11 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:27:21 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:27:31 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:27:41 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:27:52 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:28:02 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:28:12 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:28:22 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:28:32 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:28:42 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:28:52 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:29:02 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:29:12 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:29:22 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:29:32 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:29:42 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:29:52 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:30:04 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:30:14 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:30:24 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:30:34 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:30:44 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:30:55 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:31:05 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:31:15 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:31:25 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:31:35 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:31:45 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:31:55 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:32:05 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:32:15 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:32:25 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:32:35 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:32:45 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:32:55 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:33:05 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:33:15 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:33:25 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:33:35 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:33:45 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:33:55 [   ERROR] main [main.py:206] — ERRORE CRITICO:
+Traceback (most recent call last):
+  File "C:\Users\ricci\OneDrive\Desktop\SVILUPPO\polymarket\main.py", line 162, in main
+    up_price, down_price = watcher.get_prices(market)
+                           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MarketWatcher' object has no attribute 'get_prices'
+2026-04-03 21:55:23 [   ERROR] trader [trader.py:69] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 0, order amount: 510000'}]
+2026-04-03 21:59:50 [   ERROR] trader [trader.py:69] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 0, order amount: 520000'}]
+2026-04-03 22:02:31 [   ERROR] trader [trader.py:70] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 0, order amount: 510000'}]
+2026-04-03 22:02:39 [   ERROR] trader [trader.py:70] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 0, order amount: 510000'}]
+2026-04-03 22:07:09 [   ERROR] trader [trader.py:70] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 0, order amount: 510000'}]
+2026-04-03 22:07:29 [   ERROR] trader [trader.py:70] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 0, order amount: 510000'}]
+2026-04-03 22:10:00 [   ERROR] trader [trader.py:91] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'invalid signature'}]
+2026-04-03 22:10:10 [   ERROR] trader [trader.py:91] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'invalid signature'}]
+2026-04-03 22:10:37 [   ERROR] trader [trader.py:91] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'invalid signature'}]
+2026-04-03 22:10:45 [   ERROR] trader [trader.py:91] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'invalid signature'}]
+2026-04-03 22:12:06 [   ERROR] trader [trader.py:91] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'invalid signature'}]
+2026-04-03 22:12:13 [   ERROR] trader [trader.py:91] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'invalid signature'}]
+2026-04-03 22:14:59 [   ERROR] trader [trader.py:93] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'invalid signature'}]
+2026-04-03 22:18:18 [   ERROR] trader [trader.py:93] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'invalid signature'}]
+2026-04-03 22:19:49 [   ERROR] trader [trader.py:93] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'invalid signature'}]
+2026-04-03 22:21:32 [   ERROR] trader [trader.py:92] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'order 0x8451f483a0decfb5699fe6dc975a259b140bf444a5bff3d29eeeba27680ca47b is invalid. Size (1) lower than the minimum: 5'}]
+2026-04-03 22:21:56 [   ERROR] trader [trader.py:92] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'order 0x52815683a0b7b7b3161d764a88f50521b2335175fd7088829a5e75000c3a9218 is invalid. Size (1) lower than the minimum: 5'}]
+2026-04-03 22:46:41 [   ERROR] trader [trader.py:114] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 4960862, sum of active orders: 2550000, sum of matched orders: 0, order amount: 2550000'}]
+2026-04-03 22:46:50 [   ERROR] trader [trader.py:114] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 4960862, sum of active orders: 2550000, sum of matched orders: 0, order amount: 2550000'}]
+2026-04-03 22:50:06 [   ERROR] trader [trader.py:114] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2410862, order amount: 2500000'}]
+2026-04-03 22:50:15 [   ERROR] trader [trader.py:114] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2410862, order amount: 2500000'}]
+2026-04-03 22:51:40 [   ERROR] trader [trader.py:114] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2410862, order amount: 2550000'}]
+2026-04-03 22:59:35 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:00:23 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:01:14 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:01:29 [   ERROR] trader [trader.py:114] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 4860862, sum of active orders: 2550000, sum of matched orders: 0, order amount: 2550000'}]
+2026-04-03 23:02:03 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:02:51 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:03:41 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:04:27 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:05:14 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:06:00 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:06:46 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:07:31 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:08:18 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:09:08 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:09:55 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:10:43 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:11:27 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:12:11 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:13:52 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:14:59 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:16:03 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:16:11 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 4203262, sum of matched orders: 2550000, order amount: 2500000'}]
+2026-04-03 23:17:06 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:17:21 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1653262, order amount: 2550000'}]
+2026-04-03 23:18:05 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:19:05 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:20:01 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:20:32 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1653262, order amount: 2500000'}]
+2026-04-03 23:20:40 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1653262, order amount: 2550000'}]
+2026-04-03 23:21:01 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:21:01 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1653262, order amount: 2550000'}]
+2026-04-03 23:21:33 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1653262, order amount: 2500000'}]
+2026-04-03 23:22:04 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:23:02 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:24:02 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:25:08 [   ERROR] redeem [redeem.py:33] — Errore recupero saldo MATIC: {'code': -32000, 'message': 'Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.'}
+2026-04-03 23:27:09 [   ERROR] main [main.py:40] — Errore salvataggio storico trades: name 'os' is not defined
+2026-04-03 23:28:13 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:29:21 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:30:01 [   ERROR] main [main.py:40] — Errore salvataggio storico trades: name 'os' is not defined
+2026-04-03 23:30:26 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:30:47 [   ERROR] main [main.py:40] — Errore salvataggio storico trades: name 'os' is not defined
+2026-04-03 23:31:40 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:32:50 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:33:08 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1739662, order amount: 2550000'}]
+2026-04-03 23:33:55 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:34:57 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:35:06 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1739662, order amount: 2500000'}]
+2026-04-03 23:35:56 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:36:53 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:37:52 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:38:07 [   ERROR] main [main.py:40] — Errore salvataggio storico trades: name 'os' is not defined
+2026-04-03 23:38:49 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:39:03 [   ERROR] main [main.py:40] — Errore salvataggio storico trades: name 'os' is not defined
+2026-04-03 23:39:11 [   ERROR] main [main.py:40] — Errore salvataggio storico trades: name 'os' is not defined
+2026-04-03 23:39:48 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:40:06 [   ERROR] main [main.py:40] — Errore salvataggio storico trades: name 'os' is not defined
+2026-04-03 23:40:14 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 4734462, sum of active orders: 2500000, sum of matched orders: 0, order amount: 2500000'}]
+2026-04-03 23:40:49 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:41:04 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2234462, order amount: 2550000'}]
+2026-04-03 23:41:51 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:42:49 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:42:56 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2234462, order amount: 2550000'}]
+2026-04-03 23:43:03 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2234462, order amount: 2550000'}]
+2026-04-03 23:43:44 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:44:39 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:45:45 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:46:53 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:47:25 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2234462, order amount: 2500000'}]
+2026-04-03 23:47:31 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2234462, order amount: 2700000'}]
+2026-04-03 23:47:32 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2234462, order amount: 2500000'}]
+2026-04-03 23:47:53 [   ERROR] redeem [redeem.py:85] — Errore check_winnings: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:48:01 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2234462, order amount: 2700000'}]
+2026-04-03 23:48:01 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2234462, order amount: 2500000'}]
+2026-04-03 23:49:08 [   ERROR] main [main.py:48] — Errore salvataggio storico trades: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2026-04-03 23:54:37 [   ERROR] redeem [redeem.py:139] — Errore durante sync_external_winnings: 'list' object has no attribute 'get'
+2026-04-03 23:55:31 [   ERROR] redeem [redeem.py:180] — Errore in _execute_safe_redeem: ('Address has an invalid EIP-55 checksum. After looking up the address from the original source, try again.', '0x4D970805f78A966f121DC7FA03bcB21128F75C8c')
+2026-04-03 23:55:31 [   ERROR] redeem [redeem.py:180] — Errore in _execute_safe_redeem: ('Address has an invalid EIP-55 checksum. After looking up the address from the original source, try again.', '0x4D970805f78A966f121DC7FA03bcB21128F75C8c')
+2026-04-03 23:55:31 [   ERROR] redeem [redeem.py:180] — Errore in _execute_safe_redeem: ('Address has an invalid EIP-55 checksum. After looking up the address from the original source, try again.', '0x4D970805f78A966f121DC7FA03bcB21128F75C8c')
+2026-04-03 23:56:27 [   ERROR] redeem [redeem.py:183] — Errore in _execute_safe_redeem: 'Contract' object has no attribute 'encodeABI'
+2026-04-03 23:56:27 [   ERROR] redeem [redeem.py:183] — Errore in _execute_safe_redeem: 'Contract' object has no attribute 'encodeABI'
+2026-04-03 23:56:27 [   ERROR] redeem [redeem.py:183] — Errore in _execute_safe_redeem: 'Contract' object has no attribute 'encodeABI'
+2026-04-03 23:57:28 [   ERROR] redeem [redeem.py:184] — Errore in _execute_safe_redeem: BaseContract.encode_abi() got an unexpected keyword argument 'fn_name'
+2026-04-03 23:57:28 [   ERROR] redeem [redeem.py:184] — Errore in _execute_safe_redeem: BaseContract.encode_abi() got an unexpected keyword argument 'fn_name'
+2026-04-03 23:57:28 [   ERROR] redeem [redeem.py:184] — Errore in _execute_safe_redeem: BaseContract.encode_abi() got an unexpected keyword argument 'fn_name'
+2026-04-03 23:58:23 [   ERROR] redeem [redeem.py:185] — Errore in _execute_safe_redeem: ('execution reverted', '0x')
+2026-04-03 23:58:24 [   ERROR] redeem [redeem.py:185] — Errore in _execute_safe_redeem: ('execution reverted', '0x')
+2026-04-03 23:58:27 [   ERROR] redeem [redeem.py:185] — Errore in _execute_safe_redeem: ('execution reverted', '0x')
+2026-04-04 00:03:38 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2550000'}]
+2026-04-04 00:04:55 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2500000'}]
+2026-04-04 00:05:47 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2600000'}]
+2026-04-04 00:05:57 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2600000'}]
+2026-04-04 00:06:09 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2450000'}]
+2026-04-04 00:07:52 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2600000'}]
+2026-04-04 00:08:02 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2600000'}]
+2026-04-04 00:09:23 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2450000'}]
+2026-04-04 00:11:36 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2450000'}]
+2026-04-04 00:14:52 [   ERROR] redeem [redeem.py:185] — Errore in _execute_safe_redeem: Could not decode contract function call to nonce() with return data: b'', output_types: ['uint256']
+2026-04-04 00:14:53 [   ERROR] redeem [redeem.py:185] — Errore in _execute_safe_redeem: Could not decode contract function call to nonce() with return data: b'', output_types: ['uint256']
+2026-04-04 00:14:54 [   ERROR] redeem [redeem.py:185] — Errore in _execute_safe_redeem: Could not decode contract function call to nonce() with return data: b'', output_types: ['uint256']
+2026-04-04 00:15:09 [   ERROR] redeem [redeem.py:185] — Errore in _execute_safe_redeem: Could not decode contract function call to nonce() with return data: b'', output_types: ['uint256']
+2026-04-04 00:16:21 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2550000'}]
+2026-04-04 00:19:46 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2550000'}]
+2026-04-04 00:21:13 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2550000'}]
+2026-04-04 00:21:32 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2500000'}]
+2026-04-04 00:26:07 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2500000'}]
+2026-04-04 00:26:14 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2500000'}]
+2026-04-04 00:27:22 [   ERROR] redeem [redeem.py:217] — Errore durante l'esecuzione del redeem: 'SignedTransaction' object has no attribute 'rawTransaction'
+2026-04-04 00:27:22 [   ERROR] redeem [redeem.py:217] — Errore durante l'esecuzione del redeem: 'SignedTransaction' object has no attribute 'rawTransaction'
+2026-04-04 00:27:23 [   ERROR] redeem [redeem.py:217] — Errore durante l'esecuzione del redeem: 'SignedTransaction' object has no attribute 'rawTransaction'
+2026-04-04 00:27:23 [   ERROR] redeem [redeem.py:217] — Errore durante l'esecuzione del redeem: 'SignedTransaction' object has no attribute 'rawTransaction'
+2026-04-04 00:28:33 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'insufficient funds for gas * price + value: balance 0, tx cost 20000000000000000, overshot 20000000000000000'}
+2026-04-04 00:28:37 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'insufficient funds for gas * price + value: balance 0, tx cost 20000000000000000, overshot 20000000000000000'}
+2026-04-04 00:28:39 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'insufficient funds for gas * price + value: balance 0, tx cost 20000000000000000, overshot 20000000000000000'}
+2026-04-04 00:28:41 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'insufficient funds for gas * price + value: balance 0, tx cost 20000000000000000, overshot 20000000000000000'}
+2026-04-04 00:31:29 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2500000'}]
+2026-04-04 00:31:36 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2550000'}]
+2026-04-04 00:32:19 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2500000'}]
+2026-04-04 00:33:31 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'replacement transaction underpriced'}
+2026-04-04 00:33:33 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'replacement transaction underpriced'}
+2026-04-04 00:33:35 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'replacement transaction underpriced'}
+2026-04-04 00:34:36 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2500000'}]
+2026-04-04 00:36:45 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2550000'}]
+2026-04-04 00:36:53 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2550000'}]
+2026-04-04 00:38:01 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2500000'}]
+2026-04-04 00:39:40 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'already known'}
+2026-04-04 00:39:42 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'replacement transaction underpriced'}
+2026-04-04 00:39:45 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'replacement transaction underpriced'}
+2026-04-04 00:39:48 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'replacement transaction underpriced'}
+2026-04-04 00:43:49 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'nonce too low: next nonce 1, tx nonce 0'}
+2026-04-04 00:43:56 [   ERROR] redeem [redeem.py:218] — Errore durante l'esecuzione del redeem: {'code': -32000, 'message': 'nonce too low: next nonce 2, tx nonce 1'}
+2026-04-04 00:45:21 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2400000'}]
+2026-04-04 00:46:52 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2650000'}]
+2026-04-04 00:47:10 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2650000'}]
+2026-04-04 00:47:19 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2650000'}]
+2026-04-04 00:47:28 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2650000'}]
+2026-04-04 00:48:04 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2400000'}]
+2026-04-04 00:48:24 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2400000'}]
+2026-04-04 00:49:19 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2400000'}]
+2026-04-04 00:54:17 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2500000'}]
+2026-04-04 00:56:24 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2500000'}]
+2026-04-04 00:56:32 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2550000'}]
+2026-04-04 01:00:14 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2550000'}]
+2026-04-04 01:05:26 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1784462, order amount: 2600000'}]
+2026-04-04 01:12:50 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 784463, order amount: 2500000'}]
+2026-04-04 01:15:04 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 784463, order amount: 2550000'}]
+2026-04-04 01:30:44 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 8774486, sum of active orders: 7500000, sum of matched orders: 0, order amount: 2500000'}]
+2026-04-04 01:30:50 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 8774486, sum of active orders: 7500000, sum of matched orders: 0, order amount: 2500000'}]
+2026-04-04 01:31:45 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 8774486, sum of active orders: 7500000, sum of matched orders: 0, order amount: 2500000'}]
+2026-04-04 01:33:17 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 6824486, sum of active orders: 5000000, sum of matched orders: 0, order amount: 2500000'}]
+2026-04-04 01:35:37 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2500000'}]
+2026-04-04 01:35:56 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2500000'}]
+2026-04-04 01:38:01 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2500000'}]
+2026-04-04 01:39:01 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2550000'}]
+2026-04-04 01:40:17 [   ERROR] redeem [redeem.py:151] — Errore _execute_redeem_proxywallet: 429 Client Error: Too Many Requests for url: https://1rpc.io/matic
+2026-04-04 01:40:17 [   ERROR] redeem [redeem.py:250] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:25PM-7:30PM ET
+2026-04-04 01:40:24 [   ERROR] redeem [redeem.py:151] — Errore _execute_redeem_proxywallet: {'code': -32000, 'message': 'nonce too low: next nonce 9, tx nonce 0'}
+2026-04-04 01:40:24 [   ERROR] redeem [redeem.py:250] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:05PM-7:10PM ET
+2026-04-04 01:41:21 [   ERROR] redeem [redeem.py:151] — Errore _execute_redeem_proxywallet: {'code': -32000, 'message': 'nonce too low: next nonce 13, tx nonce 4'}
+2026-04-04 01:41:21 [   ERROR] redeem [redeem.py:250] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:05PM-7:10PM ET
+2026-04-04 01:42:23 [   ERROR] redeem [redeem.py:151] — Errore _execute_redeem_proxywallet: {'code': -32000, 'message': 'nonce too low: next nonce 13, tx nonce 2'}
+2026-04-04 01:42:23 [   ERROR] redeem [redeem.py:251] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:30PM-7:35PM ET
+2026-04-04 01:44:19 [   ERROR] redeem [redeem.py:164] — Errore _execute_redeem_proxywallet: {'code': -32000, 'message': 'nonce too low: next nonce 19, tx nonce 0'}
+2026-04-04 01:44:19 [   ERROR] redeem [redeem.py:264] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:30PM-7:35PM ET
+2026-04-04 01:45:08 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2600000'}]
+2026-04-04 01:45:15 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2600000'}]
+2026-04-04 01:45:47 [   ERROR] redeem [redeem.py:164] — Errore _execute_redeem_proxywallet: {'code': -32000, 'message': 'nonce too low: next nonce 19, tx nonce 0'}
+2026-04-04 01:45:47 [   ERROR] redeem [redeem.py:264] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:30PM-7:35PM ET
+2026-04-04 01:47:43 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2300000'}]
+2026-04-04 01:47:50 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2300000'}]
+2026-04-04 01:50:07 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2550000'}]
+2026-04-04 01:55:38 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2750000'}]
+2026-04-04 01:55:44 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2750000'}]
+2026-04-04 01:56:45 [   ERROR] redeem [redeem.py:284] — Errore _execute_redeem_relayer: 'str' object has no attribute 'hex'
+2026-04-04 01:56:45 [   ERROR] redeem [redeem.py:344] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:30PM-7:35PM ET
+2026-04-04 01:57:50 [   ERROR] redeem [redeem.py:284] — Errore _execute_redeem_relayer: 'str' object has no attribute 'hex'
+2026-04-04 01:57:50 [   ERROR] redeem [redeem.py:344] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:30PM-7:35PM ET
+2026-04-04 01:59:10 [   ERROR] redeem [redeem.py:284] — Errore _execute_redeem_relayer: 'str' object has no attribute 'hex'
+2026-04-04 01:59:10 [   ERROR] redeem [redeem.py:344] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:30PM-7:35PM ET
+2026-04-04 01:59:57 [   ERROR] redeem [redeem.py:280] — Errore _execute_redeem_relayer: 'str' object has no attribute 'hex'
+2026-04-04 01:59:57 [   ERROR] redeem [redeem.py:340] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:30PM-7:35PM ET
+2026-04-04 02:00:11 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2600000'}]
+2026-04-04 02:00:24 [   ERROR] trader [trader.py:115] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1824486, order amount: 2600000'}]
+2026-04-04 02:00:46 [   ERROR] redeem [redeem.py:285] — Errore _execute_redeem_relayer: Unsupported type: The primitive argument must be one of: bytes,bytearray, int or bool and not str
+2026-04-04 02:00:46 [   ERROR] redeem [redeem.py:345] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:30PM-7:35PM ET
+2026-04-04 02:02:14 [   ERROR] redeem [redeem.py:285] — Errore _execute_redeem_relayer: Unsupported type: The primitive argument must be one of: bytes,bytearray, int or bool and not str
+2026-04-04 02:02:14 [   ERROR] redeem [redeem.py:345] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:30PM-7:35PM ET
+2026-04-04 02:02:45 [   ERROR] redeem [redeem.py:291] — Errore _execute_redeem_relayer: Unsupported type: The primitive argument must be one of: bytes,bytearray, int or bool and not str
+2026-04-04 02:02:45 [   ERROR] redeem [redeem.py:351] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:30PM-7:35PM ET
+2026-04-04 02:03:56 [   ERROR] redeem [redeem.py:292] — Errore _execute_redeem_relayer: Unsupported type: The primitive argument must be one of: bytes,bytearray, int or bool and not str
+2026-04-04 02:03:56 [   ERROR] redeem [redeem.py:352] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 7:30PM-7:35PM ET
+2026-04-04 02:38:19 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1744886, order amount: 2500000'}]
+2026-04-04 02:40:15 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1744886, order amount: 2550000'}]
+2026-04-04 02:40:22 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1744886, order amount: 2550000'}]
+2026-04-04 02:42:38 [   ERROR] redeem [redeem.py:294] — Errore _execute_redeem_relayer: Unsupported type: The primitive argument must be one of: bytes,bytearray, int or bool and not str
+2026-04-04 02:42:38 [   ERROR] redeem [redeem.py:354] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:43:35 [   ERROR] redeem [redeem.py:297] — Errore _execute_redeem_relayer: Unsupported type: The primitive argument must be one of: bytes,bytearray, int or bool and not str
+2026-04-04 02:43:35 [   ERROR] redeem [redeem.py:357] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:45:00 [   ERROR] redeem [redeem.py:297] — Errore _execute_redeem_relayer: Unsupported type: The primitive argument must be one of: bytes,bytearray, int or bool and not str
+2026-04-04 02:45:00 [   ERROR] redeem [redeem.py:357] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:46:53 [   ERROR] redeem [redeem.py:297] — Errore _execute_redeem_relayer: Unsupported type: The primitive argument must be one of: bytes,bytearray, int or bool and not str
+2026-04-04 02:46:53 [   ERROR] redeem [redeem.py:357] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:47:37 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1744886, order amount: 2650000'}]
+2026-04-04 02:48:14 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1744886, order amount: 2400000'}]
+2026-04-04 02:49:03 [   ERROR] redeem [redeem.py:298] — Errore _execute_redeem_relayer: Unsupported type: The primitive argument must be one of: bytes,bytearray, int or bool and not str
+2026-04-04 02:49:03 [   ERROR] redeem [redeem.py:358] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:50:08 [   ERROR] redeem [redeem.py:306] — Errore _execute_redeem_relayer: Unsupported type: The primitive argument must be one of: bytes,bytearray, int or bool and not str
+2026-04-04 02:50:08 [   ERROR] redeem [redeem.py:366] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:50:34 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1744886, order amount: 2550000'}]
+2026-04-04 02:51:19 [   ERROR] redeem [redeem.py:305] — Errore _execute_redeem_relayer: Unsupported type: The primitive argument must be one of: bytes,bytearray, int or bool and not str
+2026-04-04 02:51:19 [   ERROR] redeem [redeem.py:365] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:52:12 [   ERROR] redeem [redeem.py:310] — Errore _execute_redeem_relayer: 'LocalAccount' object has no attribute '_sign_hash'
+2026-04-04 02:52:12 [   ERROR] redeem [redeem.py:370] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:52:15 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1744886, order amount: 2550000'}]
+2026-04-04 02:53:02 [   ERROR] redeem [redeem.py:371] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:54:50 [   ERROR] redeem [redeem.py:371] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:57:09 [   ERROR] redeem [redeem.py:300] — Errore _execute_redeem_relayer: type object 'OperationType' has no attribute 'CALL'
+2026-04-04 02:57:09 [   ERROR] redeem [redeem.py:360] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:58:39 [   ERROR] redeem [redeem.py:361] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 02:59:19 [   ERROR] redeem [redeem.py:361] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 8:35PM-8:40PM ET
+2026-04-04 03:04:12 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2500000'}]
+2026-04-04 03:04:20 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2550000'}]
+2026-04-04 03:06:56 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2500000'}]
+2026-04-04 03:07:09 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2500000'}]
+2026-04-04 03:07:09 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2500000'}]
+2026-04-04 03:07:36 [   ERROR] redeem [redeem.py:361] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:08:28 [   ERROR] redeem [redeem.py:360] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:08:54 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2550000'}]
+2026-04-04 03:08:59 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2550000'}]
+2026-04-04 03:09:25 [   ERROR] redeem [redeem.py:360] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:09:32 [   ERROR] redeem [redeem.py:361] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:10:47 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2550000'}]
+2026-04-04 03:10:55 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2550000'}]
+2026-04-04 03:11:02 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2550000'}]
+2026-04-04 03:11:12 [   ERROR] redeem [redeem.py:370] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:11:30 [   ERROR] redeem [redeem.py:361] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:11:38 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2500000'}]
+2026-04-04 03:12:44 [   ERROR] redeem [redeem.py:370] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:12:52 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2550000'}]
+2026-04-04 03:13:26 [   ERROR] redeem [redeem.py:361] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:13:37 [   ERROR] redeem [redeem.py:370] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:14:07 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2500000'}]
+2026-04-04 03:14:51 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2500000'}]
+2026-04-04 03:14:52 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2550000'}]
+2026-04-04 03:15:08 [   ERROR] redeem [redeem.py:370] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:15:23 [   ERROR] redeem [redeem.py:361] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:15:37 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2600000'}]
+2026-04-04 03:16:45 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2450000'}]
+2026-04-04 03:16:51 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2600000'}]
+2026-04-04 03:16:55 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2600000'}]
+2026-04-04 03:17:18 [   ERROR] redeem [redeem.py:370] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:17:30 [   ERROR] redeem [redeem.py:361] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:17:53 [   ERROR] redeem [redeem.py:370] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:17:54 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2450000'}]
+2026-04-04 03:19:12 [   ERROR] redeem [redeem.py:370] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:19:19 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2600000'}]
+2026-04-04 03:19:23 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 253586, order amount: 2550000'}]
+2026-04-04 03:19:28 [   ERROR] redeem [redeem.py:361] — ❌ Claim fallito per: Bitcoin Up or Down - April 3, 9:00PM-9:05PM ET
+2026-04-04 03:28:58 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2353586, order amount: 2550000'}]
+2026-04-04 03:30:06 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2353586, order amount: 2500000'}]
+2026-04-04 03:30:20 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2353586, order amount: 2550000'}]
+2026-04-04 03:30:27 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2353586, order amount: 2550000'}]
+2026-04-04 03:32:20 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2353586, order amount: 2500000'}]
+2026-04-04 03:32:46 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 2353586, order amount: 2500000'}]
+2026-04-04 03:35:03 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1353587, order amount: 2550000'}]
+2026-04-04 03:37:23 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 353588, order amount: 2550000'}]
+2026-04-04 03:40:00 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 353588, order amount: 2500000'}]
+2026-04-04 03:40:05 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 353588, order amount: 2500000'}]
+2026-04-04 03:40:12 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 353588, order amount: 2550000'}]
+2026-04-04 03:40:38 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 353588, order amount: 2500000'}]
+2026-04-04 03:44:29 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 510240, order amount: 2500000'}]
+2026-04-04 03:55:21 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 1991971, order amount: 2500000'}]
+2026-04-04 04:00:09 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 991972, order amount: 2550000'}]
+2026-04-04 11:30:01 [   ERROR] trader [trader.py:120] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 991972, order amount: 2600000'}]
+2026-04-04 12:53:03 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 7781871, sum of active orders: 7650000, sum of matched orders: 0, order amount: 2550000'}]
+2026-04-04 12:53:17 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 5281871, sum of active orders: 5100000, sum of matched orders: 0, order amount: 2550000'}]
+2026-04-04 12:53:49 [   ERROR] redeem [redeem.py:178] — Errore _execute_redeem_proxywallet: {'code': -32000, 'message': 'nonce too low: next nonce 25, tx nonce 0'}
+2026-04-04 12:53:49 [   ERROR] redeem [redeem.py:354] — ❌ Claim fallito per: Dogecoin Up or Down - April 4, 6:45AM-6:50AM ET
+2026-04-04 13:27:30 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 932581, order amount: 2500000'}]
+2026-04-04 15:17:00 [   ERROR] redeem [redeem.py:178] — Errore _execute_redeem_proxywallet: {'code': -32000, 'message': 'nonce too low: next nonce 30, tx nonce 0'}
+2026-04-04 15:17:00 [   ERROR] redeem [redeem.py:354] — ❌ Claim fallito per: Bitcoin Up or Down - April 4, 9:00AM-9:05AM ET
+2026-04-04 15:21:22 [   ERROR] redeem [redeem.py:178] — Errore _execute_redeem_proxywallet: {'code': -32000, 'message': 'nonce too low: next nonce 32, tx nonce 25'}
+2026-04-04 15:21:22 [   ERROR] redeem [redeem.py:354] — ❌ Claim fallito per: Bitcoin Up or Down - April 4, 9:00AM-9:05AM ET
+2026-04-04 15:37:37 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 10735861, sum of active orders: 10200000, sum of matched orders: 0, order amount: 2550000'}]
+2026-04-04 15:37:53 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 10735861, sum of active orders: 10200000, sum of matched orders: 0, order amount: 2550000'}]
+2026-04-04 15:37:54 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 10735861, sum of active orders: 10000000, sum of matched orders: 0, order amount: 2500000'}]
+2026-04-04 15:37:55 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 10735861, sum of active orders: 10000000, sum of matched orders: 0, order amount: 2500000'}]
+2026-04-04 15:37:56 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 10735861, sum of active orders: 10000000, sum of matched orders: 0, order amount: 2500000'}]
+2026-04-04 15:38:12 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 10735861, sum of active orders: 10200000, sum of matched orders: 0, order amount: 2550000'}]
+2026-04-04 15:38:13 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 10735861, sum of active orders: 10000000, sum of matched orders: 0, order amount: 2500000'}]
+2026-04-04 15:38:15 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 10735861, sum of active orders: 10000000, sum of matched orders: 0, order amount: 2500000'}]
+2026-04-04 15:38:16 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 10735861, sum of active orders: 10000000, sum of matched orders: 0, order amount: 2500000'}]
+2026-04-04 15:38:17 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 10735861, sum of active orders: 10200000, sum of matched orders: 0, order amount: 2550000'}]
+2026-04-04 15:38:30 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 10735861, sum of active orders: 10200000, sum of matched orders: 0, order amount: 2550000'}]
+2026-04-04 15:54:26 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 8235861, sum of active orders: 7800000, sum of matched orders: 0, order amount: 2600000'}]
+2026-04-04 15:56:55 [   ERROR] trader [trader.py:116] — Errore invio ordine reale: PolyApiException[status_code=400, error_message={'error': 'not enough balance / allowance: the balance is not enough -> balance: 8235861, sum of active orders: 7650000, sum of matched orders: 0, order amount: 2550000'}]
+2026-04-04 16:03:30 [   ERROR] redeem [redeem.py:386] — ❌ Claim fallito per: Bitcoin Up or Down - April 4, 9:55AM-10:00AM ET
