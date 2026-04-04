@@ -258,7 +258,7 @@ def _execute_redeem_on_chain(cond_id: str, idx_sets: list, collateral_token=None
         })
 
         signed_tx = w3.eth.account.sign_transaction(tx, private_key=config.PRIVATE_KEY)
-        tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+        tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
         log.info(f"🚀 Transazione On-Chain inviata! Hash: {w3.to_hex(tx_hash)}")
 
         # Wait for receipt
