@@ -177,17 +177,22 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                     sig_params = None
 
                 # Crucial Fix: Standard Headers matching the polymarket webapp
+                # Authentication for relayer could require matching the web interface headers
                 headers = {
                     "Content-Type": "application/json",
                     "poly-relayer-api-key": str(config.RELAYER_API_KEY).strip(),
                 }
+
+                # In many Polymarket integrations, the relayer requires the standard Polymarket Clob API headers
+                if config.POLY_API_KEY:
+                    headers["poly-api-key"] = str(config.POLY_API_KEY).strip()
                 if hasattr(config, 'RELAYER_API_KEY_ADDRESS') and config.RELAYER_API_KEY_ADDRESS:
                     headers["poly-relayer-api-key-address"] = str(config.RELAYER_API_KEY_ADDRESS).strip()
 
                 # Non logghiamo la chiave intera, ma verifichiamo che ci sia
                 key_preview = str(config.RELAYER_API_KEY).strip()[:5] + "..." if config.RELAYER_API_KEY else "None"
                 # log.debug(f"Headers inviati al relayer: poly-relayer-api-key={key_preview}")
-                
+
                 body = {
                     "type": tx_type,
                     "from": signer.address,
