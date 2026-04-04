@@ -64,8 +64,11 @@ def get_redeemable_positions(proxy_address: str) -> list:
         resp = requests.get(url, timeout=10)
         if resp.status_code == 200:
             data = resp.json()
-            positions = data.get("Positions") or data.get("positions") or []
-            return [p for p in positions if p.get("redeemable") and float(p.get("percentRealizedPnl", 0)) > -50]
+            if isinstance(data, list):
+                positions = data
+            else:
+                positions = data.get("Positions") or data.get("positions") or []
+            return [p for p in positions if p.get("redeemable")]
     except Exception as e:
         log.debug(f"Errore lettura posizioni: {e}")
     return []
