@@ -177,17 +177,13 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                     sig_params = None
 
                 # Crucial Fix: Standard Headers matching the polymarket webapp
-                # Authentication for relayer could require matching the web interface headers
+                # Use the exact header names specified by the Polymarket Relayer Dashboard
                 headers = {
                     "Content-Type": "application/json",
-                    "poly-relayer-api-key": str(config.RELAYER_API_KEY).strip(),
+                    "RELAYER_API_KEY": str(config.RELAYER_API_KEY).strip(),
                 }
-
-                # In many Polymarket integrations, the relayer requires the standard Polymarket Clob API headers
-                if config.POLY_API_KEY:
-                    headers["poly-api-key"] = str(config.POLY_API_KEY).strip()
                 if hasattr(config, 'RELAYER_API_KEY_ADDRESS') and config.RELAYER_API_KEY_ADDRESS:
-                    headers["poly-relayer-api-key-address"] = str(config.RELAYER_API_KEY_ADDRESS).strip()
+                    headers["RELAYER_API_KEY_ADDRESS"] = str(config.RELAYER_API_KEY_ADDRESS).strip()
 
                 # Non logghiamo la chiave intera, ma verifichiamo che ci sia
                 key_preview = str(config.RELAYER_API_KEY).strip()[:5] + "..." if config.RELAYER_API_KEY else "None"
@@ -225,7 +221,7 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                     if resp.status_code == 401:
                         # Log the body to inspect what could be triggering the 401
                         # Since API keys are fine for GET /nonce, it's likely the signature or the API keys for POST /submit
-                        log.debug(f"Dettagli 401 per {tx_type}: poly-relayer-api-key usato: {headers['poly-relayer-api-key'][:5]}...")
+                        log.debug(f"Dettagli 401 per {tx_type}: RELAYER_API_KEY usato: {headers['RELAYER_API_KEY'][:5]}...")
 
                     
             except Exception as e:
