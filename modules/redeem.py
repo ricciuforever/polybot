@@ -193,15 +193,13 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                     "type": tx_type,
                     "from": signer.address,
                     "to": CTF_CONTRACT,
-                    "proxyWallet": proxy_address,
+                    "proxyAddress": proxy_address,
                     "data": data_hex,
-                    "value": "0",
+                    "value": "",
                     "nonce": str(rel_nonce),
                     "signature": signature
                 }
                 
-                if tx_type == "SAFE" and sig_params:
-                    body["signature_params"] = sig_params
 
                 resp = requests.post(f"{RELAYER_URL}/submit", json=body, headers=headers, timeout=20)
                 
@@ -218,6 +216,9 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                     log.debug("Relayer 502 Bad Gateway (probabilmente errore Payload/Network su Polymarket).")
                 else:
                     log.debug(f"Relayer ha rifiutato {tx_type}/{token[-6:]} ({resp.status_code}): {resp.text[:200]}")
+                    if resp.status_code == 400:
+                        import json
+                        log.debug(f"Payload inviato al relayer che ha causato il 400: {json.dumps(body)}")
                     if resp.status_code == 401:
                         # Log the body to inspect what could be triggering the 401
                         # Since API keys are fine for GET /nonce, it's likely the signature or the API keys for POST /submit
