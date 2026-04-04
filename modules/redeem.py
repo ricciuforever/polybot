@@ -217,6 +217,11 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                     log.debug("Relayer 502 Bad Gateway (probabilmente errore Payload/Network su Polymarket).")
                 else:
                     log.debug(f"Relayer ha rifiutato {tx_type}/{token[-6:]} ({resp.status_code}): {resp.text[:200]}")
+                    if resp.status_code == 401:
+                        # Log the body to inspect what could be triggering the 401
+                        # Since API keys are fine for GET /nonce, it's likely the signature or the API keys for POST /submit
+                        log.debug(f"Dettagli 401 per {tx_type}: poly-relayer-api-key usato: {headers['poly-relayer-api-key'][:5]}...")
+
                     
             except Exception as e:
                 log.debug(f"Errore tentativo Relayer {tx_type}: {e}")
@@ -224,10 +229,6 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
 
             # Anti-rate limit: un po' di respiro tra un tentativo e l'altro
             time.sleep(2.5)
-
-            # Aggiungiamo un ritardo tra i tentativi per evitare l'errore 429 (Too Many Requests)
-            import time
-            time.sleep(2)
                 
     return False
 
