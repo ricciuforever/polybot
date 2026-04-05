@@ -142,7 +142,7 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
         return False
         
     tokens_to_try = [collateral_token] if collateral_token else [USDC_NATIVE, USDC_E]
-    tx_types = ["SAFE", "PROXY"]
+    tx_types = ["SAFE"]
     
     try:
         signer = Account.from_key(config.PRIVATE_KEY)
@@ -195,11 +195,14 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                     "to": CTF_CONTRACT,
                     "proxyAddress": proxy_address,
                     "data": data_hex,
-                    "value": "",
+                    "value": "0",
                     "nonce": str(rel_nonce),
                     "signature": signature
                 }
                 
+                if tx_type == "SAFE" and sig_params:
+                    body["signature_params"] = sig_params
+
 
                 resp = requests.post(f"{RELAYER_URL}/submit", json=body, headers=headers, timeout=20)
                 
