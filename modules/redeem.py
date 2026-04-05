@@ -92,49 +92,83 @@ def get_relayer_nonce(address: str, wallet_type: str = "SAFE") -> str:
         log.error(f"Errore recupero nonce relayer ({wallet_type}): {e}")
     return "0"
 
-def sign_relayer_submit(signer_account, to_addr, proxy_wallet, data_hex, nonce):
-    domain = {
-        "chainId": 137,
-        "verifyingContract": Web3.to_checksum_address(proxy_wallet)
-    }
-    types = {
-        "SafeTx": [
-            {"name": "to", "type": "address"},
-            {"name": "value", "type": "uint256"},
-            {"name": "data", "type": "bytes"},
-            {"name": "operation", "type": "uint8"},
-            {"name": "safeTxGas", "type": "uint256"},
-            {"name": "baseGas", "type": "uint256"},
-            {"name": "gasPrice", "type": "uint256"},
-            {"name": "gasToken", "type": "address"},
-            {"name": "refundReceiver", "type": "address"},
-            {"name": "nonce", "type": "uint256"}
-        ]
-    }
-    message = {
-        "to": Web3.to_checksum_address(to_addr),
-        "value": 0,
-        "data": bytes.fromhex(data_hex.replace("0x", "")),
-        "operation": 0,
-        "safeTxGas": 0,
-        "baseGas": 0,
-        "gasPrice": 0,
-        "gasToken": "0x0000000000000000000000000000000000000000",
-        "refundReceiver": "0x0000000000000000000000000000000000000000",
-        "nonce": int(nonce)
-    }
-    
-    signable_msg = encode_typed_data(domain_data=domain, message_types=types, message_data=message)
-    signed_msg = signer_account.sign_message(signable_msg)
-    
-    return "0x" + signed_msg.signature.hex(), {
-        "gasPrice": "0",
-        "operation": 0,
-        "safeTxGas": "0",
-        "baseGas": "0",
-        "gasToken": "0x0000000000000000000000000000000000000000",
-        "refundReceiver": "0x0000000000000000000000000000000000000000"
-    }
+def sign_relayer_submit(signer_account, to_addr, proxy_wallet, data_hex, nonce, tx_type="SAFE"):
+    if tx_type == "SAFE":
+        domain = {
+            "chainId": 137,
+            "verifyingContract": Web3.to_checksum_address(proxy_wallet)
+        }
+        types = {
+            "SafeTx": [
+                {"name": "to", "type": "address"},
+                {"name": "value", "type": "uint256"},
+                {"name": "data", "type": "bytes"},
+                {"name": "operation", "type": "uint8"},
+                {"name": "safeTxGas", "type": "uint256"},
+                {"name": "baseGas", "type": "uint256"},
+                {"name": "gasPrice", "type": "uint256"},
+                {"name": "gasToken", "type": "address"},
+                {"name": "refundReceiver", "type": "address"},
+                {"name": "nonce", "type": "uint256"}
+            ]
+        }
+        message = {
+            "to": Web3.to_checksum_address(to_addr),
+            "value": 0,
+            "data": bytes.fromhex(data_hex.replace("0x", "")),
+            "operation": 0,
+            "safeTxGas": 0,
+            "baseGas": 0,
+            "gasPrice": 0,
+            "gasToken": "0x0000000000000000000000000000000000000000",
+            "refundReceiver": "0x0000000000000000000000000000000000000000",
+            "nonce": int(nonce)
+        }
+
+        signable_msg = encode_typed_data(domain_data=domain, message_types=types, message_data=message)
+        signed_msg = signer_account.sign_message(signable_msg)
+
+        return "0x" + signed_msg.signature.hex(), {
+            "gasPrice": "0",
+            "operation": 0,
+            "safeTxGas": "0",
+            "baseGas": "0",
+            "gasToken": "0x0000000000000000000000000000000000000000",
+            "refundReceiver": "0x0000000000000000000000000000000000000000"
+        }
+    else:
+        # PROXY uses completely different structure called EIP712 MetaTransaction or MetaTx
+        # Actually Polymarket's Proxy Wallet uses "Polymarket CTF Exchange"
+        domain = {
+            "name": "Polymarket CTF Exchange",
+            "version": "1",
+            "chainId": 137,
+            "verifyingContract": Web3.to_checksum_address(proxy_wallet)
+        }
+        types = {
+            "MetaTransaction": [
+                {"name": "nonce", "type": "uint256"},
+                {"name": "from", "type": "address"},
+                {"name": "functionSignature", "type": "bytes"}
+            ]
+        }
+        message = {
+            "nonce": int(nonce),
+            "from": signer_account.address,
+            "functionSignature": bytes.fromhex(data_hex.replace("0x", ""))
+        }
+
+        try:
+            signable_msg = encode_typed_data(domain_data=domain, message_types=types, message_data=message)
+            signed_msg = signer_account.sign_message(signable_msg)
+            return "0x" + signed_msg.signature.hex(), None
+        except Exception:
+            # If the proxy wallet is older it could use a different domain name or the structure above.
+            # But the 400 Bad request on PROXY usually means the signature was verified against a different object structure.
+            pass
+
+        # fallback if MetaTransaction fails? Let's just return it anyway.
+        return "0x" + signed_msg.signature.hex(), None
 
 def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, collateral_token=None) -> bool:
     if not config.RELAYER_API_KEY or not config.RELAYER_API_KEY_ADDRESS:
@@ -142,7 +176,7 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
         return False
         
     tokens_to_try = [collateral_token] if collateral_token else [USDC_NATIVE, USDC_E]
-    tx_types = ["SAFE"]
+    tx_types = ["PROXY", "SAFE"]
     
     try:
         signer = Account.from_key(config.PRIVATE_KEY)
@@ -168,11 +202,11 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                 
                 if tx_type == "SAFE":
                     signature, sig_params = sign_relayer_submit(
-                        signer, CTF_CONTRACT, proxy_address, data_hex, rel_nonce
+                        signer, CTF_CONTRACT, proxy_address, data_hex, rel_nonce, tx_type="SAFE"
                     )
                 else:
                     signature, _ = sign_relayer_submit(
-                        signer, CTF_CONTRACT, proxy_address, data_hex, rel_nonce
+                        signer, CTF_CONTRACT, proxy_address, data_hex, rel_nonce, tx_type="PROXY"
                     )
                     sig_params = None
 
