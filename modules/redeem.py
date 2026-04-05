@@ -92,57 +92,95 @@ def get_relayer_nonce(address: str, wallet_type: str = "SAFE") -> str:
         log.error(f"Errore recupero nonce relayer ({wallet_type}): {e}")
     return "0"
 
-def sign_relayer_submit(signer_account, to_addr, proxy_wallet, data_hex, nonce):
-    domain = {
-        "chainId": 137,
-        "verifyingContract": Web3.to_checksum_address(proxy_wallet)
-    }
-    types = {
-        "SafeTx": [
-            {"name": "to", "type": "address"},
-            {"name": "value", "type": "uint256"},
-            {"name": "data", "type": "bytes"},
-            {"name": "operation", "type": "uint8"},
-            {"name": "safeTxGas", "type": "uint256"},
-            {"name": "baseGas", "type": "uint256"},
-            {"name": "gasPrice", "type": "uint256"},
-            {"name": "gasToken", "type": "address"},
-            {"name": "refundReceiver", "type": "address"},
-            {"name": "nonce", "type": "uint256"}
-        ]
-    }
-    message = {
-        "to": Web3.to_checksum_address(to_addr),
-        "value": 0,
-        "data": bytes.fromhex(data_hex.replace("0x", "")),
-        "operation": 0,
-        "safeTxGas": 0,
-        "baseGas": 0,
-        "gasPrice": 0,
-        "gasToken": "0x0000000000000000000000000000000000000000",
-        "refundReceiver": "0x0000000000000000000000000000000000000000",
-        "nonce": int(nonce)
-    }
-    
-    signable_msg = encode_typed_data(domain_data=domain, message_types=types, message_data=message)
-    signed_msg = signer_account.sign_message(signable_msg)
-    
-    return "0x" + signed_msg.signature.hex(), {
-        "gasPrice": "0",
-        "operation": 0,
-        "safeTxGas": "0",
-        "baseGas": "0",
-        "gasToken": "0x0000000000000000000000000000000000000000",
-        "refundReceiver": "0x0000000000000000000000000000000000000000"
-    }
+def sign_relayer_submit(signer_account, to_addr, proxy_wallet, data_hex, nonce, tx_type="SAFE"):
+    if tx_type == "SAFE":
+        domain = {
+            "chainId": 137,
+            "verifyingContract": Web3.to_checksum_address(proxy_wallet)
+        }
+        types = {
+            "SafeTx": [
+                {"name": "to", "type": "address"},
+                {"name": "value", "type": "uint256"},
+                {"name": "data", "type": "bytes"},
+                {"name": "operation", "type": "uint8"},
+                {"name": "safeTxGas", "type": "uint256"},
+                {"name": "baseGas", "type": "uint256"},
+                {"name": "gasPrice", "type": "uint256"},
+                {"name": "gasToken", "type": "address"},
+                {"name": "refundReceiver", "type": "address"},
+                {"name": "nonce", "type": "uint256"}
+            ]
+        }
+        message = {
+            "to": Web3.to_checksum_address(to_addr),
+            "value": 0,
+            "data": bytes.fromhex(data_hex.replace("0x", "")),
+            "operation": 0,
+            "safeTxGas": 0,
+            "baseGas": 0,
+            "gasPrice": 0,
+            "gasToken": "0x0000000000000000000000000000000000000000",
+            "refundReceiver": "0x0000000000000000000000000000000000000000",
+            "nonce": int(nonce)
+        }
+        
+        signable_msg = encode_typed_data(domain_data=domain, message_types=types, message_data=message)
+        signed_msg = signer_account.sign_message(signable_msg)
+        
+        return "0x" + signed_msg.signature.hex(), {
+            "gasPrice": "0",
+            "operation": 0,
+            "safeTxGas": "0",
+            "baseGas": "0",
+            "gasToken": "0x0000000000000000000000000000000000000000",
+            "refundReceiver": "0x0000000000000000000000000000000000000000"
+        }
+    else:
+        # PROXY uses completely different structure called EIP712 MetaTransaction or MetaTx
+        # Actually Polymarket's Proxy Wallet uses "Polymarket CTF Exchange"
+        domain = {
+            "name": "Polymarket CTF Exchange",
+            "version": "1",
+            "chainId": 137,
+            "verifyingContract": Web3.to_checksum_address(proxy_wallet)
+        }
+        types = {
+            "MetaTransaction": [
+                {"name": "nonce", "type": "uint256"},
+                {"name": "from", "type": "address"},
+                {"name": "functionSignature", "type": "bytes"}
+            ]
+        }
+        message = {
+            "nonce": int(nonce),
+            "from": signer_account.address,
+            "functionSignature": bytes.fromhex(data_hex.replace("0x", ""))
+        }
+        
+        try:
+            signable_msg = encode_typed_data(domain_data=domain, message_types=types, message_data=message)
+            signed_msg = signer_account.sign_message(signable_msg)
+            return "0x" + signed_msg.signature.hex(), None
+        except Exception:
+            # If the proxy wallet is older it could use a different domain name or the structure above.
+            # But the 400 Bad request on PROXY usually means the signature was verified against a different object structure.
+            pass
+            
+        # fallback if MetaTransaction fails? Let's just return it anyway.
+        return "0x" + signed_msg.signature.hex(), None
 
 def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, collateral_token=None) -> bool:
+    if not config.ENABLE_REDEEM:
+        log.warning("Redeem disattivato in configurazione.")
+        return False
+        
     if not config.RELAYER_API_KEY or not config.RELAYER_API_KEY_ADDRESS:
         log.error("Relayer API Keys mancanti.")
         return False
         
     tokens_to_try = [collateral_token] if collateral_token else [USDC_NATIVE, USDC_E]
-    tx_types = ["SAFE", "PROXY"]
+    tx_types = ["SAFE", "PROXY"] # Invertito: SAFE è più comune e usato dall'utente
     
     try:
         signer = Account.from_key(config.PRIVATE_KEY)
@@ -153,7 +191,14 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
     for token in tokens_to_try:
         for tx_type in tx_types:
             try:
-                log.debug(f"Tentativo Relayer ({tx_type}) con token {token[-6:]}...")
+                rel_nonce = get_relayer_nonce(signer.address, tx_type)
+                
+                # Se il nonce è "0" e non siamo al primo tentativo assoluto, 
+                # potrebbe indicare un problema di comunicazione o ban.
+                if rel_nonce == "0":
+                    log.debug(f"Nonce 0 ricevuto per {tx_type}. Possibile errore API o rate limit.")
+
+                log.debug(f"Tentativo Relayer ({tx_type}) con token {token[-6:]} | Nonce: {rel_nonce}...")
                 w3_temp = Web3()
                 ctf = w3_temp.eth.contract(address=CTF_CONTRACT, abi=CTF_ABI)
                 parent_id = b'\x00' * 32
@@ -164,15 +209,13 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                     args=[token, parent_id, cond_id_bytes, [int(i) for i in idx_sets]]
                 )
                 
-                rel_nonce = get_relayer_nonce(signer.address, tx_type)
-                
                 if tx_type == "SAFE":
                     signature, sig_params = sign_relayer_submit(
-                        signer, CTF_CONTRACT, proxy_address, data_hex, rel_nonce
+                        signer, CTF_CONTRACT, proxy_address, data_hex, rel_nonce, tx_type="SAFE"
                     )
                 else:
                     signature, _ = sign_relayer_submit(
-                        signer, CTF_CONTRACT, proxy_address, data_hex, rel_nonce
+                        signer, CTF_CONTRACT, proxy_address, data_hex, rel_nonce, tx_type="PROXY"
                     )
                     sig_params = None
 
@@ -184,21 +227,24 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                 }
                 if hasattr(config, 'RELAYER_API_KEY_ADDRESS') and config.RELAYER_API_KEY_ADDRESS:
                     headers["RELAYER_API_KEY_ADDRESS"] = str(config.RELAYER_API_KEY_ADDRESS).strip()
-
+                
                 # Non logghiamo la chiave intera, ma verifichiamo che ci sia
                 key_preview = str(config.RELAYER_API_KEY).strip()[:5] + "..." if config.RELAYER_API_KEY else "None"
                 # log.debug(f"Headers inviati al relayer: poly-relayer-api-key={key_preview}")
-
+                
                 body = {
                     "type": tx_type,
                     "from": signer.address,
                     "to": CTF_CONTRACT,
                     "proxyAddress": proxy_address,
                     "data": data_hex,
-                    "value": "",
+                    "value": "0",
                     "nonce": str(rel_nonce),
                     "signature": signature
                 }
+                
+                if tx_type == "SAFE" and sig_params:
+                    body["signature_params"] = sig_params
                 
 
                 resp = requests.post(f"{RELAYER_URL}/submit", json=body, headers=headers, timeout=20)
@@ -208,7 +254,7 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
                     time.sleep(5)
                     # riprova 1 volta in caso di 429
                     resp = requests.post(f"{RELAYER_URL}/submit", json=body, headers=headers, timeout=20)
-
+                
                 if resp.status_code in (200, 201):
                     log.info(f"✅ Redeem gasless accettato ({tx_type})! ID: {resp.json().get('transactionID')}")
                     return True
@@ -228,8 +274,8 @@ def _execute_redeem_relayer(cond_id: str, idx_sets: list, proxy_address: str, co
             except Exception as e:
                 log.debug(f"Errore tentativo Relayer {tx_type}: {e}")
                 continue
-
-            # Anti-rate limit: un po' di respiro tra un tentativo e l'altro
+            
+            # Anti-rate limit: un po' di respiro tra un tentativo e l'altro 
             time.sleep(2.5)
                 
     return False

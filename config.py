@@ -6,14 +6,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# --- Credenziali Polymarket ---
-POLY_API_KEY    = os.getenv("POLY_API_KEY", "")
-POLY_SECRET     = os.getenv("POLY_SECRET", "")
-POLY_PASSPHRASE = os.getenv("POLY_PASSPHRASE", "")
-PRIVATE_KEY     = os.getenv("HOT_WALLET_PRIVATE_KEY", "")
-POLY_PROXY_ADDRESS = os.getenv("POLY_PROXY_ADDRESS", "")
-RELAYER_API_KEY    = os.getenv("RELAYER_API_KEY", "")
-RELAYER_API_KEY_ADDRESS = os.getenv("RELAYER_API_KEY_ADDRESS", "")
+# --- Credenziali Azuro / Wallet ---
+PRIVATE_KEY     = os.getenv("PRIVATE_KEY", "").strip()
+if PRIVATE_KEY and not PRIVATE_KEY.startswith("0x"):
+    PRIVATE_KEY = "0x" + PRIVATE_KEY
+
+WALLET_ADDRESS  = os.getenv("WALLET_ADDRESS", "").strip()
+AZURO_LP        = os.getenv("AZURO_LP_CONTRACT", "0x204e7371Ade792c5C006fb52711c50a7efC843ed").strip()
+AZURO_CORE      = os.getenv("AZURO_CORE_CONTRACT", "0x7bB7d025170dcb06573D5514fC7eBEa5DE794017").strip()
+AZURO_TOKEN     = os.getenv("USDT_ADDRESS", "0xc2132D05D31c914a87C6611C10748AEb04B58e8F").strip()
+AZURO_RPC       = os.getenv("POLYGON_RPC", "https://1rpc.io/matic").strip()
+# Fallback se l'RPC pubblico è saturo o down
+if AZURO_RPC == "https://polygon-rpc.com":
+    AZURO_RPC = "https://1rpc.io/matic"
+AZURO_SUBGRAPH  = "https://thegraph.azuro.org/v3/polygon"
 
 # --- Endpoint API ---
 CLOB_URL    = "https://clob.polymarket.com"
@@ -34,9 +40,11 @@ THRESHOLDS = {
 
 WINDOW_SECONDS  = int(os.getenv("WINDOW_SECONDS", "60"))         # finestra sliding
 BUY_MAX_PRICE   = float(os.getenv("BUY_MAX_PRICE", "0.55"))      # max prezzo acquisto
-BET_SIZE        = float(os.getenv("BET_SIZE", "2"))              # USDC per ordine
+BET_SIZE        = float(os.getenv("BET_SIZE", "2.0"))            # Stake per ordine (USDT/USDC)
 DRY_RUN         = os.getenv("DRY_RUN", "True").lower() != "false"
 LOOP_INTERVAL   = int(os.getenv("LOOP_INTERVAL", "5"))           # secondi tra cicli
+ENABLE_REDEEM   = False  # DISATTIVATO PER BAN RELAYER
+AZURO_MODE      = True   # Forza l'utilizzo di Azuro
 
 # --- AI (Gemini) ---
 GEMINI_API_KEY      = os.getenv("GEMINI_API_KEY", "")

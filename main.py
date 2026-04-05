@@ -151,13 +151,13 @@ def main():
                 if new_matic_balance is not None:
                     bot_state["matic_balance"] = new_matic_balance
                 
-                # 3. Controllo vincite e Auto-Redeem
-                bot_state["pending_claims"] = check_winnings(config.POLY_PROXY_ADDRESS)
-                if bot_state["pending_claims"] > 0:
-                    auto_redeem()
+                # 3. Controllo vincite e Auto-Redeem (DISATTIVATO PER EVITARE BAN)
+                # bot_state["pending_claims"] = check_winnings(config.POLY_PROXY_ADDRESS)
+                # if bot_state["pending_claims"] > 0:
+                #     auto_redeem()
                 
-                # 4. Sync esterno (ogni tanto)
-                sync_external_winnings()
+                # 4. Sync esterno (ogni tanto) (DISATTIVATO)
+                # sync_external_winnings()
                 
             except Exception as e:
                 log.error(f"Errore nel thread di background: {e}")
