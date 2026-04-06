@@ -6,6 +6,7 @@ import time
 import os
 import signal
 import threading
+import json
 from eth_account import Account
 
 import config
@@ -30,8 +31,26 @@ def _handle_sigint(sig, frame):
 
 signal.signal(signal.SIGINT, _handle_sigint)
 
+def kill_port_5000():
+    """Rasa tutti i processi appesi sulla porta 5000 (Windows)"""
+    try:
+        import subprocess
+        # Trova i PID sulla porta 5000
+        cmd = 'netstat -ano | findstr :5000 | findstr LISTENING'
+        output = subprocess.check_output(cmd, shell=True).decode()
+        for line in output.strip().split('\n'):
+            parts = line.split()
+            if len(parts) > 4:
+                pid = parts[-1]
+                log.warning(f"Raso processo appeso sulla porta 5000 (PID: {pid})...")
+                subprocess.run(f'taskkill /F /PID {pid}', shell=True, capture_output=True)
+    except Exception:
+        pass
+
 def main():
     global _running
+    
+    kill_port_5000()
     
     log.info("=" * 60)
     log.info(" Azuro Headless Sniper Bot V3  —  Polygon Network")
@@ -78,6 +97,11 @@ def main():
 
     while _running:
         try:
+            # Aggiornamento saldi per UI ad ogni ciclo
+            pol_bal, usdc_bal = trader.get_balances()
+            bot_state["real_balance"] = usdc_bal
+            bot_state["matic_balance"] = pol_bal
+            
             now_ts = int(time.time())
             
             # --- CICLO ASSET ---
@@ -137,10 +161,10 @@ def main():
                         log.info(f"🧪 [DRY-RUN] Simulata bet da 1.0 USDC su {asset}")
                         bot_state["balance"] -= config.BET_SIZE
                     else:
-                        success, tx_hash = trader.execute_bet(condition_id, outcome_id, config.BET_SIZE, config.MIN_ODDS)
+                        success, tx_hash = trader.execute_bet(condition_id, outcome_id, config.BET_SIZE, config.MIN_ODDS, core_address=market.get("core"))
                         if success:
-                            log.info(f"💰 BET {asset} ESEGUITA! TX: {tx_hash}")
-                            bot_state["logs"].append(f"💰 BET {asset} ESEGUITA!")
+                            log.info(f"💰 BET {asset} CONFERMATA! TX: {tx_hash}")
+                            bot_state["logs"].append(f"[{time.strftime('%H:%M:%S')}] 💰 BET {asset} CONFERMATA!")
                         else:
                             log.error(f"❌ Fallimento Bet {asset}: {tx_hash}")
 

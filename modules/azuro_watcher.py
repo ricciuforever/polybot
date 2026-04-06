@@ -2,6 +2,7 @@ import requests
 import config
 import re
 import time
+import json
 from modules.logger import get_logger
 
 log = get_logger("azuro_watcher")
@@ -63,6 +64,8 @@ class AzuroWatcher:
                     
                     if cond_id:
                         log.info(f"🎯 MERCATO DGP [GEM] TROVATO: {m['question']}")
+                        # DEBUG: Stampa tutto l'oggetto mercato per trovare il Core
+                        log.debug(f"DEBUG METADATA: {json.dumps(m)}")
                         # Azuro V3 Outcome IDs: 1 (UP/Yes), 2 (DOWN/No)
                         price_up = float(main_outcome.get("priceYes", 50))
                         price_down = 100.0 - price_up

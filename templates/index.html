@@ -346,10 +346,14 @@
                     // Logs
                     const logBox = document.getElementById('logs-container');
                     logBox.innerHTML = data.logs.map(l => {
-                        if (l.includes('SEGNALE')) return `<div class="log-line"><span class="log-signal">${l}</span></div>`;
-                        if (l.includes('Fallimento') || l.includes('Errore')) return `<div class="log-line"><span class="log-error">${l}</span></div>`;
+                        if (l.includes('SEGNALE')) return `<div class="log-line" style="color: #ffcc00; font-weight: bold;">${l}</div>`;
+                        if (l.includes('🚀')) return `<div class="log-line" style="color: #00f2ff;">${l}</div>`;
+                        if (l.includes('✅')) return `<div class="log-line" style="color: #00ff88; font-weight: bold;">${l}</div>`;
+                        if (l.includes('Fallimento') || l.includes('Errore') || l.includes('⚠️')) return `<div class="log-line" style="color: #ff3366;">${l}</div>`;
                         return `<div class="log-line">${l}</div>`;
                     }).join('');
+                    
+                    // Solo se siamo in fondo, scrolla automaticamente
                     logBox.scrollTop = logBox.scrollHeight;
 
                     document.getElementById('status-text').textContent = 'Ultimo sync: ' + new Date().toLocaleTimeString();
