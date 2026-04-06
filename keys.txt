@@ -1,0 +1,1 @@
+wallet private key: 0x677896dd201b1c56fa305b9d73c98830bc110de5ab1e40ffce1b32a87627ac62
