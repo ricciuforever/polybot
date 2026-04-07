@@ -168,7 +168,7 @@ class AzuroTrader:
         types = {
             "ClientBetData": [
                 {"name": "clientData", "type": "ClientData"},
-                {"name": "bet", "type": "Bet"}
+                {"name": "bet", "type": "SubBet"}
             ],
             "ClientData": [
                 {"name": "attention", "type": "string"},
@@ -177,15 +177,15 @@ class AzuroTrader:
                 {"name": "expiresAt", "type": "uint256"},
                 {"name": "chainId", "type": "uint256"},
                 {"name": "relayerFeeAmount", "type": "uint256"},
-                {"name": "isFeeSponsored", "type": "bool"},
                 {"name": "isBetSponsored", "type": "bool"},
+                {"name": "isFeeSponsored", "type": "bool"},
                 {"name": "isSponsoredBetReturnable", "type": "bool"}
             ],
-            "Bet": [
+            "SubBet": [
                 {"name": "conditionId", "type": "uint256"},
-                {"name": "outcomeId", "type": "uint256"},
-                {"name": "minOdds", "type": "uint256"},
-                {"name": "amount", "type": "uint256"},
+                {"name": "outcomeId", "type": "uint128"},
+                {"name": "minOdds", "type": "uint64"},
+                {"name": "amount", "type": "uint128"},
                 {"name": "nonce", "type": "uint256"}
             ]
         }
@@ -256,8 +256,8 @@ class AzuroTrader:
                     "expiresAt": expires_at,
                     "chainId": config.AZURO_CHAIN_ID,
                     "relayerFeeAmount": relayer_fee_int,
-                    "isFeeSponsored": False,
                     "isBetSponsored": False,
+                    "isFeeSponsored": False,
                     "isSponsoredBetReturnable": False
                 },
                 "bet": {
@@ -276,12 +276,19 @@ class AzuroTrader:
             # 4. Struttura Dati per l'API REST (converte i grandi numeri in stringhe)
             api_client_bet_data = {
                 "clientData": {
-                    **client_bet_data_sign["clientData"],
-                    "relayerFeeAmount": str(relayer_fee_int)
+                    "attention": client_bet_data_sign["clientData"]["attention"],
+                    "affiliate": client_bet_data_sign["clientData"]["affiliate"],
+                    "core": client_bet_data_sign["clientData"]["core"],
+                    "expiresAt": client_bet_data_sign["clientData"]["expiresAt"],
+                    "chainId": client_bet_data_sign["clientData"]["chainId"],
+                    "relayerFeeAmount": str(relayer_fee_int),
+                    "isBetSponsored": client_bet_data_sign["clientData"]["isBetSponsored"],
+                    "isFeeSponsored": client_bet_data_sign["clientData"]["isFeeSponsored"],
+                    "isSponsoredBetReturnable": client_bet_data_sign["clientData"]["isSponsoredBetReturnable"]
                 },
                 "bet": {
-                    **client_bet_data_sign["bet"],
                     "conditionId": str(c_id),
+                    "outcomeId": int(outcome_id),
                     "minOdds": str(min_odds_raw),
                     "amount": str(amount_raw),
                     "nonce": str(nonce)
