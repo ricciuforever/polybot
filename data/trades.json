@@ -1366,5 +1366,1112 @@
         "title": "Solana Up or Down - April 6, 9:25PM-9:30PM ET",
         "timestamp": 1775519570,
         "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 8:20PM-8:25PM ET",
+        "timestamp": 1775521301,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 8:20PM-8:25PM ET",
+        "timestamp": 1775521452,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 8:20PM-8:25PM ET",
+        "timestamp": 1775521688,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.127659574468085,
+        "title": "Ethereum Up or Down - April 6, 8:20PM-8:25PM ET",
+        "timestamp": 1775521695,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 8:25PM-8:30PM ET",
+        "timestamp": 1775521825,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 8:35PM-8:40PM ET",
+        "timestamp": 1775521940,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775521945,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Solana Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775521951,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0618556701030926,
+        "title": "Ethereum Up or Down - April 6, 8:35PM-8:40PM ET",
+        "timestamp": 1775522278,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775523052,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "XRP Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775523057,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 8:50PM-8:55PM ET",
+        "timestamp": 1775523071,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Solana Up or Down - April 6, 8:55PM-9:00PM ET",
+        "timestamp": 1775523501,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 9:10PM-9:15PM ET",
+        "timestamp": 1775523552,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775523557,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "XRP Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775523560,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Solana Up or Down - April 6, 8:55PM-9:00PM ET",
+        "timestamp": 1775523565,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 9:10PM-9:15PM ET",
+        "timestamp": 1775523627,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775523632,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "XRP Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775523636,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Solana Up or Down - April 6, 8:55PM-9:00PM ET",
+        "timestamp": 1775523641,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:10PM-9:15PM ET",
+        "timestamp": 1775523684,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:10PM-9:15PM ET",
+        "timestamp": 1775523709,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:10PM-9:15PM ET",
+        "timestamp": 1775523730,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775523744,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775523749,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "XRP Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775523754,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775523810,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Solana Up or Down - April 6, 9:00PM-9:05PM ET",
+        "timestamp": 1775523818,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775523849,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775523872,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775523876,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775523891,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Solana Up or Down - April 6, 9:00PM-9:05PM ET",
+        "timestamp": 1775523898,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "XRP Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775523948,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0618556701030926,
+        "title": "Solana Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775523953,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775523975,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775524013,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0618556701030926,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775524137,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0618556701030926,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775524158,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775524164,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "XRP Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775524168,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Solana Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775524174,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0618556701030926,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775524185,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775524189,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "XRP Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775524195,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Solana Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775524199,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0618556701030926,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775524238,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775524244,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0618556701030926,
+        "title": "Bitcoin Up or Down - April 6, 9:05PM-9:10PM ET",
+        "timestamp": 1775524258,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:10PM-9:15PM ET",
+        "timestamp": 1775524363,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775524373,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "XRP Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775524377,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Solana Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775524629,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:35PM-9:40PM ET",
+        "timestamp": 1775524864,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775524868,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "XRP Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775524873,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Solana Up or Down - April 6, 9:25PM-9:30PM ET",
+        "timestamp": 1775525073,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.1052631578947367,
+        "title": "Bitcoin Up or Down - April 6, 9:20PM-9:25PM ET",
+        "timestamp": 1775525265,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775525378,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775525525,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 1.9047619047619047,
+        "title": "XRP Up or Down - April 6, 9:30PM-9:35PM ET",
+        "timestamp": 1775525728,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 1.941747572815534,
+        "title": "Bitcoin Up or Down - April 6, 9:40PM-9:45PM ET",
+        "timestamp": 1775526168,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775526173,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 9:45PM-9:50PM ET",
+        "timestamp": 1775526380,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:45PM-9:50PM ET",
+        "timestamp": 1775526544,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 9:45PM-9:50PM ET",
+        "timestamp": 1775526754,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.127659574468085,
+        "title": "Ethereum Up or Down - April 6, 9:45PM-9:50PM ET",
+        "timestamp": 1775526761,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "XRP Up or Down - April 7, 12:15AM-12:20AM ET",
+        "timestamp": 1775526767,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.150537634408602,
+        "title": "Solana Up or Down - April 6, 9:45PM-9:50PM ET",
+        "timestamp": 1775526772,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 9:45PM-9:50PM ET",
+        "timestamp": 1775526786,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.127659574468085,
+        "title": "Ethereum Up or Down - April 6, 9:45PM-9:50PM ET",
+        "timestamp": 1775526795,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "XRP Up or Down - April 7, 12:15AM-12:20AM ET",
+        "timestamp": 1775526803,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.150537634408602,
+        "title": "Solana Up or Down - April 6, 9:55PM-10:00PM ET",
+        "timestamp": 1775526808,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.816901408450704,
+        "title": "Ethereum Up or Down - April 6, 9:50PM-9:55PM ET",
+        "timestamp": 1775526821,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 4.081632653061225,
+        "title": "Bitcoin Up or Down - April 6, 9:50PM-9:55PM ET",
+        "timestamp": 1775526835,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.816901408450704,
+        "title": "Ethereum Up or Down - April 6, 9:50PM-9:55PM ET",
+        "timestamp": 1775526840,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.8691588785046729,
+        "title": "Solana Up or Down - April 6, 9:55PM-10:00PM ET",
+        "timestamp": 1775526845,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:55PM-10:00PM ET",
+        "timestamp": 1775526932,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775526936,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.8691588785046729,
+        "title": "Solana Up or Down - April 6, 9:55PM-10:00PM ET",
+        "timestamp": 1775526944,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:55PM-10:00PM ET",
+        "timestamp": 1775526957,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775526961,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "XRP Up or Down - April 7, 12:15AM-12:20AM ET",
+        "timestamp": 1775526966,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.8691588785046729,
+        "title": "Solana Up or Down - April 6, 9:55PM-10:00PM ET",
+        "timestamp": 1775526971,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 6, 9:55PM-10:00PM ET",
+        "timestamp": 1775526983,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 9:55PM-10:00PM ET",
+        "timestamp": 1775527006,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775527010,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "XRP Up or Down - April 7, 12:15AM-12:20AM ET",
+        "timestamp": 1775527015,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.150537634408602,
+        "title": "Solana Up or Down - April 6, 9:55PM-10:00PM ET",
+        "timestamp": 1775527019,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 6, 9:55PM-10:00PM ET",
+        "timestamp": 1775527031,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775527036,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "XRP Up or Down - April 7, 12:15AM-12:20AM ET",
+        "timestamp": 1775527040,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.150537634408602,
+        "title": "Solana Up or Down - April 6, 9:55PM-10:00PM ET",
+        "timestamp": 1775527044,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0618556701030926,
+        "title": "Bitcoin Up or Down - April 7, 3:55AM-4:00AM ET",
+        "timestamp": 1775527120,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775527124,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0618556701030926,
+        "title": "Bitcoin Up or Down - April 7, 3:55AM-4:00AM ET",
+        "timestamp": 1775527137,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775527141,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "XRP Up or Down - April 7, 12:15AM-12:20AM ET",
+        "timestamp": 1775527145,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0618556701030926,
+        "title": "Bitcoin Up or Down - April 7, 3:55AM-4:00AM ET",
+        "timestamp": 1775527169,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:00AM-12:05AM ET",
+        "timestamp": 1775527173,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "XRP Up or Down - April 7, 12:15AM-12:20AM ET",
+        "timestamp": 1775527178,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 1.941747572815534,
+        "title": "Bitcoin Up or Down - April 7, 3:55AM-4:00AM ET",
+        "timestamp": 1775527202,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 12:15AM-12:20AM ET",
+        "timestamp": 1775527229,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 7, 4:10PM-4:15PM ET",
+        "timestamp": 1775584158,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 6:20PM-6:25PM ET",
+        "timestamp": 1775584168,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Solana Up or Down - April 7, 6:20PM-6:25PM ET",
+        "timestamp": 1775584172,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 7, 4:10PM-4:15PM ET",
+        "timestamp": 1775584682,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 7, 4:10PM-4:15PM ET",
+        "timestamp": 1775584819,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 7, 2:10PM-2:15PM ET",
+        "timestamp": 1775585088,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Ethereum Up or Down - April 7, 2:45PM-2:50PM ET",
+        "timestamp": 1775585094,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 7, 2:20PM-2:25PM ET",
+        "timestamp": 1775585433,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 7, 2:20PM-2:25PM ET",
+        "timestamp": 1775585612,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Ethereum Up or Down - April 7, 2:45PM-2:50PM ET",
+        "timestamp": 1775585618,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 7, 2:25PM-2:30PM ET",
+        "timestamp": 1775585804,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0833333333333335,
+        "title": "Bitcoin Up or Down - April 7, 2:30PM-2:35PM ET",
+        "timestamp": 1775586176,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Ethereum Up or Down - April 7, 2:45PM-2:50PM ET",
+        "timestamp": 1775586728,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "Bitcoin Up or Down - April 7, 2:45PM-2:50PM ET",
+        "timestamp": 1775586970,
+        "status": "pending"
+    },
+    {
+        "asset": "BTC",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 1.9801980198019802,
+        "title": "Bitcoin Up or Down - April 7, 2:50PM-2:55PM ET",
+        "timestamp": 1775587175,
+        "status": "pending"
+    },
+    {
+        "asset": "XRP",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0202020202020203,
+        "title": "XRP Up or Down - April 7, 2:50PM-2:55PM ET",
+        "timestamp": 1775587292,
+        "status": "pending"
+    },
+    {
+        "asset": "SOL",
+        "action": "BUY_DOWN",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Solana Up or Down - April 7, 3:00PM-3:05PM ET",
+        "timestamp": 1775587968,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 4:35PM-4:40PM ET",
+        "timestamp": 1775588098,
+        "status": "pending"
+    },
+    {
+        "asset": "ETH",
+        "action": "BUY_UP",
+        "amount": 1.0,
+        "odds": 2.0,
+        "title": "Ethereum Up or Down - April 7, 4:35PM-4:40PM ET",
+        "timestamp": 1775588155,
+        "status": "pending"
     }
 ]

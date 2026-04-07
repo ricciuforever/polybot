@@ -32,8 +32,10 @@ class AzuroWatcher:
             "Referer": "https://dgpredict.com/app/crypto"
         }
 
-        # Query dei mercati a 5 minuti (tag_slug=5M)
-        url = "https://dgpredict.com/app/api/markets?limit=48&offset=0&active=true&archived=false&closed=false&tag_slug=5M&order=volume24hr&ascending=false"
+        # Query dei mercati a 5 minuti (torniamo a volume24hr che è garantito, limit 100 basta per trovarli tutti)
+        url = "https://dgpredict.com/app/api/markets?limit=100&offset=0&active=true&closed=false&tag_slug=5M&order=volume24hr&ascending=false"
+        
+        current_time = int(time.time()) #
         
         try:
             resp = requests.get(url, headers=headers, timeout=10)
@@ -44,29 +46,46 @@ class AzuroWatcher:
             data = resp.json()
             markets = data.get("markets", [])
             
+            import calendar
+            import re
+            
+            valid_markets = []
+            
             for m in markets:
                 question = m.get("question", "").lower()
                 slug = m.get("slug", "").lower()
                 
-                # Match di una qualsiasi delle keyword nell'asset (titolo o slug)
+                # 1. Recupero tempi UTC assoluti direttamente dallo slug (bypassando il fuso orario locale del SO)
+                slug_match = re.search(r'-(\d{10})$', slug)
+                if slug_match:
+                    market_end_ts = int(slug_match.group(1))
+                else:
+                    market_end_ts = calendar.timegm(time.strptime(m["endTime"][:19], "%Y-%m-%dT%H:%M:%S"))
+                    
+                market_start_ts = market_end_ts - 300 
+                
+                # 2. FILTRO TEMPORALE STRINGENTE
+                # current_time deve essere almeno 60 secondi PRIMA dell'inizio del mercato
+                # Se mancano meno di 60s, il rischio di "Rejection" dal relayer è troppo alto.
+                if current_time >= (market_start_ts - 60):
+                    continue
+
+                # 3. FILTRO "ROBA DI IERI" (Sicurezza extra)
+                # Se il mercato finisce più di 12 ore nel futuro o è nel passato, scarta.
+                if market_end_ts < current_time or market_end_ts > (current_time + 43200):
+                    continue
+                
                 asset_match = any(kw in question or kw in slug for kw in search_kws)
                 
                 if asset_match:
-                    # Estraiamo gli outcomes e i conditionId
-                    # Il primo outcome è solitamente "Up" (Sì)
                     outcomes = m.get("outcomes", [])
                     if not outcomes: continue
                     
-                    # DGPredict usa USDC.e, mappiamo i prezzi in quote (Odds)
-                    # Odds = 100 / price_yes
                     main_outcome = outcomes[0]
                     cond_id = main_outcome.get("conditionId")
+                    core_addr = main_outcome.get("coreAddress") or m.get("coreAddress")
                     
                     if cond_id:
-                        log.info(f"🎯 MERCATO DGP [GEM] TROVATO: {m['question']}")
-                        # DEBUG: Stampa tutto l'oggetto mercato per trovare il Core
-                        log.debug(f"DEBUG METADATA: {json.dumps(m)}")
-                        # Azuro V3 Outcome IDs: 1 (UP/Yes), 2 (DOWN/No)
                         price_up = float(main_outcome.get("priceYes", 50))
                         price_down = 100.0 - price_up
                         
@@ -75,13 +94,21 @@ class AzuroWatcher:
                             "2": 100.0 / price_down if price_down > 0 else 1.0
                         }
                         
-                        return {
+                        valid_markets.append({
                             "conditionId": cond_id,
                             "title": m["question"],
-                            "startsAt": int(time.mktime(time.strptime(m["endTime"][:19], "%Y-%m-%dT%H:%M:%S"))),
+                            "startsAt": market_start_ts, # Usiamo l'inizio reale
                             "outcomes": odds,
-                            "gameId": m["id"]
-                        }
+                            "gameId": m["id"],
+                            "core": core_addr
+                        })
+            
+            # Seleziona il mercato valido PIU' IMMINENTE
+            if valid_markets:
+                valid_markets.sort(key=lambda x: x["startsAt"])
+                best_market = valid_markets[0]
+                log.info(f"🎯 MERCATO VALIDO TROVATO: {best_market['title']}")
+                return best_market
         except Exception as e:
             log.error(f"Errore scansione DGPredict {asset}: {e}")
         

@@ -129,7 +129,7 @@ def main():
                 down_odds = outcomes.get('2', 1.0)
                 
                 # Log nello stile Legacy (Oscillazione)
-                log.debug(f"[{asset}] Mov: {movement:+.4f}% | Sogl: {threshold}% | P: ${price:.2f} | T: {time_left}s")
+                # log.debug(f"[{asset}] Mov: {movement:+.4f}% | Sogl: {threshold}% | P: ${price:.2f} | T: {time_left}s")
 
                 # Aggiornamento stato per la Dashboard Bento per ogni asset
                 bot_state["assets"][asset] = {

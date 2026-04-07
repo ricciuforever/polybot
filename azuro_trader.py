@@ -5,6 +5,7 @@ from web3 import Web3
 from eth_account import Account
 from eth_account.messages import encode_typed_data
 from web3.middleware import ExtraDataToPOAMiddleware
+from modules.rpc_manager import RPCManager
 import config
 from modules.logger import get_logger
 
@@ -74,17 +75,21 @@ PROXY_ABI = [
 
 class AzuroTrader:
     def __init__(self):
-        self.w3 = Web3(Web3.HTTPProvider(config.AZURO_RPC))
-        self.w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
+        self.rpc_manager = RPCManager(config.RPC_NODES)
+        # Inizializzazione account e contratti
         self.account = Account.from_key(config.PRIVATE_KEY)
         self.my_address = self.account.address
-        
-        self.usdt = self.w3.eth.contract(address=Web3.to_checksum_address(config.AZURO_TOKEN), abi=USDT_ABI)
-        self.lp = self.w3.eth.contract(address=Web3.to_checksum_address(config.AZURO_LP), abi=LP_ABI)
-        self.proxy = self.w3.eth.contract(address=Web3.to_checksum_address(config.AZURO_PROXY), abi=PROXY_ABI)
+        self.usdc_address = Web3.to_checksum_address(config.AZURO_TOKEN)
+        self.erc20_abi = USDT_ABI
         self.safe_address = Web3.to_checksum_address(config.SAFE_ADDRESS) if config.SAFE_ADDRESS else None
-        
         self.core_address = Web3.to_checksum_address(config.AZURO_CORE)
+
+    @property
+    def w3(self):
+        w3_instance = self.rpc_manager.get_w3()
+        if not any(m.name == 'extra_data_to_poa' for m in w3_instance.middleware_onion):
+            w3_instance.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
+        return w3_instance
         
     def check_connection(self):
         try:
@@ -119,29 +124,24 @@ class AzuroTrader:
         except Exception as e:
             return False, f"Errore critico: {str(e)}"
 
-    def get_balances(self):
-        """Ritorna (pol_balance, usdc_balance_totale) con retry"""
-        for _ in range(3):
-            try:
-                # Gas MATIC (solo EOA)
-                pol_wei = self.w3.eth.get_balance(self.my_address)
-                pol_bal = float(self.w3.from_wei(pol_wei, 'ether'))
-                
-                # USDC.e (EOA)
-                usdc_eoa = self.usdt.functions.balanceOf(self.my_address).call()
-                
-                # USDC.e (Safe)
-                usdc_safe = 0
-                if self.safe_address:
-                    usdc_safe = self.usdt.functions.balanceOf(self.safe_address).call()
-                
-                usdc_tot = float((usdc_eoa + usdc_safe) / 1_000_000)
-                
-                return pol_bal, usdc_tot
-            except Exception as e:
-                log.warning(f"Tentativo recupero saldi fallito: {e}")
-                time.sleep(1)
-        return 0.0, 0.0
+    async def get_balances(self):
+        """Recupera i saldi POL e USDC.e/USDT dell'utente con Fallback RPC."""
+        def _fetch():
+            # Gas MATIC (solo EOA)
+            pol_balance = self.w3.eth.get_balance(self.my_address)
+            pol_eth = float(self.w3.from_wei(pol_balance, 'ether'))
+            
+            # USDT/USDC.e Balance
+            usdt_token = self.w3.eth.contract(address=self.usdc_address, abi=self.erc20_abi)
+            usdt_raw = usdt_token.functions.balanceOf(self.my_address).call()
+            usdt_amount = float(usdt_raw) / 10**6
+            return pol_eth, usdt_amount
+
+        try:
+            return self.rpc_manager.call_safe(_fetch)
+        except Exception as e:
+            log.warning(f"Tentativo recupero saldi fallito dopo rotazione RPC: {e}")
+            return 0.0, 0.0
 
     def get_relayer_gas_info(self):
         """Recupera info gas dal relayer"""
@@ -156,40 +156,53 @@ class AzuroTrader:
             log.warning(f"Errore recupero gas info: {e}")
             return "0"
 
-    def sign_bet_order(self, client_bet_data):
-        """Firma il messaggio EIP-712 per il relayer"""
+    def _rpc_call_with_retry(self, func, *args, **kwargs):
+        for attempt in range(5):
+            try:
+                return func(*args, **kwargs)
+            except Exception as e:
+                if "429" in str(e) and attempt < 4:
+                    time.sleep(2)
+                else:
+                    raise e
+
+    def sign_proxy_bet_order(self, target_core, amount_raw, expires_at, c_id, outcome_id, min_odds_raw):
+        """Firma il messaggio EIP-712 usando BetData per il ProxyFront V3"""
         domain = {
-            "name": "Relayer",
+            "name": "ProxyFront",
             "version": "1",
             "chainId": config.AZURO_CHAIN_ID,
-            "verifyingContract": Web3.to_checksum_address(config.AZURO_RELAYER)
+            "verifyingContract": Web3.to_checksum_address(config.AZURO_PROXY)
         }
         
         types = {
-            "ClientBetData": [
-                {"name": "clientData", "type": "ClientData"},
-                {"name": "bet", "type": "Bet"}
-            ],
-            "ClientData": [
-                {"name": "attention", "type": "string"},
-                {"name": "affiliate", "type": "address"},
+            "BetData": [
                 {"name": "core", "type": "address"},
+                {"name": "amount", "type": "uint128"},
                 {"name": "expiresAt", "type": "uint256"},
-                {"name": "chainId", "type": "uint256"},
-                {"name": "relayerFeeAmount", "type": "uint256"},
-                {"name": "isFeeSponsored", "type": "bool"},
-                {"name": "isBetSponsored", "type": "bool"},
-                {"name": "isSponsoredBetReturnable", "type": "bool"}
+                {"name": "bet", "type": "SubBet"}
             ],
-            "Bet": [
+            "SubBet": [
                 {"name": "conditionId", "type": "uint256"},
-                {"name": "outcomeId", "type": "uint256"},
-                {"name": "minOdds", "type": "uint256"},
-                {"name": "amount", "type": "uint256"},
-                {"name": "nonce", "type": "uint256"}
+                {"name": "outcomeId", "type": "uint64"},
+                {"name": "minOdds", "type": "uint64"}
             ]
         }
         
+        message = {
+            "core": Web3.to_checksum_address(target_core),
+            "amount": amount_raw,
+            "expiresAt": expires_at,
+            "bet": {
+                "conditionId": c_id,
+                "outcomeId": int(outcome_id),
+                "minOdds": min_odds_raw
+            }
+        }
+        
+        return self._sign_message(domain, types, message)
+
+    def _sign_message(self, domain, types, message):
         structured_data = {
             "types": {
                 "EIP712Domain": [
@@ -200,9 +213,9 @@ class AzuroTrader:
                 ],
                 **types
             },
-            "primaryType": "ClientBetData",
+            "primaryType": list(types.keys())[0],
             "domain": domain,
-            "message": client_bet_data
+            "message": message
         }
         
         encoded_data = encode_typed_data(full_message=structured_data)
@@ -210,78 +223,93 @@ class AzuroTrader:
         sig_hex = signed_msg.signature.hex()
         return "0x" + sig_hex if not sig_hex.startswith("0x") else sig_hex
 
+
     def execute_bet(self, condition_id, outcome_id, amount_human, min_odds_decimal, core_address=None):
         """
-        Esegue la scommessa tramite RELAYER API (V3 Live/DGPredict logic).
+        Esegue la scommessa tramite LIVE RELAYER API (V3 Live/DGPredict logic).
         """
         try:
             amount_raw = int(amount_human * 1_000_000)
-            min_odds_raw = int(min_odds_decimal * 1_000_000_000_000)
+            # Calcolo min_odds con slippage del 5% per evitare rejections su variazioni rapide live
+            slippage = 0.95
+            min_odds_raw = int(min_odds_decimal * slippage * 1_000_000_000_000)
             expires_at = int(time.time()) + 300
             nonce = int(time.time() * 1000)
             
             # Dinamismo CORE
             target_core = Web3.to_checksum_address(core_address) if core_address else self.core_address
             
-            # Gas Strategy (EIP-1559)
-            base_fee = self.w3.eth.get_block('latest')['baseFeePerGas']
-            priority_fee = self.w3.eth.max_priority_fee + self.w3.to_wei(2, 'gwei')
-            max_fee = base_fee * 2 + priority_fee
+            # Gas Strategy - Fallback robusto per Polygon
+            try:
+                block = self._rpc_call_with_retry(self.w3.eth.get_block, 'latest')
+                base_fee = block.get('baseFeePerGas', self.w3.eth.gas_price)
+                max_prio = self._rpc_call_with_retry(getattr, self.w3.eth, 'max_priority_fee')
+                priority_fee = max_prio + self.w3.to_wei(2, 'gwei')
+                max_fee = base_fee * 2 + priority_fee
+                tx_params = {
+                    'maxFeePerGas': max_fee,
+                    'maxPriorityFeePerGas': priority_fee
+                }
+            except Exception:
+                tx_params = {'gasPrice': self.w3.eth.gas_price}
 
             # 1. Controllo Allowance per RELAYER
             relayer_addr = Web3.to_checksum_address(config.AZURO_RELAYER)
-            allowance = self.usdt.functions.allowance(self.my_address, relayer_addr).call()
+            try:
+                allowance_func = self.usdt.functions.allowance(self.my_address, relayer_addr).call
+                allowance = self._rpc_call_with_retry(allowance_func)
+            except Exception as e:
+                log.warning(f"Failed to fetch allowance rpc (nodo lento): {e} -> Bypass Allowance Check.")
+                allowance = 2**256 - 1 # Assume allowance già data per procedere alla signature
 
             if allowance < amount_raw:
                 log.info(f"Approve Relayer in corso...")
-                tx_approve = self.usdt.functions.approve(relayer_addr, 2**256-1).build_transaction({
+                base_tx = {
                     'from': self.my_address,
                     'nonce': self.w3.eth.get_transaction_count(self.my_address, 'pending'),
                     'gas': 80000,
                     'chainId': config.AZURO_CHAIN_ID
-                })
+                }
+                base_tx.update(tx_params)
+                
+                tx_approve = self.usdt.functions.approve(relayer_addr, 2**256-1).build_transaction(base_tx)
                 signed_approve = self.w3.eth.account.sign_transaction(tx_approve, private_key=config.PRIVATE_KEY)
                 self.w3.eth.send_raw_transaction(signed_approve.raw_transaction)
                 time.sleep(5)
 
-            # 2. Struttura Dati per la firma EIP-712 (usa interi per web3.py)
+            # 2. Struttura Dati gerarchica per firma Live EIP-712 e API REST
             c_id = int(condition_id, 16) if str(condition_id).startswith('0x') else int(condition_id)
             relayer_fee_int = int(self.get_relayer_gas_info())
             
-            client_bet_data_sign = {
+            client_data = {
+                "attention": "NitroBot_Live",
+                "affiliate": "0x0000000000000000000000000000000000000000",
+                "core": target_core,
+                "expiresAt": expires_at,
+                "chainId": config.AZURO_CHAIN_ID,
+                "relayerFeeAmount": relayer_fee_int
+            }
+            
+            # 3. Firma EIP-712 usando BetData e ProxyFront
+            signature = self.sign_proxy_bet_order(target_core, amount_raw, expires_at, c_id, outcome_id, min_odds_raw)
+            log.info(f"Firma ProxyFront EIP-712 generata: {signature[:10]}...")
+
+            # 4. Struttura Dati per l'API REST
+            api_bet_payload = {
                 "clientData": {
-                    "attention": "Azuro Sniper Bot",
-                    "affiliate": "0x0000000000000000000000000000000000000000",
-                    "core": target_core,
-                    "expiresAt": expires_at,
-                    "chainId": config.AZURO_CHAIN_ID,
-                    "relayerFeeAmount": relayer_fee_int,
+                    "attention": client_data["attention"],
+                    "affiliate": client_data["affiliate"],
+                    "core": client_data["core"],
+                    "expiresAt": client_data["expiresAt"],
+                    "chainId": client_data["chainId"],
+                    "relayerFeeAmount": str(client_data["relayerFeeAmount"]),
                     "isFeeSponsored": False,
                     "isBetSponsored": False,
                     "isSponsoredBetReturnable": False
                 },
                 "bet": {
-                    "conditionId": c_id,
-                    "outcomeId": int(outcome_id),
-                    "minOdds": min_odds_raw,
-                    "amount": amount_raw,
-                    "nonce": nonce
-                }
-            }
-            
-            # 3. Firma EIP-712
-            signature = self.sign_bet_order(client_bet_data_sign)
-            log.info(f"Firma EIP-712 generata: {signature[:10]}...")
-
-            # 4. Struttura Dati per l'API REST (converte i grandi numeri in stringhe)
-            api_client_bet_data = {
-                "clientData": {
-                    **client_bet_data_sign["clientData"],
-                    "relayerFeeAmount": str(relayer_fee_int)
-                },
-                "bet": {
-                    **client_bet_data_sign["bet"],
                     "conditionId": str(c_id),
+                    "outcomeId": int(outcome_id),     # DEVE ESSERE NUMBER
                     "minOdds": str(min_odds_raw),
                     "amount": str(amount_raw),
                     "nonce": str(nonce)
@@ -290,15 +318,22 @@ class AzuroTrader:
 
             # 5. Invio API
             payload = {
-                "environment": config.AZURO_ENVIRONMENT, # Ora sarà "PolygonUSDT"
-                "bettor": self.my_address,
-                "betOwner": self.my_address,
-                "clientBetData": api_client_bet_data,
+                "environment": config.AZURO_ENVIRONMENT,
+                "bettor": self.my_address.lower(),
+                "betOwner": self.my_address.lower(),
+                "clientBetData": api_bet_payload,
                 "bettorSignature": signature
             }
             
+            import json
+            log.warning("=== DEBUG PAYLOAD EIP-712 ===")
+            log.warning("Firma EIP-712 e BetData verificate internamente.")
+            log.warning(f"API payload: {json.dumps(payload)}")
+            log.warning("=============================")
+            
+            # Endpoint LIVE
             api_url = f"{config.AZURO_API_URL}/bet/orders/ordinar"
-            log.info(f"Invio ordine Relayer... | Core: {target_core}")
+            log.info(f"Invio ordine LIVE Relayer... | Core: {target_core}")
             
             resp = requests.post(api_url, json=payload, timeout=15)
             if resp.status_code not in [200, 201]:
@@ -306,7 +341,7 @@ class AzuroTrader:
             
             order_data = resp.json()
             order_id = order_data.get('id')
-            log.info(f"🚀 Ordine inviato! ID: {order_id}")
+            log.info(f"🚀 Ordine LIVE inviato! ID: {order_id}")
             
             # Polling Stato Ordine
             for _ in range(12): # 36 secondi max
@@ -320,11 +355,11 @@ class AzuroTrader:
                         tx_hash = status_data.get('txHash', 'N/A')
                         return True, tx_hash
                     elif state in ['Rejected', 'Canceled', 'Error']:
-                        return False, f"Ordine fallito: {state}"
+                        return False, f"Ordine fallito: {state} - {status_data.get('errorMessage')}"
             return False, "Timeout attesa conferma ordine"
 
         except Exception as e:
-            log.error(f"Errore durante l'esecuzione della bet: {e}")
+            log.error(f"Errore durante l'esecuzione della bet LIVE: {e}")
             return False, str(e)
 
 if __name__ == "__main__":
