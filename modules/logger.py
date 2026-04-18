@@ -71,6 +71,12 @@ def get_logger(name: str) -> logging.Logger:
     eh.setFormatter(_file_fmt)
     logger.addHandler(eh)
 
+    # 4. Dashboard Log (Semplificato per la UI)
+    dh = logging.FileHandler("dashboard_log.txt", encoding="utf-8")
+    dh.setLevel(logging.INFO)
+    dh.setFormatter(logging.Formatter(fmt='%(asctime)s [%(levelname)-5s] %(name)s — %(message)s', datefmt='%Y-%m-%d %H:%M:%S'))
+    logger.addHandler(dh)
+
     # 4. Memory Handler (per Dashboard Web)
     class MemoryHandler(logging.Handler):
         def emit(self, record):
