@@ -117,12 +117,11 @@ class NitroBotPoly:
                 if processed_live:
                     log_entries = []
                     for m in processed_live:
-                        asset = "ETH" # Semplificato per ora
-                        mov = self.watcher.prices.get(asset, 0)
+                        mov = self.feed.get_window_movement("BTC")
                         log_entries.append({
                             "time": int(time.time()),
                             "match": m['title'],
-                            "confidence": abs(mov) / 0.10,
+                            "confidence": min(abs(mov) / 0.10, 1.0),
                             "recommendation": "BUY YES" if mov > 0 else "BUY NO",
                             "decision": "Analyzing"
                         })
