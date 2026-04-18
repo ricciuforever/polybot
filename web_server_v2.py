@@ -111,6 +111,41 @@ def get_state():
     with open(STATE_FILE, "r", encoding='utf-8') as f:
         return jsonify(json.load(f))
 
+@app.route('/api/trades')
+def get_trades():
+    TRADES_LOG = "trades_history.json"
+    if not os.path.exists(TRADES_LOG):
+        return jsonify([])
+    try:
+        with open(TRADES_LOG, "r", encoding='utf-8') as f:
+            trades = json.load(f)
+            # Restituiamo i trade ordinati per data (più recenti prima)
+            return jsonify(sorted(trades, key=lambda x: x.get('ts', 0), reverse=True))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/stats')
+def get_stats():
+    TRADES_LOG = "trades_history.json"
+    if not os.path.exists(TRADES_LOG):
+        return jsonify({"total": 0, "wins": 0, "losses": 0, "win_rate": 0})
+    try:
+        with open(TRADES_LOG, "r", encoding='utf-8') as f:
+            trades = json.load(f)
+            comp = [t for t in trades if t.get("result") is not None]
+            wins = sum(1 for t in comp if t["result"] == "WIN")
+            losses = len(comp) - wins
+            wr = (wins / len(comp) * 100) if comp else 0
+            return jsonify({
+                "total": len(comp),
+                "wins": wins,
+                "losses": losses,
+                "win_rate": round(wr, 1),
+                "last_trade": comp[-1] if comp else None
+            })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/api/logs')
 def get_logs():
     if not os.path.exists("dashboard_log.txt"):

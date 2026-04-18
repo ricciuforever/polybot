@@ -74,7 +74,8 @@ class NitroBotPoly:
         self.state = {
             "last_update": 0, "live_games": [], "ai_logs": [],
             "wallet": {"pol": 0, "usdc": 0, "address": self.trader.my_address},
-            "stats": {"total_bets": 0, "won_bets": 0}
+            "stats": {"total_bets": 0, "won_bets": 0},
+            "recent_trades": []
         }
 
     async def run(self):
@@ -128,11 +129,12 @@ class NitroBotPoly:
                 # 1c. Update esiti (300s)
                 if now - last_results_check > RESULTS_INTERVAL:
                     if update_trade_results():
-                        # Ricalcola stats per dashboard
+                        # Ricalcola stats e recent_trades per dashboard
                         trades = load_trades_log()
                         comp = [t for t in trades if t.get("result") is not None]
                         wins = sum(1 for t in comp if t["result"] == "WIN")
                         self.state["stats"] = {"total_bets": len(comp), "won_bets": wins}
+                        self.state["recent_trades"] = sorted(trades, key=lambda x: x.get('ts', 0), reverse=True)[:10]
                         log.info(f"📈 Stats Aggiornate: {wins}W - {len(comp)-wins}L")
                     last_results_check = now
 
@@ -234,7 +236,7 @@ class NitroBotPoly:
                                 log.info(f"   ↳ ✅ TRADE ESEGUITO!")
 
                                 # Tracking
-                                save_trade({
+                                entry = {
                                     "ts": int(now),
                                     "market": m['title'],
                                     "side": side,
@@ -245,7 +247,9 @@ class NitroBotPoly:
                                     "market_end": market_end,
                                     "condition_id": m.get('conditionId'),
                                     "result": None
-                                })
+                                }
+                                save_trade(entry)
+                                self.state["recent_trades"] = [entry] + self.state["recent_trades"][:9]
                             else:
                                 log.error(f"   ↳ ❌ Trade fallito.")
 
