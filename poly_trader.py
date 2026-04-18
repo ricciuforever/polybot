@@ -151,10 +151,19 @@ class PolyTrader:
                                         continue
                                         
                                     title = market.get('question', 'Match')
+                                    
+                                    # Filtro Strategia: Mostriamo solo BTC e scommesse di prezzo
+                                    q_low = title.lower()
+                                    if not any(x in q_low for x in ["btc", "bitcoin", "price of", "up or down"]):
+                                        continue
+                                        
                                     entry = float(p.get('avg_price', 0))
                                     current = float(p.get('cur_price', 0)) or entry
                                     pnl = (current - entry) * size
                                     
+                                    if size * current < 0.01: # Nascondi rimasugli a valore zero
+                                        continue
+
                                     active.append({
                                         "title": title,
                                         "size": size,
