@@ -67,24 +67,30 @@ class NitroBotPoly:
                 for m in markets:
                     try:
                         asset = m['asset']
-                        movement = self.watcher.prices.get(asset, 0)
+                        movement = self.feed.get_window_movement(asset)
                         threshold = config.THRESHOLDS.get(asset, 0.10)
                         
-                        log.debug(f"  > Analisi {m['title']}: Movimento {movement:+.4f}% (Soglia: {threshold}%)")
+                        log.info(f"📊 VALUTAZIONE ATTIVA: {m['title']}")
+                        log.info(f"   ↳ Movimento a 5m: {movement:+.4f}% | Soglia target: {threshold}%")
                         
-                        # Controllo Cooldown: Se abbiamo già scommesso su questo asset < 5 min fa, salta
+                        # Controllo Cooldown
                         last_t = self.last_trade_times.get(asset, 0)
-                        if time.time() - last_t < config.COOLDOWN_SECONDS:
+                        time_left = config.COOLDOWN_SECONDS - (time.time() - last_t)
+                        if time_left > 0:
+                            log.info(f"   ↳ [ATTESA] Cooldown asset attivo per altri {int(time_left)}s")
                             continue
 
+                        # Valutazione Soglie
                         if abs(movement) >= threshold:
-                            log.info(f"🎯 SOGLIA SUPERATA [{asset}]: {movement:+.3f}%! Eseguo trade...")
+                            log.info(f"   ↳ 🎯 [SEGNALE FORTE] Soglia {threshold}% superata! Inizio operazioni...")
                             
                             # Esecuzione Trade Reale/Simulato
                             success = self.trader.execute_market_trade(m, movement)
                             if success:
                                 self.last_trade_times[asset] = time.time()
                                 self.state["stats"]["won_bets"] += 1 
+                        else:
+                            log.info(f"   ↳ [ATTESA] Movimento insufficiente per agire.")
                         
                         # Calcolo Odds simulate per la UI
                         odds_yes, odds_no = 1.90, 1.90
