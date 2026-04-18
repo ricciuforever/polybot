@@ -2,6 +2,7 @@ import asyncio
 import time
 import json
 import os
+import requests
 from modules.poly_watcher import PolyWatcher
 from modules.price_feed import BinanceFeed
 from poly_trader import PolyTrader
@@ -132,29 +133,54 @@ class NitroBotPoly:
                         # ALWAYS IN: scommetti nella direzione del trend attuale
                         if movement_pct > 0:
                             side = "UP (YES)"
+                            token_to_check = m['token_yes']
                         elif movement_pct < 0:
                             side = "DOWN (NO)"
+                            token_to_check = m['token_no']
                         else:
-                            # Piatto totale → usa il trend a 5m di Binance come tiebreaker
                             trend = self.feed.get_trend_direction("BTC")
                             if trend >= 0:
                                 side = "UP (YES)"
-                                movement_pct = 0.001  # Forzatura minima per il router
+                                token_to_check = m['token_yes']
+                                movement_pct = 0.001
                             else:
                                 side = "DOWN (NO)"
+                                token_to_check = m['token_no']
                                 movement_pct = -0.001
                         
-                        log.info(f"   ↳ 🎯🎯🎯 ALWAYS IN! {side}")
-                        log.info(f"   ↳ Movimento dal PTB: {movement_pct:+.4f}%")
-                        log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
+                        # 📊 CONTROLLO QUOTE dal CLOB
+                        try:
+                            mid_resp = requests.get(
+                                f"https://clob.polymarket.com/midpoint",
+                                params={"token_id": token_to_check},
+                                timeout=3
+                            )
+                            mid_price = float(mid_resp.json().get("mid", 0.50))
+                        except:
+                            mid_price = 0.50
                         
-                        success = self.trader.sniper_trade(m, movement_pct)
-                        if success:
-                            bet_placed = True
-                            self.last_trade_times[m['asset']] = now
-                            log.info(f"   ↳ ✅ TRADE ESEGUITO CON SUCCESSO!")
+                        cost_cents = int(mid_price * 100)
+                        profit_cents = 100 - cost_cents
+                        roi = (profit_cents / cost_cents * 100) if cost_cents > 0 else 0
+                        
+                        log.info(f"   ↳ 🎯 ALWAYS IN! {side}")
+                        log.info(f"   ↳ 📊 Quota: {cost_cents}¢ → Payout: {profit_cents}¢ (ROI: {roi:.0f}%)")
+                        log.info(f"   ↳ 📊 Movimento dal PTB: {movement_pct:+.4f}%")
+                        
+                        # Protezione: non scommettere se la quota è > 75¢ (payout troppo basso)
+                        MAX_ENTRY_PRICE = 0.75
+                        if mid_price > MAX_ENTRY_PRICE:
+                            log.warning(f"   ↳ ⚠️ Quota troppo alta ({cost_cents}¢)! Il mercato è già convinto. SKIP.")
                         else:
-                            log.error(f"   ↳ ❌ Trade fallito.")
+                            log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
+                            
+                            success = self.trader.sniper_trade(m, movement_pct)
+                            if success:
+                                bet_placed = True
+                                self.last_trade_times[m['asset']] = now
+                                log.info(f"   ↳ ✅ TRADE ESEGUITO CON SUCCESSO!")
+                            else:
+                                log.error(f"   ↳ ❌ Trade fallito.")
                 
                 # 6. Salvataggio stato dashboard
                 self.state["last_update"] = int(now)
