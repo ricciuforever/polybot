@@ -56,12 +56,13 @@ class PolyWatcher:
                 if matched_asset:
                     clob_ids = m.get('clobTokenIds')
                     end_date_str = m.get('endDate')
+                    start_date_str = m.get('eventStartTime') or m.get('startDate')
                     
-                    if clob_ids and end_date_str:
+                    if clob_ids and end_date_str and start_date_str:
                         try:
                             from datetime import datetime, timezone
-                            # Parsing endDate UTC
                             end_dt = datetime.strptime(end_date_str.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S%z")
+                            start_dt = datetime.strptime(start_date_str.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S%z")
                             now_dt = datetime.now(timezone.utc)
                             
                             # Filtro: solo il mercato che scade entro i prossimi 0-7 minuti
@@ -79,6 +80,7 @@ class PolyWatcher:
                                         "token_no": tokens[1],
                                         "volume": float(m.get('volume', 0)),
                                         "asset": matched_asset,
+                                        "start_timestamp": start_dt.timestamp(),
                                         "end_timestamp": end_dt.timestamp()
                                     })
                         except Exception as e: 
@@ -86,7 +88,7 @@ class PolyWatcher:
             
             # Ordiniamo dal più imminente in poi (quello currently live)
             all_found.sort(key=lambda x: x['end_timestamp'])
-            return all_found[:1] # Restituiamo solo ed esclusivamente UNO (il Live)
+            return all_found[:1]
             
         except Exception as e:
             log.error(f"Errore Gamma API: {e}")

@@ -42,58 +42,101 @@ class NitroBotPoly:
         
         cached_markets = []
         last_api_call = 0
-        API_REFRESH_INTERVAL = 30 # Aggiorna mercato ogni 30s (tanto dura 5 min)
+        API_REFRESH_INTERVAL = 15
+        
+        # Strategia "Sniper a Metà Finestra"
+        anchor_price = None        # Prezzo BTC all'inizio della finestra Polymarket
+        current_market_id = None   # ID del mercato attuale (per rilevare cambio finestra)
+        bet_placed = False         # Già scommesso su questa finestra?
+        
+        BET_AFTER_SEC = 150        # Scommetti dopo 2:30 min dall'inizio (metà finestra)
+        NO_BET_LAST_SEC = 30       # Non scommettere negli ultimi 30 secondi
         
         while self.running:
             try:
                 now = time.time()
                 
-                # 1. Refresh mercato da API (ogni 30s)
+                # 1. Refresh mercato da API (ogni 15s)
                 if now - last_api_call > API_REFRESH_INTERVAL:
                     cached_markets = self.watcher.find_btc_markets(limit=20)
                     last_api_call = now
-                    pol, usdc = self.trader.get_balances()
-                    self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
-                    if cached_markets:
-                        log.info(f"📡 [API] Mercato Live: {cached_markets[0]['title']}")
-                    else:
-                        log.info(f"📡 [API] Nessun mercato BTC 5m live al momento.")
                 
-                # 2. Log prezzo + movimento OGNI SECONDO
+                # 2. Prezzo BTC in tempo reale (OGNI SECONDO)
                 btc_price = self.feed.get_last_price("BTC")
-                movement = self.feed.get_window_movement("BTC")
-                threshold = config.THRESHOLDS.get("BTC", 0.10)
-                direction = "📈 UP" if movement > 0 else "📉 DOWN" if movement < 0 else "➡️ FLAT"
                 
-                log.info(f"💲 BTC ${btc_price:,.2f} | Mov: {movement:+.4f}% | Soglia: {threshold}% | {direction}")
+                if not cached_markets:
+                    log.info(f"💲 BTC ${btc_price:,.2f} | ⏳ Nessun mercato live. Attendo prossima finestra...")
+                    await asyncio.sleep(1)
+                    continue
                 
-                # 3. Valutazione trade (solo se abbiamo un mercato live)
-                if cached_markets:
-                    m = cached_markets[0]
-                    asset = m['asset']
-                    
-                    # Cooldown check
-                    last_t = self.last_trade_times.get(asset, 0)
-                    time_left = config.COOLDOWN_SECONDS - (now - last_t)
-                    
-                    if time_left > 0:
-                        log.info(f"   ↳ ⏳ Cooldown attivo: {int(time_left)}s rimanenti")
-                    elif abs(movement) >= threshold:
-                        side = "UP (YES)" if movement > 0 else "DOWN (NO)"
-                        log.info(f"   ↳ 🎯 SEGNALE! {side} | Mov {movement:+.4f}% > Soglia {threshold}%")
+                m = cached_markets[0]
+                market_start = m['start_timestamp']
+                market_end = m['end_timestamp']
+                elapsed = now - market_start
+                remaining = market_end - now
+                
+                # 3. Rilevamento nuova finestra → Reset ancoraggio
+                if m['id'] != current_market_id:
+                    current_market_id = m['id']
+                    anchor_price = btc_price
+                    bet_placed = False
+                    log.info(f"")
+                    log.info(f"{'='*60}")
+                    log.info(f"🆕 NUOVA FINESTRA: {m['title']}")
+                    log.info(f"   ⚓ Prezzo Ancorato: ${anchor_price:,.2f}")
+                    log.info(f"   ⏱️  Durata: {int(market_end - market_start)}s | Scade tra {int(remaining)}s")
+                    log.info(f"{'='*60}")
+                
+                # 4. Calcolo movimento DAL PREZZO ANCORATO (non finestra mobile!)
+                if anchor_price and anchor_price > 0:
+                    movement_pct = ((btc_price - anchor_price) / anchor_price) * 100
+                else:
+                    movement_pct = 0.0
+                
+                threshold = config.THRESHOLDS.get("BTC", 0.08)
+                direction = "📈 UP" if movement_pct > 0 else "📉 DN" if movement_pct < 0 else "➡️ --"
+                
+                # Barra progresso finestra
+                progress = min(elapsed / (market_end - market_start), 1.0)
+                bar_len = 20
+                filled = int(progress * bar_len)
+                bar = "█" * filled + "░" * (bar_len - filled)
+                
+                log.info(
+                    f"💲 ${btc_price:,.2f} | "
+                    f"Δ {movement_pct:+.4f}% | "
+                    f"{direction} | "
+                    f"[{bar}] {int(remaining)}s | "
+                    f"{'🎯 PRONTO' if elapsed >= BET_AFTER_SEC and not bet_placed else '⏳ ACCUMULO' if not bet_placed else '✅ PIAZZATA'}"
+                )
+                
+                # 5. DECISIONE DI TRADING
+                if not bet_placed:
+                    if elapsed < BET_AFTER_SEC:
+                        # Fase di accumulo dati - non scommettiamo ancora
+                        pass
+                    elif remaining < NO_BET_LAST_SEC:
+                        # Troppo tardi - rischio di non riuscire a piazzare
+                        log.warning(f"   ↳ ⚠️ Troppo tardi per scommettere ({int(remaining)}s rimasti)")
+                    elif abs(movement_pct) >= threshold:
+                        # SEGNALE FORTE → SCOMMETTI
+                        side = "UP (YES)" if movement_pct > 0 else "DOWN (NO)"
+                        log.info(f"   ↳ 🎯🎯🎯 SEGNALE CONFERMATO! {side}")
+                        log.info(f"   ↳ Movimento: {movement_pct:+.4f}% > Soglia: {threshold}%")
                         log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
-                        success = self.trader.execute_market_trade(m, movement)
+                        
+                        success = self.trader.execute_market_trade(m, movement_pct)
                         if success:
-                            self.last_trade_times[asset] = now
-                            self.state["stats"]["won_bets"] += 1
-                            log.info(f"   ↳ ✅ TRADE ESEGUITO!")
+                            bet_placed = True
+                            self.last_trade_times[m['asset']] = now
+                            log.info(f"   ↳ ✅ TRADE ESEGUITO CON SUCCESSO!")
                         else:
                             log.error(f"   ↳ ❌ Trade fallito.")
                     else:
-                        pct = (abs(movement) / threshold) * 100
-                        log.info(f"   ↳ ⏳ Sotto soglia ({pct:.0f}% del target). Attendo...")
+                        pct_of_target = (abs(movement_pct) / threshold) * 100
+                        log.info(f"   ↳ ⏳ Segnale debole ({pct_of_target:.0f}% del target). Attendo conferma...")
                 
-                # 4. Salvataggio stato dashboard
+                # 6. Salvataggio stato dashboard
                 self.state["last_update"] = int(now)
                 with open(self.state_file, "w") as f:
                     json.dump(self.state, f, indent=2)
