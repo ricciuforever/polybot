@@ -11,7 +11,7 @@ model = genai.GenerativeModel('gemini-2.0-flash') # Uso modello stabile 2.0 Flas
 
 PRIVATE_KEY = os.getenv("PRIVATE_KEY", "").strip()
 if PRIVATE_KEY and not PRIVATE_KEY.startswith("0x"): PRIVATE_KEY = "0x" + PRIVATE_KEY
-WALLET_ADDRESS = os.getenv("WALLET_ADDRESS", "").strip()
+WALLET_ADDRESS = os.getenv("WALLET_ADDRESS", "0x27Fb2C57b1149bE45d99070a906753D5A8ad6e3a").strip()
 SAFE_ADDRESS = os.getenv("SAFE_ADDRESS", "0xF70ce42B1bBEbCc1deEe5315506373Ba7E535e9d").strip()
 
 # Azuro V3 (Polygon) - MAINNET Configuration
