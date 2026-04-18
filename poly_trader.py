@@ -112,7 +112,7 @@ class PolyTrader:
     def sniper_trade(self, market: dict, movement_pct: float) -> bool:
         """Metodo principale per la strategia Sniper: traduce il mercato in un ordine CLOB."""
         try:
-            # Determina direzione: se BTC sale → compra YES, se scende → compra NO
+            # Determina direzione
             if movement_pct > 0:
                 token_id = market['token_yes']
                 direction = "UP → BUY YES"
@@ -120,14 +120,23 @@ class PolyTrader:
                 token_id = market['token_no']
                 direction = "DOWN → BUY NO"
             
-            bet_size = config.BET_SIZE  # 1.10 USDC
+            # Verifica saldo PRIMA di piazzare
+            _, usdc_balance = self.get_balances()
+            min_bet = 1.05  # Minimo CLOB
+            
+            if usdc_balance < min_bet:
+                log.error(f"   ❌ Saldo insufficiente: ${usdc_balance:.2f} (minimo ${min_bet})")
+                return False
+            
+            # Adatta bet_size al saldo disponibile
+            bet_size = min(config.BET_SIZE, usdc_balance * 0.95)  # Usa 95% del saldo
+            bet_size = max(bet_size, min_bet)  # Mai sotto il minimo
             
             log.info(f"   📋 Direzione: {direction}")
             log.info(f"   📋 Token ID: {token_id[:20]}...")
-            log.info(f"   📋 Importo: ${bet_size}")
+            log.info(f"   📋 Saldo: ${usdc_balance:.2f} | Importo: ${bet_size:.2f}")
             
-            # Recupero order book per il miglior prezzo
-            log.info(f"   📋 Recupero Order Book...")
+            # Recupero order book
             ob = self.client.get_order_book(token_id)
             
             if ob.asks:
@@ -191,6 +200,66 @@ class PolyTrader:
             log.info(f"✅ Approvato spender {spender_address}")
         except Exception as e:
             log.error(f"Errore approvazione dinamica: {e}")
+
+    def auto_redeem(self):
+        """Riscuote automaticamente i profitti da mercati risolti (resolved)."""
+        try:
+            url = f"https://data-api.polymarket.com/positions?user={self.my_address}"
+            resp = requests.get(url, timeout=10)
+            if resp.status_code != 200:
+                return
+            
+            positions = resp.json()
+            redeemed = 0
+            
+            for p in positions:
+                size = float(p.get('size', 0))
+                if size < 0.01:
+                    continue
+                
+                cond_id = p.get('condition_id')
+                if not cond_id:
+                    continue
+                
+                # Verifica se il mercato è risolto
+                try:
+                    g_url = f"https://gamma-api.polymarket.com/markets?conditionId={cond_id}"
+                    g_resp = requests.get(g_url, timeout=5)
+                    if g_resp.status_code == 200:
+                        g_data = g_resp.json()
+                        if g_data and g_data[0].get('closed'):
+                            # Mercato CHIUSO → Prova a riscuotere via CTF
+                            log.info(f"   💰 Mercato risolto trovato: {g_data[0].get('question', '')[:50]}")
+                            
+                            ctf_abi = [{"inputs": [{"name": "conditionId", "type": "bytes32"}, {"name": "indexSets", "type": "uint256[]"}], "name": "redeemPositions", "outputs": [], "stateMutability": "nonpayable", "type": "function"}]
+                            ctf = self.w3.eth.contract(
+                                address=Web3.to_checksum_address(config.POLY_CTF),
+                                abi=ctf_abi
+                            )
+                            
+                            # indexSets: [1, 2] = riscuoti sia YES che NO
+                            cond_bytes = bytes.fromhex(cond_id) if not cond_id.startswith('0x') else bytes.fromhex(cond_id[2:])
+                            tx = ctf.functions.redeemPositions(
+                                cond_bytes,
+                                [1, 2]
+                            ).build_transaction({
+                                'from': self.my_address,
+                                'nonce': self.w3.eth.get_transaction_count(self.my_address),
+                                'gas': 200000,
+                                'gasPrice': self.w3.eth.gas_price
+                            })
+                            signed = self.w3.eth.account.sign_transaction(tx, config.PRIVATE_KEY)
+                            tx_hash = self.w3.eth.send_raw_transaction(signed.raw_transaction)
+                            log.info(f"   💰 Redeem TX inviata: {tx_hash.hex()[:20]}...")
+                            redeemed += 1
+                except Exception as e:
+                    log.warning(f"   ⚠️ Errore redeem per {cond_id[:10]}: {e}")
+            
+            if redeemed > 0:
+                log.info(f"💰 Auto-redeem completato: {redeemed} posizioni riscattate!")
+            
+        except Exception as e:
+            log.warning(f"Errore auto-redeem: {e}")
 
     def get_positions(self):
         """Recupera solo le posizioni ATTIVE del 2026, ignorando lo storico obsoleto."""

@@ -46,12 +46,14 @@ class NitroBotPoly:
         API_REFRESH_INTERVAL = 15
         
         # Strategia "Sniper a Metà Finestra"
-        anchor_price = None        # Prezzo BTC all'inizio della finestra Polymarket
-        current_market_id = None   # ID del mercato attuale (per rilevare cambio finestra)
-        bet_placed = False         # Già scommesso su questa finestra?
+        anchor_price = None
+        current_market_id = None
+        bet_placed = False
+        last_redeem_check = 0
         
-        BET_AFTER_SEC = 150        # Scommetti dopo 2:30 min dall'inizio (metà finestra)
-        NO_BET_LAST_SEC = 30       # Non scommettere negli ultimi 30 secondi
+        BET_AFTER_SEC = 150        # Scommetti dopo 2:30 min dall'inizio
+        NO_BET_LAST_SEC = 30       # Stop negli ultimi 30 secondi
+        REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 minuti
         
         while self.running:
             try:
@@ -61,6 +63,12 @@ class NitroBotPoly:
                 if now - last_api_call > API_REFRESH_INTERVAL:
                     cached_markets = self.watcher.find_btc_markets(limit=20)
                     last_api_call = now
+                
+                # 1b. Auto-redeem posizioni vinte (ogni 5 min)
+                if now - last_redeem_check > REDEEM_INTERVAL:
+                    log.info("💰 Controllo auto-redeem posizioni...")
+                    self.trader.auto_redeem()
+                    last_redeem_check = now
                 
                 # 2. Prezzo BTC in tempo reale (OGNI SECONDO)
                 btc_price = self.feed.get_last_price("BTC")
@@ -130,65 +138,47 @@ class NitroBotPoly:
                         # Troppo tardi
                         log.warning(f"   ↳ ⚠️ Troppo tardi per scommettere ({int(remaining)}s rimasti)")
                     else:
-                        # 📊 RECUPERO QUOTE di ENTRAMBI i token
-                        try:
-                            up_resp = requests.get("https://clob.polymarket.com/midpoint",
-                                params={"token_id": m['token_yes']}, timeout=3)
-                            up_mid = float(up_resp.json().get("mid", 0.50))
-                        except:
-                            up_mid = 0.50
-                        
-                        try:
-                            dn_resp = requests.get("https://clob.polymarket.com/midpoint",
-                                params={"token_id": m['token_no']}, timeout=3)
-                            dn_mid = float(dn_resp.json().get("mid", 0.50))
-                        except:
-                            dn_mid = 0.50
-                        
-                        log.info(f"   ↳ 📊 Quote mercato: UP {int(up_mid*100)}¢ | DOWN {int(dn_mid*100)}¢")
-                        
-                        # LOGICA IBRIDA: Prezzo forte → segui prezzo, debole → segui mercato
-                        WEAK_SIGNAL = 0.005  # Sotto 0.005% consideriamo il segnale "debole"
-                        
-                        if abs(movement_pct) >= WEAK_SIGNAL:
-                            # SEGNALE FORTE: il prezzo si è mosso chiaramente → segui il prezzo
-                            if movement_pct > 0:
-                                side = "UP (YES)"
-                                token_to_bet = m['token_yes']
-                                entry_price = up_mid
-                            else:
-                                side = "DOWN (NO)"
-                                token_to_bet = m['token_no']
-                                entry_price = dn_mid
-                            signal_source = "PREZZO"
+                        # ALWAYS IN: scommetti nella direzione del trend attuale
+                        if movement_pct > 0:
+                            side = "UP (YES)"
+                            token_to_check = m['token_yes']
+                        elif movement_pct < 0:
+                            side = "DOWN (NO)"
+                            token_to_check = m['token_no']
                         else:
-                            # SEGNALE DEBOLE: prezzo piatto → segui il consenso del mercato
-                            if up_mid < dn_mid:
-                                # UP è più economico = mercato pensa DOWN → compra UP (contrarian) 
-                                # NO: seguiamo il mercato → compra dove il mercato è più convinto
-                                side = "DOWN (NO)"
-                                token_to_bet = m['token_no']
-                                entry_price = dn_mid
-                                movement_pct = -0.001
-                            else:
+                            trend = self.feed.get_trend_direction("BTC")
+                            if trend >= 0:
                                 side = "UP (YES)"
-                                token_to_bet = m['token_yes']
-                                entry_price = up_mid
+                                token_to_check = m['token_yes']
                                 movement_pct = 0.001
-                            signal_source = "MERCATO"
+                            else:
+                                side = "DOWN (NO)"
+                                token_to_check = m['token_no']
+                                movement_pct = -0.001
                         
-                        cost_cents = int(entry_price * 100)
+                        # 📊 CONTROLLO QUOTE dal CLOB
+                        try:
+                            mid_resp = requests.get(
+                                f"https://clob.polymarket.com/midpoint",
+                                params={"token_id": token_to_check},
+                                timeout=3
+                            )
+                            mid_price = float(mid_resp.json().get("mid", 0.50))
+                        except:
+                            mid_price = 0.50
+                        
+                        cost_cents = int(mid_price * 100)
                         profit_cents = 100 - cost_cents
                         roi = (profit_cents / cost_cents * 100) if cost_cents > 0 else 0
                         
-                        log.info(f"   ↳ 🎯 ALWAYS IN! {side} (segnale: {signal_source})")
-                        log.info(f"   ↳ 📊 Costo: {cost_cents}¢ → Payout: {profit_cents}¢ (ROI: {roi:.0f}%)")
+                        log.info(f"   ↳ 🎯 ALWAYS IN! {side}")
+                        log.info(f"   ↳ 📊 Quota: {cost_cents}¢ → Payout: {profit_cents}¢ (ROI: {roi:.0f}%)")
                         log.info(f"   ↳ 📊 Movimento dal PTB: {movement_pct:+.4f}%")
                         
-                        # Protezione: non scommettere se il costo è > 75¢
+                        # Protezione: non scommettere se la quota è > 75¢ (payout troppo basso)
                         MAX_ENTRY_PRICE = 0.75
-                        if entry_price > MAX_ENTRY_PRICE:
-                            log.warning(f"   ↳ ⚠️ Quota troppo alta ({cost_cents}¢)! SKIP.")
+                        if mid_price > MAX_ENTRY_PRICE:
+                            log.warning(f"   ↳ ⚠️ Quota troppo alta ({cost_cents}¢)! Il mercato è già convinto. SKIP.")
                         else:
                             log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
                             
@@ -198,7 +188,8 @@ class NitroBotPoly:
                                 self.last_trade_times[m['asset']] = now
                                 log.info(f"   ↳ ✅ TRADE ESEGUITO CON SUCCESSO!")
                             else:
-                                log.error(f"   ↳ ❌ Trade fallito.")
+                                bet_placed = True  # Non ritentare ogni secondo
+                                log.error(f"   ↳ ❌ Trade fallito. Skip questa finestra.")
                 
                 # 6. Salvataggio stato dashboard
                 self.state["last_update"] = int(now)
