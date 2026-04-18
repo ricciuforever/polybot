@@ -40,101 +40,68 @@ class NitroBotPoly:
         log.info("Attendo warm-up feed Binance...")
         await asyncio.sleep(5)
         
+        cached_markets = []
+        last_api_call = 0
+        API_REFRESH_INTERVAL = 30 # Aggiorna mercato ogni 30s (tanto dura 5 min)
+        
         while self.running:
             try:
-                # 1. Recupero Mercati attivi da Gamma API
-                markets = self.watcher.find_btc_markets(limit=20)
+                now = time.time()
+                
+                # 1. Refresh mercato da API (ogni 30s)
+                if now - last_api_call > API_REFRESH_INTERVAL:
+                    cached_markets = self.watcher.find_btc_markets(limit=20)
+                    last_api_call = now
+                    pol, usdc = self.trader.get_balances()
+                    self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
+                    if cached_markets:
+                        log.info(f"📡 [API] Mercato Live: {cached_markets[0]['title']}")
+                    else:
+                        log.info(f"📡 [API] Nessun mercato BTC 5m live al momento.")
+                
+                # 2. Log prezzo + movimento OGNI SECONDO
                 btc_price = self.feed.get_last_price("BTC")
-                log.info(f"🔎 [RADAR] Scansione: {len(markets)} mercati trovati | BTC: ${btc_price:,.2f}")
+                movement = self.feed.get_window_movement("BTC")
+                threshold = config.THRESHOLDS.get("BTC", 0.10)
+                direction = "📈 UP" if movement > 0 else "📉 DOWN" if movement < 0 else "➡️ FLAT"
                 
-                # 2. Recupero Saldi, Posizioni e Storico
-                pol, usdc = self.trader.get_balances()
-                active_positions = self.trader.get_positions()
-                trade_history = self.trader.get_trade_history()
+                log.info(f"💲 BTC ${btc_price:,.2f} | Mov: {movement:+.4f}% | Soglia: {threshold}% | {direction}")
                 
-                # Protezione Saldo: Se meno di 1.50 USDC.e, sospendi trading
-                trading_enabled = usdc >= 1.50
-                if not trading_enabled:
-                    log.warning(f"⚠️ Saldo Insufficiente: {usdc:.2f} USDC.e. Trading Sospeso.")
-                
-                # Aggiornamento stato Dashboard
-                self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
-                self.state["active_bets"] = active_positions
-                self.state["trade_history"] = trade_history
-                self.state["stats"]["total_bets"] = len(active_positions)
-                # 3. Analisi e Trading Sniper
-                processed_live = []
-                for m in markets:
-                    try:
-                        asset = m['asset']
-                        movement = self.feed.get_window_movement(asset)
-                        threshold = config.THRESHOLDS.get(asset, 0.10)
-                        
-                        log.info(f"📊 VALUTAZIONE ATTIVA: {m['title']}")
-                        log.info(f"   ↳ Movimento a 5m: {movement:+.4f}% | Soglia target: {threshold}%")
-                        
-                        # Controllo Cooldown
-                        last_t = self.last_trade_times.get(asset, 0)
-                        time_left = config.COOLDOWN_SECONDS - (time.time() - last_t)
-                        if time_left > 0:
-                            log.info(f"   ↳ [ATTESA] Cooldown asset attivo per altri {int(time_left)}s")
-                            continue
-
-                        # Valutazione Soglie
-                        if abs(movement) >= threshold:
-                            log.info(f"   ↳ 🎯 [SEGNALE FORTE] Soglia {threshold}% superata! Inizio operazioni...")
-                            
-                            # Esecuzione Trade Reale/Simulato
-                            success = self.trader.execute_market_trade(m, movement)
-                            if success:
-                                self.last_trade_times[asset] = time.time()
-                                self.state["stats"]["won_bets"] += 1 
-                        else:
-                            log.info(f"   ↳ [ATTESA] Movimento insufficiente per agire.")
-                        
-                        # Calcolo Odds simulate per la UI
-                        odds_yes, odds_no = 1.90, 1.90
-                        processed_live.append({
-                            "gameId": m['id'],
-                            "title": m['title'],
-                            "sport": "Crypto",
-                            "league": "Polymarket",
-                            "volume": m['volume'],
-                            "outcomes": [
-                                {"outcomeId": m['token_yes'], "name": "YES", "odds": odds_yes},
-                                {"outcomeId": m['token_no'], "name": "NO", "odds": odds_no}
-                            ]
-                        })
-                    except Exception as ex:
-                        log.error(f"   ↳ ❌ ERRORE valutazione mercato: {ex}")
-                        continue
-                
-                self.state["live_games"] = processed_live
-                self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
-                self.state["last_update"] = int(time.time())
-                
-                # 4. Update Dashboard Logs
-                if processed_live:
-                    log_entries = []
-                    for m in processed_live:
-                        mov = self.feed.get_window_movement("BTC")
-                        log_entries.append({
-                            "time": int(time.time()),
-                            "match": m['title'],
-                            "confidence": min(abs(mov) / 0.10, 1.0),
-                            "recommendation": "BUY YES" if mov > 0 else "BUY NO",
-                            "decision": "Analyzing"
-                        })
-                    self.state["ai_logs"] = (log_entries + self.state["ai_logs"])[:30]
+                # 3. Valutazione trade (solo se abbiamo un mercato live)
+                if cached_markets:
+                    m = cached_markets[0]
+                    asset = m['asset']
                     
-                # Salvataggio Stato
+                    # Cooldown check
+                    last_t = self.last_trade_times.get(asset, 0)
+                    time_left = config.COOLDOWN_SECONDS - (now - last_t)
+                    
+                    if time_left > 0:
+                        log.info(f"   ↳ ⏳ Cooldown attivo: {int(time_left)}s rimanenti")
+                    elif abs(movement) >= threshold:
+                        side = "UP (YES)" if movement > 0 else "DOWN (NO)"
+                        log.info(f"   ↳ 🎯 SEGNALE! {side} | Mov {movement:+.4f}% > Soglia {threshold}%")
+                        log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
+                        success = self.trader.execute_market_trade(m, movement)
+                        if success:
+                            self.last_trade_times[asset] = now
+                            self.state["stats"]["won_bets"] += 1
+                            log.info(f"   ↳ ✅ TRADE ESEGUITO!")
+                        else:
+                            log.error(f"   ↳ ❌ Trade fallito.")
+                    else:
+                        pct = (abs(movement) / threshold) * 100
+                        log.info(f"   ↳ ⏳ Sotto soglia ({pct:.0f}% del target). Attendo...")
+                
+                # 4. Salvataggio stato dashboard
+                self.state["last_update"] = int(now)
                 with open(self.state_file, "w") as f:
                     json.dump(self.state, f, indent=2)
                     
             except Exception as e:
-                log.error(f"Errore loop bot: {e}")
+                log.error(f"❌ Errore loop: {e}")
             
-            await asyncio.sleep(1) # Log ogni secondo
+            await asyncio.sleep(1)
 
 if __name__ == "__main__":
     bot = NitroBotPoly()
