@@ -140,4 +140,5 @@ if __name__ == "__main__":
     try:
         asyncio.run(bot.run())
     except KeyboardInterrupt:
-        log.info("Chiusura Bot...")
+        bot.feed.stop()
+        log.info("Chiusura Bot... Bye!")
