@@ -25,9 +25,8 @@ class PolyWatcher:
         params = {
             "active": "true",
             "closed": "false",
-            "limit": 1000,
-            "order": "volume",
-            "ascending": "false"
+            "limit": 100,
+            "search": "btc-updown-5m"
         }
         
         all_found = []
