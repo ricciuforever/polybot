@@ -44,6 +44,8 @@ class NitroBotPoly:
             try:
                 # 1. Recupero Mercati attivi da Gamma API
                 markets = self.watcher.find_btc_markets(limit=20)
+                btc_price = self.feed.get_price("BTC")
+                log.info(f"🔎 [RADAR] Scansione: {len(markets)} mercati trovati | BTC: ${btc_price:,.2f}")
                 
                 # 2. Recupero Saldi, Posizioni e Storico
                 pol, usdc = self.trader.get_balances()
@@ -64,9 +66,11 @@ class NitroBotPoly:
                 processed_live = []
                 for m in markets:
                     try:
-                        asset = m['asset_name']
+                        asset = m['asset']
                         movement = self.watcher.prices.get(asset, 0)
                         threshold = config.THRESHOLDS.get(asset, 0.10)
+                        
+                        log.debug(f"  > Analisi {m['title']}: Movimento {movement:+.4f}% (Soglia: {threshold}%)")
                         
                         # Controllo Cooldown: Se abbiamo già scommesso su questo asset < 5 min fa, salta
                         last_t = self.last_trade_times.get(asset, 0)

@@ -37,6 +37,7 @@ class PolyWatcher:
                 return []
             
             data = resp.json()
+            log.info(f"📡 Gamma API: Ricevuti {len(data)} mercati da analizzare.")
             for m in data:
                 q = m.get('question', '').lower()
                 
@@ -48,7 +49,7 @@ class PolyWatcher:
                         break
                 
                 if matched_asset:
-                    # Filtro Sniper Matematico + Filtro Imminenza (Next 10 mins)
+                    # Filtro Sniper Matematico + Filtro Imminenza
                     import re
                     from datetime import datetime
                     times = re.findall(r"(\d+):(\d+)", q)
@@ -59,42 +60,33 @@ class PolyWatcher:
                         try:
                             h1, m1 = map(int, times[0])
                             h2, m2 = map(int, times[1])
-                            
-                            # Calcolo durata (solo 5 min esatti)
                             duration = abs((h2 * 60 + m2) - (h1 * 60 + m1))
                             if duration == 5 or duration == 1435:
                                 is_real_5m = True
-                                
-                            # Calcolo Imminenza: deve iniziare tra poco (considerando ET time approssimativo)
-                            # Nota: Polymarket usa ET. Qui facciamo un controllo relativo semplice:
-                            # Se l'orario del match è molto diverso dall'attuale, lo scartiamo.
-                            # Per ora, per semplicità e sicurezza, filtriamo solo i 5 minuti reali.
-                            # Ma aggiungiamo un controllo per evitare quelli palesemente futuri:
-                            # Calcolo Imminenza: mostriamo tutto ciò che inizia nelle prossime 24 ore
-                            if True: # Rilassiamo al massimo per vedere tutti i mercati BTC 5m
-                                is_imminent = True
+                            is_imminent = True # Mostriamo tutto ciò che inizia nelle prossime 24 ore
                         except: pass
                     
+                    clob_ids = m.get('clobTokenIds')
+                    if clob_ids:
+                        try:
                             tokens = json.loads(clob_ids)
-                            # Se è un mercato Up/Down o Price, lo prendiamo
                             is_crypto_target = any(x in q for x in ["up or down", "price of", "bitcoin", "btc"])
                             
                             if is_crypto_target and is_imminent:
                                 all_found.append({
-                                "id": m['id'],
-                                "title": m['question'],
-                                "conditionId": m['conditionId'],
-                                "token_yes": tokens[0],
-                                "token_no": tokens[1],
-                                "volume": float(m.get('volume', 0)),
-                                "asset": matched_asset
-                            })
-                        except: continue
+                                    "id": m['id'],
+                                    "title": m['question'],
+                                    "conditionId": m['conditionId'],
+                                    "token_yes": tokens[0],
+                                    "token_no": tokens[1],
+                                    "volume": float(m.get('volume', 0)),
+                                    "asset": matched_asset
+                                })
+                        except: pass
             
-            # Ordina per volume
             all_found.sort(key=lambda x: x['volume'], reverse=True)
             return all_found[:limit]
             
         except Exception as e:
-            log.error(f"Errore scansione Gamma API: {e}")
+            log.error(f"Errore Gamma API: {e}")
             return []
