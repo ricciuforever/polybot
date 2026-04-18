@@ -12,6 +12,9 @@ done
 
 echo "Utilizzando $PYTHON_CMD per la creazione del venv..."
 
+# Cancella il vecchio venv 3.8 se esiste per forzare un ambiente pulito 3.9
+rm -rf venv
+
 # Crea il virtual environment isolato
 $PYTHON_CMD -m venv venv
 
