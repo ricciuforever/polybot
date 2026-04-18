@@ -6,3 +6,5 @@ colorama>=0.4.6
 flask
 flask-cors
 google-generativeai
+web3
+eth-account
