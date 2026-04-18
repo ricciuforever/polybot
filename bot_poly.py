@@ -64,13 +64,13 @@ class NitroBotPoly:
                     cached_markets = self.watcher.find_btc_markets(limit=20)
                     last_api_call = now
                 
-                # 1b. Check saldo e stato operativo (ogni 30s)
+                # 1b. Check saldo + auto-redeem (ogni 30s)
                 if now - last_redeem_check > REDEEM_INTERVAL:
+                    redeemed = self.trader.auto_redeem()
                     pol, usdc = self.trader.get_balances()
-                    self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
-                    if usdc >= 1.05:
-                        log.info(f"💰 Saldo: ${usdc:.2f} USDC | ✅ Pronto per operare")
-                    else:
+                    if redeemed:
+                        log.info(f"💰 Riscattate {redeemed} posizioni! Saldo: ${usdc:.2f} USDC")
+                    elif usdc < 1.05:
                         log.warning(f"💰 Saldo: ${usdc:.2f} USDC | ⚠️ Sotto soglia minima ($1.05)")
                     last_redeem_check = now
                 

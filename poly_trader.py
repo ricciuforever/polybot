@@ -202,64 +202,93 @@ class PolyTrader:
             log.error(f"Errore approvazione dinamica: {e}")
 
     def auto_redeem(self):
-        """Riscuote automaticamente i profitti da mercati risolti (resolved)."""
+        """Riscuote automaticamente i profitti da mercati BTC 5m chiusi."""
         try:
-            url = f"https://data-api.polymarket.com/positions?user={self.my_address}"
-            resp = requests.get(url, timeout=10)
-            if resp.status_code != 200:
-                return
+            # Recupera gli ultimi trades per trovare i market hash
+            trades = self.client.get_trades()
+            if not trades:
+                return 0
             
-            positions = resp.json()
+            # Deduplicazione: raccoglie i market hash unici
+            seen_markets = set()
             redeemed = 0
             
-            for p in positions:
-                size = float(p.get('size', 0))
-                if size < 0.01:
+            for tr in trades[:20]:  # Ultimi 20 trades
+                market_hash = tr.get("market", "")
+                if market_hash in seen_markets:
                     continue
+                seen_markets.add(market_hash)
                 
-                cond_id = p.get('condition_id')
-                if not cond_id:
-                    continue
-                
-                # Verifica se il mercato è risolto
+                # Cerca il conditionId
+                asset_id = tr.get("asset_id", "")
                 try:
-                    g_url = f"https://gamma-api.polymarket.com/markets?conditionId={cond_id}"
-                    g_resp = requests.get(g_url, timeout=5)
-                    if g_resp.status_code == 200:
-                        g_data = g_resp.json()
-                        if g_data and g_data[0].get('closed'):
-                            # Mercato CHIUSO → Prova a riscuotere via CTF
-                            log.info(f"   💰 Mercato risolto trovato: {g_data[0].get('question', '')[:50]}")
-                            
-                            ctf_abi = [{"inputs": [{"name": "conditionId", "type": "bytes32"}, {"name": "indexSets", "type": "uint256[]"}], "name": "redeemPositions", "outputs": [], "stateMutability": "nonpayable", "type": "function"}]
-                            ctf = self.w3.eth.contract(
-                                address=Web3.to_checksum_address(config.POLY_CTF),
-                                abi=ctf_abi
-                            )
-                            
-                            # indexSets: [1, 2] = riscuoti sia YES che NO
-                            cond_bytes = bytes.fromhex(cond_id) if not cond_id.startswith('0x') else bytes.fromhex(cond_id[2:])
-                            tx = ctf.functions.redeemPositions(
-                                cond_bytes,
-                                [1, 2]
-                            ).build_transaction({
-                                'from': self.my_address,
-                                'nonce': self.w3.eth.get_transaction_count(self.my_address),
-                                'gas': 200000,
-                                'gasPrice': self.w3.eth.gas_price
-                            })
-                            signed = self.w3.eth.account.sign_transaction(tx, config.PRIVATE_KEY)
-                            tx_hash = self.w3.eth.send_raw_transaction(signed.raw_transaction)
-                            log.info(f"   💰 Redeem TX inviata: {tx_hash.hex()[:20]}...")
-                            redeemed += 1
+                    g = requests.get(
+                        "https://gamma-api.polymarket.com/markets",
+                        params={"clob_token_ids": asset_id},
+                        timeout=5
+                    )
+                    if g.status_code != 200 or not g.json():
+                        continue
+                    
+                    m = g.json()[0]
+                    if not m.get("closed"):
+                        continue  # Mercato ancora aperto
+                    
+                    cond_id = m.get("conditionId", "")
+                    if not cond_id:
+                        continue
+                    
+                    log.info(f"   💰 Mercato chiuso: {m.get('question', '')[:50]}")
+                    
+                    # ABI corretta con collateralToken e parentCollectionId
+                    redeem_abi = [{
+                        "inputs": [
+                            {"name": "collateralToken", "type": "address"},
+                            {"name": "parentCollectionId", "type": "bytes32"},
+                            {"name": "conditionId", "type": "bytes32"},
+                            {"name": "indexSets", "type": "uint256[]"}
+                        ],
+                        "name": "redeemPositions",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    }]
+                    
+                    ctf = self.w3.eth.contract(
+                        address=Web3.to_checksum_address(config.POLY_CTF),
+                        abi=redeem_abi
+                    )
+                    
+                    cond_bytes = bytes.fromhex(cond_id[2:] if cond_id.startswith("0x") else cond_id)
+                    parent = b'\x00' * 32
+                    usdc = Web3.to_checksum_address(config.POLY_USDC)
+                    
+                    tx = ctf.functions.redeemPositions(
+                        usdc, parent, cond_bytes, [1, 2]
+                    ).build_transaction({
+                        'from': self.my_address,
+                        'nonce': self.w3.eth.get_transaction_count(self.my_address),
+                        'gas': 300000,
+                        'gasPrice': self.w3.eth.gas_price
+                    })
+                    signed = self.w3.eth.account.sign_transaction(tx, config.PRIVATE_KEY)
+                    tx_hash = self.w3.eth.send_raw_transaction(signed.raw_transaction)
+                    receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash, timeout=15)
+                    
+                    if receipt.status == 1:
+                        log.info(f"   💰 ✅ Redeem riuscito! TX: {tx_hash.hex()[:20]}...")
+                        redeemed += 1
+                    else:
+                        log.warning(f"   💰 ❌ Redeem fallito (nulla da riscuotere)")
+                        
                 except Exception as e:
-                    log.warning(f"   ⚠️ Errore redeem per {cond_id[:10]}: {e}")
+                    pass  # Silenzioso per mercati senza match
             
-            if redeemed > 0:
-                log.info(f"💰 Auto-redeem completato: {redeemed} posizioni riscattate!")
+            return redeemed
             
         except Exception as e:
             log.warning(f"Errore auto-redeem: {e}")
+            return 0
 
     def get_positions(self):
         """Recupera solo le posizioni ATTIVE del 2026, ignorando lo storico obsoleto."""
