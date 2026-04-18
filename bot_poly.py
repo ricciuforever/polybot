@@ -105,7 +105,9 @@ class NitroBotPoly:
                                 {"outcomeId": m['token_no'], "name": "NO", "odds": odds_no}
                             ]
                         })
-                    except: continue
+                    except Exception as ex:
+                        log.error(f"   ↳ ❌ ERRORE valutazione mercato: {ex}")
+                        continue
                 
                 self.state["live_games"] = processed_live
                 self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
@@ -133,7 +135,7 @@ class NitroBotPoly:
             except Exception as e:
                 log.error(f"Errore loop bot: {e}")
             
-            await asyncio.sleep(5) # Ciclo rapido Sniper Mode
+            await asyncio.sleep(1) # Log ogni secondo
 
 if __name__ == "__main__":
     bot = NitroBotPoly()
