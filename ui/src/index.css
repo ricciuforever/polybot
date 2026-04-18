@@ -7,52 +7,66 @@
   --color-neon: #00f2ff;
   --color-accent: #ff00d9;
   
-  --shadow-neon: 0 0 10px rgba(0, 242, 255, 0.5);
-  --shadow-accent: 0 0 10px rgba(255, 0, 217, 0.5);
+  --shadow-neon: 0 0 20px rgba(0, 242, 255, 0.3);
+  --shadow-accent: 0 0 20px rgba(255, 0, 217, 0.3);
 }
 
 @layer base {
   body {
-    background-color: var(--color-background);
-    color: #f4f4f5; /* zinc-100 */
-    font-family: sans-serif;
+    @apply bg-[#0a0a0c] text-zinc-100 antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background-image: 
-      radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(0, 242, 255, 0.1) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(0, 242, 255, 0.05) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(255, 0, 217, 0.03) 0px, transparent 50%);
+    background-attachment: fixed;
   }
 }
 
 .glass {
-  @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl;
+  @apply bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass:hover {
+  @apply bg-white/[0.05] border-white/20;
 }
 
 .glass-dark {
-  @apply bg-black/40 backdrop-blur-lg border border-white/5 rounded-2xl;
+  @apply bg-black/40 backdrop-blur-2xl border border-white/5 rounded-2xl shadow-inner;
 }
 
 .neon-border {
   @apply border border-neon/30 shadow-neon;
 }
 
-.accent-border {
-  @apply border border-accent/30 shadow-accent;
-}
-
 .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-neon to-accent;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-neon via-indigo-400 to-accent;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
 }
-::-webkit-scrollbar-thumb {
-  background: #1f2937;
-  border-radius: 10px;
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-white/20;
+}
+
+/* Animations */
+@keyframes pulse-neon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-neon {
+  animation: pulse-neon 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.shadow-neon {
+  box-shadow: var(--shadow-neon);
 }

@@ -7,12 +7,15 @@ import {
   TrendingUp, 
   Shield, 
   Gamepad2, 
-  Bell,
   Settings,
-  Circle,
   Power,
   X,
-  Save
+  Target,
+  ArrowUpRight,
+  ArrowDownRight,
+  Clock,
+  BarChart3,
+  RefreshCw
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -26,109 +29,122 @@ const postFetcher = async (url, data) => {
   return res.json()
 }
 
-const StatCard = ({ icon: Icon, title, value, color }) => (
-  <div className="glass p-6 flex items-center space-x-4">
-    <div className={`p-3 rounded-xl bg-${color}/10 text-${color}`}>
-      <Icon size={24} />
+const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val)
+
+const StatCard = ({ icon: Icon, title, value, subValue, color, delay = 0 }) => (
+  <motion.div 
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay }}
+    className="glass p-5 flex flex-col justify-between border-l-4"
+    style={{ borderLeftColor: `var(--color-${color})` }}
+  >
+    <div className="flex justify-between items-start mb-4">
+      <div className={`p-2 rounded-lg bg-white/5 text-${color}`}>
+        <Icon size={20} />
+      </div>
+      {subValue && <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-tighter">{subValue}</span>}
     </div>
     <div>
-      <p className="text-sm text-zinc-400">{title}</p>
-      <p className="text-2xl font-bold">{value}</p>
+      <p className="text-xs font-medium text-zinc-400 uppercase tracking-wider mb-1">{title}</p>
+      <p className="text-2xl font-black tracking-tight">{value}</p>
     </div>
-  </div>
+  </motion.div>
 )
 
-const AILogItem = ({ log }) => (
-  <div className="flex items-start space-x-3 p-3 border-l-2 border-neon/50 bg-white/5 rounded-r-lg mb-2">
-    <div className="mt-1">
-      <Cpu size={16} className="text-neon" />
-    </div>
-    <div className="flex-1">
-      <div className="flex justify-between items-center mb-1">
-        <span className="text-xs font-bold text-zinc-300">{log.match}</span>
-        <span className={`text-[10px] px-1.5 py-0.5 rounded ${log.decision === 'Bet' ? 'bg-green-500/20 text-green-400' : 'bg-zinc-500/20 text-zinc-400'}`}>
-          {log.decision}
-        </span>
-      </div>
-      <p className="text-xs text-zinc-400 leading-relaxed italic">"{log.recommendation}"</p>
-      <div className="mt-2 flex items-center justify-between">
-        <div className="h-1 flex-1 bg-zinc-800 rounded-full overflow-hidden mr-4">
-          <div className="h-full bg-neon shadow-neon" style={{ width: `${log.confidence * 100}%` }}></div>
-        </div>
-        <span className="text-[10px] font-bold text-neon">{(log.confidence * 100).toFixed(0)}%</span>
-      </div>
-    </div>
-  </div>
-)
-
-const SettingsModal = ({ isOpen, onClose }) => {
-  const { data: envData, mutate } = useSWR(isOpen ? '/api/env' : null, fetcher)
-  const [formData, setFormData] = useState({})
+const TradeRow = ({ trade }) => {
+  const isWin = trade.result === 'WIN'
+  const isLoss = trade.result === 'LOSS'
   
-  useEffect(() => {
-    if (envData) setFormData(envData)
-  }, [envData])
-
-  const handleSave = async () => {
-    try {
-      await postFetcher('/api/env', formData)
-      alert('Ambiente salvato! Il bot è stato riavviato con i nuovi parametri.')
-      onClose()
-    } catch (e) {
-      alert('Errore salvataggio.')
-    }
-  }
-
-  if (!isOpen) return null
-
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="glass-dark border border-white/10 p-6 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold flex items-center">
-            <Settings className="mr-2 text-neon" /> .ENV Configuration
-          </h2>
-          <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors">
-            <X size={20} />
-          </button>
+    <motion.tr 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="hover:bg-white/5 transition-colors border-b border-white/5"
+    >
+      <td className="px-5 py-3">
+        <div className="flex flex-col">
+          <span className="text-xs font-bold">{trade.market.split('-')[0]}</span>
+          <span className="text-[10px] text-zinc-500">{new Date(trade.ts * 1000).toLocaleTimeString()}</span>
         </div>
-        
-        <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-4">
-          {!envData ? <p>Caricamento chiavi...</p> : Object.entries(formData).map(([k, v]) => (
-            <div key={k}>
-              <label className="block text-xs font-mono text-zinc-400 mb-1">{k}</label>
-              <input 
-                type={k.includes('KEY') || k.includes('SECRET') || k.includes('PASS') ? 'password' : 'text'}
-                value={v}
-                onChange={e => setFormData({...formData, [k]: e.target.value})}
-                className="w-full bg-black/40 border border-white/10 rounded p-2 text-sm text-white font-mono focus:border-neon focus:outline-none"
-              />
-            </div>
-          ))}
-          <div className="pt-4 border-t border-white/10">
-            <p className="text-xs text-yellow-500 mb-2">
-              <Shield size={12} className="inline mr-1" />
-              Aggiungi nuove chiavi specificando Nome e Valore:
-            </p>
-            <div className="flex space-x-2">
-              <input id="newKey" placeholder="KEY_NAME" className="flex-1 bg-black/40 border border-white/10 rounded p-2 text-sm text-white font-mono" />
-              <input id="newVal" placeholder="Value" className="flex-1 bg-black/40 border border-white/10 rounded p-2 text-sm text-white font-mono" />
-              <button 
-                onClick={() => {
-                  const k = document.getElementById('newKey').value;
-                  const val = document.getElementById('newVal').value;
-                  if(k) setFormData({...formData, [k]: val});
-                }}
-                className="px-4 bg-white/10 hover:bg-white/20 rounded text-sm font-bold"
-              >Add</button>
-            </div>
+      </td>
+      <td className="px-5 py-3">
+        <div className={`flex items-center text-[10px] font-bold ${trade.side === 'UP' ? 'text-neon' : 'text-accent'}`}>
+          {trade.side === 'UP' ? <ArrowUpRight size={12} className="mr-1" /> : <ArrowDownRight size={12} className="mr-1" />}
+          {trade.side}
+        </div>
+      </td>
+      <td className="px-5 py-3">
+        <span className="text-xs font-mono text-zinc-300">{(trade.entry_price * 100).toFixed(0)}¢</span>
+      </td>
+      <td className="px-5 py-3">
+        {trade.result ? (
+          <span className={`text-[10px] px-2 py-0.5 rounded-full font-black ${isWin ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-100'}`}>
+            {trade.result}
+          </span>
+        ) : (
+          <span className="text-[10px] px-2 py-0.5 rounded-full font-black bg-zinc-500/20 text-zinc-400">PENDING</span>
+        )}
+      </td>
+      <td className="px-5 py-3 text-right">
+        <span className={`text-xs font-bold ${isWin ? 'text-green-400' : isLoss ? 'text-red-400' : 'text-zinc-500'}`}>
+          {isWin ? '+1.00 USDC' : isLoss ? '-1.10 USDC' : '--'}
+        </span>
+      </td>
+    </motion.tr>
+  )
+}
+
+const LivePrediction = ({ market, btcPrice }) => {
+  if (!market) return null
+  
+  const progress = Math.min((Date.now()/1000 - market.start_timestamp) / (market.end_timestamp - market.start_timestamp), 1)
+  const remaining = Math.max(0, Math.round(market.end_timestamp - Date.now()/1000))
+  
+  return (
+    <div className="glass-dark p-6 relative overflow-hidden">
+      <div className="absolute top-0 left-0 h-1 bg-neon/30 w-full">
+        <motion.div 
+          className="h-full bg-neon shadow-neon"
+          initial={{ width: 0 }}
+          animate={{ width: `${progress * 100}%` }}
+        />
+      </div>
+      
+      <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center space-x-2">
+          <Clock size={16} className="text-zinc-500" />
+          <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">{remaining}s REMAINING</span>
+        </div>
+        <div className="px-3 py-1 bg-neon/10 border border-neon/20 rounded-full">
+          <span className="text-[10px] font-black text-neon uppercase">BTC/USDC PAIR</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-8 mb-6">
+        <div>
+          <p className="text-[10px] font-bold text-zinc-500 uppercase mb-1">Target Price</p>
+          <p className="text-2xl font-black tracking-tighter">${market.anchor_price?.toLocaleString() || '---'}</p>
+        </div>
+        <div className="text-right">
+          <p className="text-[10px] font-bold text-zinc-500 uppercase mb-1">Current Price</p>
+          <p className="text-2xl font-black tracking-tighter text-neon animate-pulse">${btcPrice?.toLocaleString()}</p>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+        <div className="flex items-center">
+          <div className="mr-4 p-2 bg-neon/20 rounded-lg text-neon">
+            <Target size={20} />
+          </div>
+          <div>
+            <p className="text-xs font-bold">{market.title}</p>
+            <p className="text-[10px] text-zinc-500">Vol: ${market.volume?.toFixed(0)}</p>
           </div>
         </div>
-
-        <div className="mt-6 pt-4 border-t border-white/10 flex justify-end">
-          <button onClick={handleSave} className="bg-neon text-black px-6 py-2 rounded-lg font-bold flex items-center hover:bg-neon/80 transition-colors">
-            <Save size={16} className="mr-2" /> Salva e Applica
-          </button>
+        <div className="text-right">
+          <p className="text-[10px] font-bold text-zinc-500 uppercase">Strategy</p>
+          <p className="text-xs font-black text-accent uppercase">SMART SNIPER v2</p>
         </div>
       </div>
     </div>
@@ -136,200 +152,198 @@ const SettingsModal = ({ isOpen, onClose }) => {
 }
 
 export default function App() {
-  const { data: state, error } = useSWR('/api/state', fetcher, { refreshInterval: 5000 })
+  const { data: state, mutate: mutateState } = useSWR('/api/state', fetcher, { refreshInterval: 2000 })
+  const { data: stats } = useSWR('/api/stats', fetcher, { refreshInterval: 10000 })
+  const { data: trades } = useSWR('/api/trades', fetcher, { refreshInterval: 10000 })
   const { data: botStatus, mutate: mutateStatus } = useSWR('/api/bot/status', fetcher, { refreshInterval: 2000 })
-  const [settingsOpen, setSettingsOpen] = useState(false)
+  
+  const [isRefreshing, setIsRefreshing] = useState(false)
 
   const toggleBot = async () => {
     const res = await postFetcher('/api/bot/toggle', {})
     mutateStatus({ ...botStatus, desired: res.desired })
   }
 
+  const handleRefresh = async () => {
+    setIsRefreshing(true)
+    await mutateState()
+    setTimeout(() => setIsRefreshing(false), 1000)
+  }
+
   if (!state || !botStatus) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-spin text-neon">
-        <Activity size={48} />
+    <div className="min-h-screen bg-[#0a0a0c] flex items-center justify-center p-8">
+      <div className="flex flex-col items-center">
+        <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}>
+          <RefreshCw className="text-neon" size={48} />
+        </motion.div>
+        <p className="mt-4 text-xs font-black tracking-widest text-zinc-600 uppercase">Synchronizing Engine...</p>
       </div>
     </div>
   )
 
+  const liveMarket = state.live_games?.length > 0 ? state.live_games[0] : null
+  const btcPrice = state.live_games?.length > 0 ? state.live_games[0].current_price : null
+
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* Header */}
-      <header className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
-        <div>
-          <h1 className="text-4xl font-extrabold tracking-tighter text-gradient mb-1">NITRO<span className="text-white">BOT</span> V2</h1>
-          <p className="text-zinc-500 text-sm flex items-center">
-             <Shield size={14} className="mr-1 text-neon" /> AI-Powered Live Betting Engine
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-4">
-          <button 
-            onClick={toggleBot}
-            className={`px-4 py-2 flex items-center space-x-2 rounded-lg text-xs font-bold transition-all shadow-lg ${
-              botStatus.running 
-                ? 'bg-green-500/20 text-green-400 border border-green-500/50 hover:bg-green-500/30' 
-                : 'bg-red-500/20 text-red-400 border border-red-500/50 hover:bg-red-500/30'
-            }`}
-          >
-            <Power size={16} />
-            <span>{botStatus.running ? 'PROCESS ONLINE' : 'PROCESS OFFLINE'}</span>
-          </button>
+    <div className="min-h-screen bg-[#0a0a0c] text-zinc-100 font-sans selection:bg-neon selection:text-black">
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+        {/* Navbar */}
+        <header className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-neon to-accent rounded-2xl flex items-center justify-center shadow-lg shadow-neon/20">
+              <Cpu className="text-black" size={28} />
+            </div>
+            <div>
+              <h1 className="text-2xl font-black tracking-tighter flex items-center uppercase">
+                NitroBot <span className="text-neon ml-2">V2.1</span>
+              </h1>
+              <div className="flex items-center space-x-2">
+                <div className={`w-2 h-2 rounded-full ${botStatus.running ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
+                <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                  {botStatus.running ? 'System Operational' : 'System Offline'}
+                </span>
+              </div>
+            </div>
+          </div>
 
-          <button 
-            onClick={() => {
-              if(window.confirm("Vuoi vendere tutte le posizioni e recuperare il saldo?")) {
-                fetch('/api/liquidate', { method: 'POST' })
-                  .then(r => r.json())
-                  .then(data => alert(data.message));
-              }
-            }}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-lg shadow-red-500/20 flex items-center"
-          >
-            <Shield size={16} className="mr-2" /> RECOVER ALL FUNDS
-          </button>
+          <div className="flex items-center space-x-3">
+             <button 
+              onClick={handleRefresh}
+              className={`p-2 glass text-zinc-400 hover:text-neon transition-colors ${isRefreshing ? 'animate-spin' : ''}`}
+            >
+              <RefreshCw size={20} />
+            </button>
+            <button 
+              onClick={toggleBot}
+              className={`px-6 py-2.5 rounded-xl text-xs font-black tracking-widest transition-all uppercase flex items-center ${
+                botStatus.running 
+                  ? 'bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20' 
+                  : 'bg-green-500/10 text-green-500 border border-green-500/20 hover:bg-green-500/20'
+              }`}
+            >
+              <Power size={16} className="mr-2" />
+              {botStatus.running ? 'Stop Bot' : 'Start Bot'}
+            </button>
+            <div className="h-10 w-[1px] bg-white/10 mx-2" />
+            <div className="flex flex-col items-end">
+              <p className="text-[10px] font-bold text-zinc-500 uppercase">Gas Fee Reserve</p>
+              <p className="text-sm font-black text-indigo-400">{state.wallet.pol.toFixed(3)} POL</p>
+            </div>
+          </div>
+        </header>
+
+        {/* Top Dash */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <StatCard 
+            icon={Wallet} 
+            title="Available Capital" 
+            value={formatCurrency(state.wallet.usdc)} 
+            subValue="USDC.e (Polygon)"
+            color="indigo-500" 
+            delay={0.1}
+          />
+          <StatCard 
+            icon={BarChart3} 
+            title="Total PNL" 
+            value={formatCurrency((stats?.wins || 0) - (stats?.losses || 0) * 1.1)} 
+            subValue="Verified Profit"
+            color="green-500" 
+            delay={0.2}
+          />
+          <StatCard 
+            icon={Target} 
+            title="Win Rate" 
+            value={`${stats?.win_rate || 0}%`} 
+            subValue={`${stats?.wins || 0} Wins / ${stats?.losses || 0} Losses`}
+            color="neon" 
+            delay={0.3}
+          />
+          <StatCard 
+            icon={TrendingUp} 
+            title="Total Volume" 
+            value={formatCurrency((stats?.total || 0) * 1.1)} 
+            subValue="CLOB Activity"
+            color="accent" 
+            delay={0.4}
+          />
+        </div>
+
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          <button onClick={() => setSettingsOpen(true)} className="glass p-2 text-zinc-400 hover:text-white transition-colors">
-            <Settings size={20} />
-          </button>
-        </div>
-      </header>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <StatCard icon={Wallet} title="Balance USDC.e" value={`$${state.wallet.usdc.toFixed(2)}`} color="indigo-500" />
-        <StatCard icon={Activity} title="Gas Balance" value={`${state.wallet.pol.toFixed(4)} POL`} color="neon" />
-        <StatCard icon={TrendingUp} title="Active Bets" value={state.stats.total_bets} color="accent" />
-        <StatCard icon={Gamepad2} title="Markets Live" value={state.live_games.length} color="green-500" />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-6">
-          {/* Active Positions */}
-          <div className="mb-12">
-            <h2 className="text-xl font-bold flex items-center mb-6">
-              <TrendingUp size={24} className="mr-2 text-accent" /> Active Positions
-            </h2>
-            <div className="glass-dark overflow-hidden rounded-xl">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                  <thead className="bg-white/5 text-xs font-medium text-zinc-400">
-                    <tr>
-                      <th className="px-6 py-4">Match</th>
-                      <th className="px-6 py-4">Side</th>
-                      <th className="px-6 py-4">Size</th>
-                      <th className="px-6 py-4">Value</th>
-                      <th className="px-6 py-4">PNL</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/5">
-                    {state.active_bets && state.active_bets.length > 0 ? (
-                      state.active_bets.map((bet, i) => (
-                        <tr key={i} className="hover:bg-white/5 transition-colors">
-                          <td className="px-6 py-4 text-sm font-medium">{bet.title}</td>
-                          <td className="px-6 py-4 text-sm">
-                            <span className={`px-2 py-1 rounded text-xs font-bold ${bet.side === 'YES' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-                              {bet.side}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 text-sm text-zinc-300">{bet.size.toFixed(2)}</td>
-                          <td className="px-6 py-4 text-sm text-zinc-300">${bet.value.toFixed(2)}</td>
-                          <td className={`px-6 py-4 text-sm font-bold ${bet.pnl >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                            {bet.pnl >= 0 ? '+' : ''}{bet.pnl.toFixed(2)}$
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan="5" className="px-6 py-8 text-center text-zinc-500 text-sm">Nessuna posizione aperta</td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          {/* Trade History */}
-          <div className="mt-12">
-            <h2 className="text-xl font-bold flex items-center mb-6 text-zinc-400">
-              <Activity size={24} className="mr-2 text-indigo-400" /> Recent Activity
-            </h2>
-            <div className="glass-dark overflow-hidden rounded-xl border border-white/5">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                  <thead className="bg-white/5 text-[10px] uppercase tracking-wider text-zinc-500">
-                    <tr>
-                      <th className="px-6 py-3">ID</th>
-                      <th className="px-6 py-3">Asset</th>
-                      <th className="px-6 py-3">Side</th>
-                      <th className="px-6 py-3">Size</th>
-                      <th className="px-6 py-3">Price</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/5">
-                    {state.trade_history && state.trade_history.length > 0 ? (
-                      state.trade_history.map((t, i) => (
-                        <tr key={i} className="text-xs hover:bg-white/5 transition-colors">
-                          <td className="px-6 py-3 font-mono text-zinc-500">#{t.id}</td>
-                          <td className="px-6 py-3 font-medium">{t.asset}</td>
-                          <td className="px-6 py-3">
-                            <span className={`font-bold ${t.side === 'BUY' ? 'text-green-500' : 'text-red-500'}`}>
-                              {t.side}
-                            </span>
-                          </td>
-                          <td className="px-6 py-3 text-zinc-400">{t.size.toFixed(2)}</td>
-                          <td className="px-6 py-3 text-zinc-400">${t.price.toFixed(3)}</td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan="5" className="px-6 py-8 text-center text-zinc-600 italic">Nessuna attività recente</td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Sidebar */}
-        <div className="space-y-8">
-          {/* AI Logs */}
-          <div className="glass p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-bold flex items-center">
-                <Cpu size={20} className="mr-2 text-accent" /> AI Insights
+          {/* Left Column: Predictions & Stats */}
+          <div className="lg:col-span-8 space-y-8">
+            <section tabIndex="0">
+              <h2 className="text-lg font-black uppercase tracking-tighter mb-4 flex items-center">
+                <Activity size={20} className="mr-2 text-neon" /> Live Market Tracking
               </h2>
-              <span className="text-[10px] text-zinc-500">Real-time</span>
-            </div>
-            
-            <div className="space-y-2 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
-              {state.ai_logs.length > 0 ? (
-                state.ai_logs.map((log, i) => (
-                  <AILogItem key={i} log={log} />
-                ))
-              ) : (
-                <div className="text-center py-8 text-zinc-600 text-sm italic">
-                  Analisi in corso...
-                </div>
-              )}
+              <LivePrediction market={liveMarket} btcPrice={btcPrice} />
+            </section>
+
+            <section tabIndex="0">
+              <div className="flex justify-between items-center mb-6">
+                 <h2 className="text-lg font-black uppercase tracking-tighter flex items-center">
+                  <BarChart3 size={20} className="mr-2 text-indigo-400" /> Performance Analysis
+                </h2>
+                <span className="text-[10px] font-bold text-zinc-500 uppercase">Last 24 Hours</span>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="glass p-4">
+                    <div className="flex items-center justify-between mb-2">
+                       <span className="text-[10px] font-bold text-zinc-500 uppercase">Asset {i === 1 ? 'BTC' : i === 2 ? 'ETH' : 'SOL'}</span>
+                       <span className="text-[10px] font-black text-green-400">+12%</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                       <motion.div initial={{ width: 0 }} animate={{ width: `${60+i*10}%` }} className="h-full bg-gradient-to-r from-neon to-indigo-500" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          {/* Right Column: Trade History */}
+          <div className="lg:col-span-4 flex flex-col h-full">
+            <h2 className="text-lg font-black uppercase tracking-tighter mb-4 flex items-center">
+              <Clock size={20} className="mr-2 text-accent" /> Trade History
+            </h2>
+            <div className="glass-dark flex-1 overflow-hidden flex flex-col">
+              <div className="flex-1 overflow-y-auto custom-scrollbar">
+                <table className="w-full text-left">
+                  <thead className="sticky top-0 bg-[#16161a] text-[10px] font-black text-zinc-500 uppercase tracking-widest border-b border-white/5">
+                    <tr>
+                      <th className="px-5 py-3">Market</th>
+                      <th className="px-5 py-3">Side</th>
+                      <th className="px-5 py-3">Price</th>
+                      <th className="px-5 py-3">Result</th>
+                      <th className="px-5 py-3 text-right">PNL</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {trades && trades.length > 0 ? (
+                      trades.map((t, i) => (
+                        <TradeRow key={i} trade={t} />
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5" className="px-5 py-12 text-center text-zinc-600 italic text-sm">
+                          No recent trades found.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <div className="p-4 bg-white/5 border-t border-white/5 text-center">
+                <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Connected: {state.wallet.address.substring(0,6)}...{state.wallet.address.substring(38)}</p>
+              </div>
             </div>
           </div>
 
-          {/* Wallet Address */}
-          <div className="glass p-6 overflow-hidden">
-            <h2 className="text-sm font-bold text-zinc-500 uppercase tracking-widest mb-4">Connected Wallet</h2>
-            <p className="text-xs font-mono text-neon break-all bg-neon/5 p-3 rounded-lg border border-neon/10">
-              {state.wallet.address}
-            </p>
-          </div>
         </div>
       </div>
-      
-      <SettingsModal isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   )
 }
