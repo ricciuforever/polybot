@@ -3,7 +3,8 @@ cd /var/www/vhosts/emanueletolomei.it/polybot.emanueletolomei.it
 
 echo "Riavviando il Bot per applicare aggiornamenti..."
 
-# Uccidiamo i vecchi processi per ricaricare il codice e le chiavi .env
+# Uccidiamo i vecchi processi e liberiamo la porta 5000
+fuser -k 5000/tcp || true
 pkill -f "web_server_v2.py" || true
 pkill -f "bot_poly.py" || true
 
