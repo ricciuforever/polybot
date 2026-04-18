@@ -7,7 +7,8 @@ import threading
 import time
 import sys
 
-app = Flask(__name__, static_folder='ui/dist')
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+app = Flask(__name__, static_folder=os.path.join(BASE_DIR, 'ui/dist'), static_url_path='')
 CORS(app)
 
 def check_auth(username, password):
