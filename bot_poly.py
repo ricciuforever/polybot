@@ -44,7 +44,7 @@ class NitroBotPoly:
             try:
                 # 1. Recupero Mercati attivi da Gamma API
                 markets = self.watcher.find_btc_markets(limit=20)
-                btc_price = self.feed.get_price("BTC")
+                btc_price = self.feed.get_last_price("BTC")
                 log.info(f"🔎 [RADAR] Scansione: {len(markets)} mercati trovati | BTC: ${btc_price:,.2f}")
                 
                 # 2. Recupero Saldi, Posizioni e Storico
