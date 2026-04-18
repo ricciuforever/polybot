@@ -26,7 +26,7 @@ class PolyWatcher:
             "active": "true",
             "closed": "false",
             "limit": 100,
-            "search": "btc-updown-5m"
+            "search": "Bitcoin Up or Down"
         }
         
         all_found = []
