@@ -1,11 +1,15 @@
 #!/bin/bash
 cd /var/www/vhosts/emanueletolomei.it/polybot.emanueletolomei.it
 
-echo "Sincronizzazione e riavvio forzato in corso..."
+# CONTROLLO INTELLIGENTE:
+# Se il processo è già attivo, esci senza fare nulla.
+# Questo permette di impostare il Cron ogni 5 minuti senza interrompere il bot.
+if pgrep -f "web_server_v2.py" > /dev/null; then
+    echo "Il Bot è già operativo. Watchdog completato."
+    exit 0
+fi
 
-# Uccidiamo i vecchi processi per ricaricare il codice e le chiavi .env
-pkill -f "web_server_v2.py" || true
-pkill -f "bot_poly.py" || true
+echo "Bot non rilevato. Avvio procedura di ripristino..."
 
 # Cerchiamo la versione aggiornata di Python (Polymarket richiede >= 3.9.10)
 PYTHON_CMD="/usr/local/bin/python3.11"
@@ -18,7 +22,7 @@ if [ ! -d "venv" ]; then
     $PYTHON_CMD -m venv venv
 fi
 
-# Aggiorna pip e installa librerie (incluso web3 ora presente)
+# Installazione dipendenze
 venv/bin/python -m pip install --upgrade pip
 venv/bin/pip install -r requirements.txt
 
