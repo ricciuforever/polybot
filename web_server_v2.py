@@ -26,7 +26,7 @@ def require_auth():
 
 STATE_FILE = "bot_state.json"
 BOT_PROCESS = None
-DESIRED_STATE = False
+DESIRED_STATE = True
 
 def bot_manager():
     global BOT_PROCESS, DESIRED_STATE
