@@ -21,12 +21,12 @@ class PolyWatcher:
 
     def find_btc_markets(self, limit: int = 50) -> List[Dict[str, Any]]:
         """Trova i mercati crypto attivi scansionando i top 500 mercati per volume."""
-        endpoint = f"{self.url}/markets"
+        endpoint = f"{self.url}/events"
         params = {
             "active": "true",
             "closed": "false",
-            "limit": 100,
-            "search": "Bitcoin Up or Down"
+            "limit": 500,
+            "series_id": "10684" # ID Serie Ufficiale: BTC Up or Down 5m
         }
         
         all_found = []
@@ -36,7 +36,12 @@ class PolyWatcher:
                 log.error(f"Errore Gamma API: {resp.status_code}")
                 return []
             
-            data = resp.json()
+            events = resp.json()
+            data = []
+            for e in events:
+                if e.get("markets"):
+                    data.extend(e["markets"])
+                    
             log.info(f"📡 Gamma API: Ricevuti {len(data)} mercati da analizzare.")
             for m in data:
                 q = m.get('question', '').lower()
@@ -49,43 +54,39 @@ class PolyWatcher:
                         break
                 
                 if matched_asset:
-                    # Filtro Sniper Matematico + Filtro Imminenza
-                    import re
-                    from datetime import datetime
-                    times = re.findall(r"(\d+):(\d+)", q)
-                    is_real_5m = False
-                    is_imminent = False
-                    
-                    if len(times) >= 2:
-                        try:
-                            h1, m1 = map(int, times[0])
-                            h2, m2 = map(int, times[1])
-                            duration = abs((h2 * 60 + m2) - (h1 * 60 + m1))
-                            if duration == 5 or duration == 1435:
-                                is_real_5m = True
-                            is_imminent = True # Mostriamo tutto ciò che inizia nelle prossime 24 ore
-                        except: pass
-                    
                     clob_ids = m.get('clobTokenIds')
-                    if clob_ids:
+                    end_date_str = m.get('endDate')
+                    
+                    if clob_ids and end_date_str:
                         try:
-                            tokens = json.loads(clob_ids)
-                            is_crypto_target = any(x in q for x in ["up or down", "price of", "bitcoin", "btc"])
+                            from datetime import datetime, timezone
+                            # Parsing endDate UTC
+                            end_dt = datetime.strptime(end_date_str.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S%z")
+                            now_dt = datetime.now(timezone.utc)
                             
-                            if is_crypto_target and is_imminent:
-                                all_found.append({
-                                    "id": m['id'],
-                                    "title": m['question'],
-                                    "conditionId": m['conditionId'],
-                                    "token_yes": tokens[0],
-                                    "token_no": tokens[1],
-                                    "volume": float(m.get('volume', 0)),
-                                    "asset": matched_asset
-                                })
-                        except: pass
+                            # Filtro: solo il mercato che scade entro i prossimi 0-7 minuti
+                            diff_sec = (end_dt - now_dt).total_seconds()
+                            if 0 < diff_sec <= 420:
+                                tokens = json.loads(clob_ids)
+                                is_crypto_target = any(x in q for x in ["up or down"])
+                                
+                                if is_crypto_target:
+                                    all_found.append({
+                                        "id": m['id'],
+                                        "title": m['question'],
+                                        "conditionId": m['conditionId'],
+                                        "token_yes": tokens[0],
+                                        "token_no": tokens[1],
+                                        "volume": float(m.get('volume', 0)),
+                                        "asset": matched_asset,
+                                        "end_timestamp": end_dt.timestamp()
+                                    })
+                        except Exception as e: 
+                            pass
             
-            all_found.sort(key=lambda x: x['volume'], reverse=True)
-            return all_found[:limit]
+            # Ordiniamo dal più imminente in poi (quello currently live)
+            all_found.sort(key=lambda x: x['end_timestamp'])
+            return all_found[:1] # Restituiamo solo ed esclusivamente UNO (il Live)
             
         except Exception as e:
             log.error(f"Errore Gamma API: {e}")

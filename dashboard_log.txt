@@ -24,3 +24,27 @@
 2026-04-19 00:27:13 [INFO ] bot_poly — 🔎 [RADAR] Scansione: 0 mercati trovati | BTC: $75,697.93
 2026-04-19 00:28:38 [INFO ] bot_poly — 🔎 [RADAR] Scansione: 0 mercati trovati | BTC: $75,705.20
 2026-04-19 00:31:41 [INFO ] bot_poly — 🔎 [RADAR] Scansione: 0 mercati trovati | BTC: $75,742.00
+2026-04-19 00:33:03 [INFO ] bot_poly — 🚀 NitroBot POLYMARKET (Threshold Mode) Avviato!
+2026-04-19 00:33:03 [INFO ] bot_poly — Monitoraggio Asset: BTC
+2026-04-19 00:33:03 [INFO ] bot_poly — Wallet: 0x27Fb2C57b1149bE45d99070a906753D5A8ad6e3a
+2026-04-19 00:33:03 [INFO ] price_feed — BinanceFeed avviato (WebSocket Multi-Asset: BTC)
+2026-04-19 00:33:03 [INFO ] bot_poly — Attendo warm-up feed Binance...
+2026-04-19 00:33:05 [INFO ] price_feed — WebSocket Binance Multi-Asset connesso.
+2026-04-19 00:33:09 [INFO ] bot_poly — 🔎 [RADAR] Scansione: 0 mercati trovati | BTC: $75,781.23
+2026-04-19 00:33:58 [INFO ] bot_poly — Chiusura Bot...
+2026-04-19 00:34:08 [INFO ] bot_poly — 🚀 NitroBot POLYMARKET (Threshold Mode) Avviato!
+2026-04-19 00:34:08 [INFO ] bot_poly — Monitoraggio Asset: BTC
+2026-04-19 00:34:08 [INFO ] bot_poly — Wallet: 0x27Fb2C57b1149bE45d99070a906753D5A8ad6e3a
+2026-04-19 00:34:08 [INFO ] price_feed — BinanceFeed avviato (WebSocket Multi-Asset: BTC)
+2026-04-19 00:34:08 [INFO ] bot_poly — Attendo warm-up feed Binance...
+2026-04-19 00:34:09 [INFO ] price_feed — WebSocket Binance Multi-Asset connesso.
+2026-04-19 00:34:14 [INFO ] bot_poly — 🔎 [RADAR] Scansione: 0 mercati trovati | BTC: $75,790.45
+2026-04-19 00:34:48 [INFO ] bot_poly — Chiusura Bot...
+2026-04-19 00:37:19 [INFO ] bot_poly — 🚀 NitroBot POLYMARKET (Threshold Mode) Avviato!
+2026-04-19 00:37:19 [INFO ] bot_poly — Monitoraggio Asset: BTC
+2026-04-19 00:37:19 [INFO ] bot_poly — Wallet: 0x27Fb2C57b1149bE45d99070a906753D5A8ad6e3a
+2026-04-19 00:37:19 [INFO ] price_feed — BinanceFeed avviato (WebSocket Multi-Asset: BTC)
+2026-04-19 00:37:19 [INFO ] bot_poly — Attendo warm-up feed Binance...
+2026-04-19 00:37:21 [INFO ] price_feed — WebSocket Binance Multi-Asset connesso.
+2026-04-19 00:37:26 [INFO ] bot_poly — 🔎 [RADAR] Scansione: 20 mercati trovati | BTC: $75,792.97
+2026-04-19 00:38:59 [INFO ] bot_poly — Chiusura Bot...
