@@ -111,6 +111,18 @@ def get_state():
     with open(STATE_FILE, "r", encoding='utf-8') as f:
         return jsonify(json.load(f))
 
+@app.route('/api/logs')
+def get_logs():
+    if not os.path.exists("dashboard_log.txt"):
+        return jsonify({"logs": []})
+    try:
+        with open("dashboard_log.txt", "r", encoding='utf-8') as f:
+            lines = f.readlines()
+            # Restituiamo le ultime 50 righe pulite
+            return jsonify({"logs": [l.strip() for l in lines[-50:]]})
+    except Exception as e:
+        return jsonify({"logs": [f"Errore lettura log: {str(e)}"]})
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
