@@ -109,6 +109,74 @@ class PolyTrader:
                 except: pass
             return False, error_msg
 
+    def sniper_trade(self, market: dict, movement_pct: float) -> bool:
+        """Metodo principale per la strategia Sniper: traduce il mercato in un ordine CLOB."""
+        try:
+            # Determina direzione: se BTC sale → compra YES, se scende → compra NO
+            if movement_pct > 0:
+                token_id = market['token_yes']
+                direction = "UP → BUY YES"
+            else:
+                token_id = market['token_no']
+                direction = "DOWN → BUY NO"
+            
+            bet_size = config.BET_SIZE  # 1.10 USDC
+            
+            log.info(f"   📋 Direzione: {direction}")
+            log.info(f"   📋 Token ID: {token_id[:20]}...")
+            log.info(f"   📋 Importo: ${bet_size}")
+            
+            # Recupero order book per il miglior prezzo
+            log.info(f"   📋 Recupero Order Book...")
+            ob = self.client.get_order_book(token_id)
+            
+            if ob.asks:
+                best_price = float(ob.asks[0].price)
+                log.info(f"   📋 Miglior prezzo ASK: ${best_price}")
+            else:
+                best_price = 0.50
+                log.warning(f"   ⚠️ Nessun ASK trovato, uso prezzo default: ${best_price}")
+            
+            # Calcolo size (numero di shares da comprare)
+            size = round(bet_size / best_price, 2)
+            log.info(f"   📋 Size ordine: {size} shares @ ${best_price}")
+            
+            # Creazione ordine
+            order_args = OrderArgs(
+                price=best_price,
+                size=size,
+                side="BUY",
+                token_id=token_id
+            )
+            
+            log.info(f"   📋 Firma ordine in corso...")
+            signed = self.client.create_order(order_args)
+            
+            log.info(f"   📋 Invio ordine al CLOB...")
+            resp = self.client.post_order(signed)
+            
+            log.info(f"   📋 Risposta CLOB: {resp}")
+            
+            if resp.get('success') or resp.get('orderID'):
+                oid = resp.get('orderID') or resp.get('order_id')
+                log.info(f"   ✅ Ordine piazzato! ID: {oid}")
+                return True
+            else:
+                log.error(f"   ❌ Ordine RIFIUTATO dal CLOB: {resp}")
+                return False
+                
+        except Exception as e:
+            log.error(f"   ❌ ERRORE TRADE: {e}")
+            # Gestione Allowance automatica
+            error_msg = str(e)
+            if "allowance" in error_msg.lower():
+                log.info(f"   🛡️ Problema di allowance rilevato, provo ad approvare...")
+                try:
+                    spender = re.search(r"spender: (0x[a-fA-F0-9]{40})", error_msg).group(1)
+                    self.approve_spender(spender)
+                except: pass
+            return False
+
     def approve_spender(self, spender_address: str):
         """Approva un indirizzo specifico (contratto di scambio) a spendere USDC.e."""
         try:

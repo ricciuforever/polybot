@@ -125,7 +125,7 @@ class NitroBotPoly:
                         log.info(f"   ↳ Movimento: {movement_pct:+.4f}% > Soglia: {threshold}%")
                         log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
                         
-                        success = self.trader.execute_market_trade(m, movement_pct)
+                        success = self.trader.sniper_trade(m, movement_pct)
                         if success:
                             bet_placed = True
                             self.last_trade_times[m['asset']] = now
