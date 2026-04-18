@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory, request
+from flask import Flask, jsonify, send_from_directory, request, Response
 from flask_cors import CORS
 import json
 import os
@@ -9,6 +9,20 @@ import sys
 
 app = Flask(__name__, static_folder='ui/dist')
 CORS(app)
+
+def check_auth(username, password):
+    return username == 'ricciuforever' and password == 'Giusy.7@'
+
+def authenticate():
+    return Response('Login Required', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
+@app.before_request
+def require_auth():
+    if request.method == 'OPTIONS':
+        return
+    auth = request.authorization
+    if not auth or not check_auth(auth.username, auth.password):
+        return authenticate()
 
 STATE_FILE = "bot_state.json"
 BOT_PROCESS = None
