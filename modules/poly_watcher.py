@@ -61,9 +61,9 @@ class PolyWatcher:
                             h1, m1 = map(int, times[0])
                             h2, m2 = map(int, times[1])
                             
-                            # Calcolo durata (deve essere 5 min)
-                            duration = (h2 * 60 + m2) - (h1 * 60 + m1)
-                            if duration == 5 or duration == -1435:
+                            # Calcolo durata (gestisce AM/PM in modo semplificato ma efficace per le differenze brevi)
+                            duration = abs((h2 * 60 + m2) - (h1 * 60 + m1))
+                            if duration == 5 or duration == 10 or duration == 15 or duration == 1435:
                                 is_real_5m = True
                                 
                             # Calcolo Imminenza: deve iniziare tra poco (considerando ET time approssimativo)
@@ -76,13 +76,12 @@ class PolyWatcher:
                                 is_imminent = True
                         except: pass
                     
-                    if is_real_5m and is_imminent and ("up or down" in q or "price of" in q):
-                        clob_ids = m.get('clobTokenIds')
-                        if not clob_ids: continue
-                        
-                        try:
                             tokens = json.loads(clob_ids)
-                            all_found.append({
+                            # Se è un mercato Up/Down o Price, lo prendiamo
+                            is_crypto_target = any(x in q for x in ["up or down", "price of", "bitcoin", "btc"])
+                            
+                            if is_crypto_target and is_imminent:
+                                all_found.append({
                                 "id": m['id'],
                                 "title": m['question'],
                                 "conditionId": m['conditionId'],
