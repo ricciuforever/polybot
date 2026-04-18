@@ -75,15 +75,25 @@ class NitroBotPoly:
                 elapsed = now - market_start
                 remaining = market_end - now
                 
-                # 3. Rilevamento nuova finestra → Reset ancoraggio
+                # 3. Rilevamento nuova finestra → Ancora al prezzo REALE di inizio
                 if m['id'] != current_market_id:
                     current_market_id = m['id']
-                    anchor_price = btc_price
                     bet_placed = False
+                    
+                    # Recupera prezzo storico al VERO inizio della finestra Polymarket
+                    historical_price = self.feed.get_price_at_time("BTC", market_start)
+                    if historical_price > 0:
+                        anchor_price = historical_price
+                        log.info(f"   ⚓ Prezzo Ancorato (STORICO): ${anchor_price:,.2f} (dal buffer Binance)")
+                    else:
+                        anchor_price = btc_price
+                        log.info(f"   ⚓ Prezzo Ancorato (CORRENTE): ${anchor_price:,.2f} (buffer insufficiente)")
+                    
                     log.info(f"")
                     log.info(f"{'='*60}")
                     log.info(f"🆕 NUOVA FINESTRA: {m['title']}")
-                    log.info(f"   ⚓ Prezzo Ancorato: ${anchor_price:,.2f}")
+                    log.info(f"   ⚓ Price to Beat: ${anchor_price:,.2f}")
+                    log.info(f"   💲 Prezzo Attuale: ${btc_price:,.2f}")
                     log.info(f"   ⏱️  Durata: {int(market_end - market_start)}s | Scade tra {int(remaining)}s")
                     log.info(f"{'='*60}")
                 

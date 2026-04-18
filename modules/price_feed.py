@@ -37,13 +37,13 @@ class BinanceFeed:
     def get_window_movement(self, asset: str) -> float:
         now = time.time()
         cutoff_window = now - config.WINDOW_SECONDS
-        cutoff_trend = now - 300  # 5 minuti per il trend
+        cutoff_trend = now - 600  # 10 minuti di buffer storico
 
         with self._lock:
             window = self._windows.get(asset)
             if not window: return 0.0
 
-            # Rimuovi punti più vecchi di 5 minuti
+            # Rimuovi punti più vecchi di 10 minuti
             while window and window[0][0] < cutoff_trend:
                 window.popleft()
 
@@ -63,6 +63,24 @@ class BinanceFeed:
             return 0.0
 
         return ((newest_price - oldest_price_in_window) / oldest_price_in_window) * 100
+
+    def get_price_at_time(self, asset: str, target_ts: float) -> float:
+        """Recupera il prezzo più vicino a un timestamp passato dal buffer storico."""
+        with self._lock:
+            window = self._windows.get(asset)
+            if not window:
+                return 0.0
+            
+            # Cerca il prezzo più vicino al timestamp target
+            best_price = 0.0
+            best_diff = float('inf')
+            for ts, price in window:
+                diff = abs(ts - target_ts)
+                if diff < best_diff:
+                    best_diff = diff
+                    best_price = price
+            
+            return best_price
 
     def get_trend_direction(self, asset: str) -> int:
         """Ritorna 1 se il trend a 5m è UP, -1 se DOWN, 0 se neutrale."""
