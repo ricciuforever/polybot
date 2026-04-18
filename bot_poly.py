@@ -120,19 +120,32 @@ class NitroBotPoly:
                     f"{'🎯 PRONTO' if elapsed >= BET_AFTER_SEC and not bet_placed else '⏳ ACCUMULO' if not bet_placed else '✅ PIAZZATA'}"
                 )
                 
-                # 5. DECISIONE DI TRADING
+                # 5. DECISIONE DI TRADING — ALWAYS IN (ogni finestra)
                 if not bet_placed:
                     if elapsed < BET_AFTER_SEC:
                         # Fase di accumulo dati - non scommettiamo ancora
                         pass
                     elif remaining < NO_BET_LAST_SEC:
-                        # Troppo tardi - rischio di non riuscire a piazzare
+                        # Troppo tardi
                         log.warning(f"   ↳ ⚠️ Troppo tardi per scommettere ({int(remaining)}s rimasti)")
-                    elif abs(movement_pct) >= threshold:
-                        # SEGNALE FORTE → SCOMMETTI
-                        side = "UP (YES)" if movement_pct > 0 else "DOWN (NO)"
-                        log.info(f"   ↳ 🎯🎯🎯 SEGNALE CONFERMATO! {side}")
-                        log.info(f"   ↳ Movimento: {movement_pct:+.4f}% > Soglia: {threshold}%")
+                    else:
+                        # ALWAYS IN: scommetti nella direzione del trend attuale
+                        if movement_pct > 0:
+                            side = "UP (YES)"
+                        elif movement_pct < 0:
+                            side = "DOWN (NO)"
+                        else:
+                            # Piatto totale → usa il trend a 5m di Binance come tiebreaker
+                            trend = self.feed.get_trend_direction("BTC")
+                            if trend >= 0:
+                                side = "UP (YES)"
+                                movement_pct = 0.001  # Forzatura minima per il router
+                            else:
+                                side = "DOWN (NO)"
+                                movement_pct = -0.001
+                        
+                        log.info(f"   ↳ 🎯🎯🎯 ALWAYS IN! {side}")
+                        log.info(f"   ↳ Movimento dal PTB: {movement_pct:+.4f}%")
                         log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
                         
                         success = self.trader.sniper_trade(m, movement_pct)
@@ -142,9 +155,6 @@ class NitroBotPoly:
                             log.info(f"   ↳ ✅ TRADE ESEGUITO CON SUCCESSO!")
                         else:
                             log.error(f"   ↳ ❌ Trade fallito.")
-                    else:
-                        pct_of_target = (abs(movement_pct) / threshold) * 100
-                        log.info(f"   ↳ ⏳ Segnale debole ({pct_of_target:.0f}% del target). Attendo conferma...")
                 
                 # 6. Salvataggio stato dashboard
                 self.state["last_update"] = int(now)
