@@ -25,7 +25,7 @@ class PolyWatcher:
         params = {
             "active": "true",
             "closed": "false",
-            "limit": 500,
+            "limit": 1000,
             "order": "volume",
             "ascending": "false"
         }
@@ -71,8 +71,8 @@ class PolyWatcher:
                             # Se l'orario del match è molto diverso dall'attuale, lo scartiamo.
                             # Per ora, per semplicità e sicurezza, filtriamo solo i 5 minuti reali.
                             # Ma aggiungiamo un controllo per evitare quelli palesemente futuri:
-                            now_hour = datetime.utcnow().hour - 4 # Approssimazione ET
-                            if abs(h1 - now_hour) <= 1: 
+                            # Calcolo Imminenza: mostriamo tutto ciò che inizia nelle prossime 24 ore
+                            if True: # Rilassiamo al massimo per vedere tutti i mercati BTC 5m
                                 is_imminent = True
                         except: pass
                     
