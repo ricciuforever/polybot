@@ -7,14 +7,24 @@ import {
   TrendingUp, 
   Shield, 
   Gamepad2, 
-  LayoutDashboard,
   Bell,
   Settings,
-  Circle
+  Circle,
+  Power,
+  X,
+  Save
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
+const postFetcher = async (url, data) => {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  return res.json()
+}
 
 const StatCard = ({ icon: Icon, title, value, color }) => (
   <div className="glass p-6 flex items-center space-x-4">
@@ -26,40 +36,6 @@ const StatCard = ({ icon: Icon, title, value, color }) => (
       <p className="text-2xl font-bold">{value}</p>
     </div>
   </div>
-)
-
-const MatchCard = ({ game }) => (
-  <motion.div 
-    layout
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="glass-dark p-1 overflow-hidden"
-  >
-    <div className="p-4 bg-white/5 border-b border-white/5 flex justify-between items-center">
-      <span className="text-xs font-medium uppercase tracking-wider text-neon flex items-center">
-        <Circle className="fill-neon mr-2" size={8} /> {game.sport}
-      </span>
-      <span className="text-xs text-zinc-500">{game.league}</span>
-    </div>
-    <div className="p-5">
-      <h3 className="text-lg font-semibold text-center mb-4">{game.title}</h3>
-      <div className="grid grid-cols-3 gap-2">
-        {game.outcomes.map((o) => (
-          <div key={o.outcomeId} className="bg-white/5 p-3 rounded-lg text-center border border-white/5 hover:border-neon/30 transition-colors">
-            <p className="text-[10px] text-zinc-500 truncate mb-1">{o.name}</p>
-            <p className="text-sm font-bold text-neon">{o.odds.toFixed(2)}</p>
-          </div>
-        ))}
-      </div>
-      {game.score && (
-        <div className="mt-4 text-center">
-          <span className="px-3 py-1 bg-accent/20 text-accent text-xs font-bold rounded-full">
-            LIVE SCORE: {game.score}
-          </span>
-        </div>
-      )}
-    </div>
-  </motion.div>
 )
 
 const AILogItem = ({ log }) => (
@@ -85,12 +61,91 @@ const AILogItem = ({ log }) => (
   </div>
 )
 
-export default function App() {
-  const { data: state, error } = useSWR('http://localhost:5000/api/state', fetcher, {
-    refreshInterval: 5000
-  })
+const SettingsModal = ({ isOpen, onClose }) => {
+  const { data: envData, mutate } = useSWR(isOpen ? 'http://localhost:5000/api/env' : null, fetcher)
+  const [formData, setFormData] = useState({})
+  
+  useEffect(() => {
+    if (envData) setFormData(envData)
+  }, [envData])
 
-  if (!state) return (
+  const handleSave = async () => {
+    try {
+      await postFetcher('http://localhost:5000/api/env', formData)
+      alert('Ambiente salvato! Il bot è stato riavviato con i nuovi parametri.')
+      onClose()
+    } catch (e) {
+      alert('Errore salvataggio.')
+    }
+  }
+
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="glass-dark border border-white/10 p-6 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold flex items-center">
+            <Settings className="mr-2 text-neon" /> .ENV Configuration
+          </h2>
+          <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+            <X size={20} />
+          </button>
+        </div>
+        
+        <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-4">
+          {!envData ? <p>Caricamento chiavi...</p> : Object.entries(formData).map(([k, v]) => (
+            <div key={k}>
+              <label className="block text-xs font-mono text-zinc-400 mb-1">{k}</label>
+              <input 
+                type={k.includes('KEY') || k.includes('SECRET') || k.includes('PASS') ? 'password' : 'text'}
+                value={v}
+                onChange={e => setFormData({...formData, [k]: e.target.value})}
+                className="w-full bg-black/40 border border-white/10 rounded p-2 text-sm text-white font-mono focus:border-neon focus:outline-none"
+              />
+            </div>
+          ))}
+          <div className="pt-4 border-t border-white/10">
+            <p className="text-xs text-yellow-500 mb-2">
+              <Shield size={12} className="inline mr-1" />
+              Aggiungi nuove chiavi specificando Nome e Valore:
+            </p>
+            <div className="flex space-x-2">
+              <input id="newKey" placeholder="KEY_NAME" className="flex-1 bg-black/40 border border-white/10 rounded p-2 text-sm text-white font-mono" />
+              <input id="newVal" placeholder="Value" className="flex-1 bg-black/40 border border-white/10 rounded p-2 text-sm text-white font-mono" />
+              <button 
+                onClick={() => {
+                  const k = document.getElementById('newKey').value;
+                  const val = document.getElementById('newVal').value;
+                  if(k) setFormData({...formData, [k]: val});
+                }}
+                className="px-4 bg-white/10 hover:bg-white/20 rounded text-sm font-bold"
+              >Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-white/10 flex justify-end">
+          <button onClick={handleSave} className="bg-neon text-black px-6 py-2 rounded-lg font-bold flex items-center hover:bg-neon/80 transition-colors">
+            <Save size={16} className="mr-2" /> Salva e Applica
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function App() {
+  const { data: state, error } = useSWR('http://localhost:5000/api/state', fetcher, { refreshInterval: 5000 })
+  const { data: botStatus, mutate: mutateStatus } = useSWR('http://localhost:5000/api/bot/status', fetcher, { refreshInterval: 2000 })
+  const [settingsOpen, setSettingsOpen] = useState(false)
+
+  const toggleBot = async () => {
+    const res = await postFetcher('http://localhost:5000/api/bot/toggle', {})
+    mutateStatus({ ...botStatus, desired: res.desired })
+  }
+
+  if (!state || !botStatus) return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="animate-spin text-neon">
         <Activity size={48} />
@@ -101,14 +156,26 @@ export default function App() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Header */}
-      <header className="flex justify-between items-center mb-12">
+      <header className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
         <div>
           <h1 className="text-4xl font-extrabold tracking-tighter text-gradient mb-1">NITRO<span className="text-white">BOT</span> V2</h1>
           <p className="text-zinc-500 text-sm flex items-center">
              <Shield size={14} className="mr-1 text-neon" /> AI-Powered Live Betting Engine
           </p>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex flex-wrap items-center gap-4">
+          <button 
+            onClick={toggleBot}
+            className={`px-4 py-2 flex items-center space-x-2 rounded-lg text-xs font-bold transition-all shadow-lg ${
+              botStatus.running 
+                ? 'bg-green-500/20 text-green-400 border border-green-500/50 hover:bg-green-500/30' 
+                : 'bg-red-500/20 text-red-400 border border-red-500/50 hover:bg-red-500/30'
+            }`}
+          >
+            <Power size={16} />
+            <span>{botStatus.running ? 'PROCESS ONLINE' : 'PROCESS OFFLINE'}</span>
+          </button>
+
           <button 
             onClick={() => {
               if(window.confirm("Vuoi vendere tutte le posizioni e recuperare il saldo?")) {
@@ -121,11 +188,8 @@ export default function App() {
           >
             <Shield size={16} className="mr-2" /> RECOVER ALL FUNDS
           </button>
-          <div className="glass px-4 py-2 flex items-center space-x-3">
-            <div className="w-2 h-2 bg-neon rounded-full animate-pulse shadow-neon" />
-            <span className="text-xs font-bold tracking-widest text-zinc-300 uppercase">Live Polygon</span>
-          </div>
-          <button className="glass p-2 text-zinc-400 hover:text-white transition-colors">
+          
+          <button onClick={() => setSettingsOpen(true)} className="glass p-2 text-zinc-400 hover:text-white transition-colors">
             <Settings size={20} />
           </button>
         </div>
@@ -140,7 +204,6 @@ export default function App() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Feed */}
         <div className="lg:col-span-2 space-y-6">
           {/* Active Positions */}
           <div className="mb-12">
@@ -240,7 +303,7 @@ export default function App() {
               <h2 className="text-lg font-bold flex items-center">
                 <Cpu size={20} className="mr-2 text-accent" /> AI Insights
               </h2>
-              <span className="text-[10px] text-zinc-500">Real-time analysis</span>
+              <span className="text-[10px] text-zinc-500">Real-time</span>
             </div>
             
             <div className="space-y-2 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
@@ -265,6 +328,8 @@ export default function App() {
           </div>
         </div>
       </div>
+      
+      <SettingsModal isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   )
 }
