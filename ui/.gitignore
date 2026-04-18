@@ -8,7 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
+# Rimosso dist dal gitignore per permettere il deploy tramite github
 dist-ssr
 *.local
 
