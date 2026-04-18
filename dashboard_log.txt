@@ -2589,3 +2589,478 @@
 2026-04-19 01:20:25 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 274s | ⏳ ACCUMULO
 2026-04-19 01:20:26 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 273s | ⏳ ACCUMULO
 2026-04-19 01:20:27 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█░░░░░░░░░░░░░░░░░░░] 272s | ⏳ ACCUMULO
+2026-04-19 01:20:28 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█░░░░░░░░░░░░░░░░░░░] 271s | ⏳ ACCUMULO
+2026-04-19 01:20:29 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█░░░░░░░░░░░░░░░░░░░] 270s | ⏳ ACCUMULO
+2026-04-19 01:20:30 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [██░░░░░░░░░░░░░░░░░░] 269s | ⏳ ACCUMULO
+2026-04-19 01:20:32 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [██░░░░░░░░░░░░░░░░░░] 268s | ⏳ ACCUMULO
+2026-04-19 01:20:33 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [██░░░░░░░░░░░░░░░░░░] 266s | ⏳ ACCUMULO
+2026-04-19 01:20:34 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [██░░░░░░░░░░░░░░░░░░] 265s | ⏳ ACCUMULO
+2026-04-19 01:20:35 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [██░░░░░░░░░░░░░░░░░░] 264s | ⏳ ACCUMULO
+2026-04-19 01:20:36 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [██░░░░░░░░░░░░░░░░░░] 263s | ⏳ ACCUMULO
+2026-04-19 01:20:37 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [██░░░░░░░░░░░░░░░░░░] 262s | ⏳ ACCUMULO
+2026-04-19 01:20:38 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [██░░░░░░░░░░░░░░░░░░] 261s | ⏳ ACCUMULO
+2026-04-19 01:20:39 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 260s | ⏳ ACCUMULO
+2026-04-19 01:20:40 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 259s | ⏳ ACCUMULO
+2026-04-19 01:20:41 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 258s | ⏳ ACCUMULO
+2026-04-19 01:20:42 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 257s | ⏳ ACCUMULO
+2026-04-19 01:20:43 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 256s | ⏳ ACCUMULO
+2026-04-19 01:20:44 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [██░░░░░░░░░░░░░░░░░░] 255s | ⏳ ACCUMULO
+2026-04-19 01:20:45 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [███░░░░░░░░░░░░░░░░░] 254s | ⏳ ACCUMULO
+2026-04-19 01:20:48 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [███░░░░░░░░░░░░░░░░░] 253s | ⏳ ACCUMULO
+2026-04-19 01:20:49 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [███░░░░░░░░░░░░░░░░░] 250s | ⏳ ACCUMULO
+2026-04-19 01:20:50 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [███░░░░░░░░░░░░░░░░░] 249s | ⏳ ACCUMULO
+2026-04-19 01:20:51 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [███░░░░░░░░░░░░░░░░░] 248s | ⏳ ACCUMULO
+2026-04-19 01:20:52 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [███░░░░░░░░░░░░░░░░░] 247s | ⏳ ACCUMULO
+2026-04-19 01:20:53 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [███░░░░░░░░░░░░░░░░░] 246s | ⏳ ACCUMULO
+2026-04-19 01:20:54 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [███░░░░░░░░░░░░░░░░░] 245s | ⏳ ACCUMULO
+2026-04-19 01:20:55 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [███░░░░░░░░░░░░░░░░░] 244s | ⏳ ACCUMULO
+2026-04-19 01:20:56 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [███░░░░░░░░░░░░░░░░░] 243s | ⏳ ACCUMULO
+2026-04-19 01:20:57 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [███░░░░░░░░░░░░░░░░░] 242s | ⏳ ACCUMULO
+2026-04-19 01:20:58 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [███░░░░░░░░░░░░░░░░░] 241s | ⏳ ACCUMULO
+2026-04-19 01:20:59 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [███░░░░░░░░░░░░░░░░░] 240s | ⏳ ACCUMULO
+2026-04-19 01:21:00 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [████░░░░░░░░░░░░░░░░] 239s | ⏳ ACCUMULO
+2026-04-19 01:21:01 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [████░░░░░░░░░░░░░░░░] 238s | ⏳ ACCUMULO
+2026-04-19 01:21:03 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [████░░░░░░░░░░░░░░░░] 237s | ⏳ ACCUMULO
+2026-04-19 01:21:04 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [████░░░░░░░░░░░░░░░░] 235s | ⏳ ACCUMULO
+2026-04-19 01:21:05 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [████░░░░░░░░░░░░░░░░] 234s | ⏳ ACCUMULO
+2026-04-19 01:21:06 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [████░░░░░░░░░░░░░░░░] 233s | ⏳ ACCUMULO
+2026-04-19 01:21:07 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [████░░░░░░░░░░░░░░░░] 232s | ⏳ ACCUMULO
+2026-04-19 01:21:08 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [████░░░░░░░░░░░░░░░░] 231s | ⏳ ACCUMULO
+2026-04-19 01:21:09 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [████░░░░░░░░░░░░░░░░] 230s | ⏳ ACCUMULO
+2026-04-19 01:21:10 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [████░░░░░░░░░░░░░░░░] 229s | ⏳ ACCUMULO
+2026-04-19 01:21:11 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [████░░░░░░░░░░░░░░░░] 228s | ⏳ ACCUMULO
+2026-04-19 01:21:12 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [████░░░░░░░░░░░░░░░░] 227s | ⏳ ACCUMULO
+2026-04-19 01:21:13 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [████░░░░░░░░░░░░░░░░] 226s | ⏳ ACCUMULO
+2026-04-19 01:21:14 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [████░░░░░░░░░░░░░░░░] 225s | ⏳ ACCUMULO
+2026-04-19 01:21:15 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 224s | ⏳ ACCUMULO
+2026-04-19 01:21:16 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 223s | ⏳ ACCUMULO
+2026-04-19 01:21:18 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 222s | ⏳ ACCUMULO
+2026-04-19 01:21:19 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [█████░░░░░░░░░░░░░░░] 220s | ⏳ ACCUMULO
+2026-04-19 01:21:20 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 219s | ⏳ ACCUMULO
+2026-04-19 01:21:21 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 218s | ⏳ ACCUMULO
+2026-04-19 01:21:22 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 217s | ⏳ ACCUMULO
+2026-04-19 01:21:23 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 216s | ⏳ ACCUMULO
+2026-04-19 01:21:24 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 215s | ⏳ ACCUMULO
+2026-04-19 01:21:25 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 214s | ⏳ ACCUMULO
+2026-04-19 01:21:26 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 213s | ⏳ ACCUMULO
+2026-04-19 01:21:27 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 212s | ⏳ ACCUMULO
+2026-04-19 01:21:28 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 211s | ⏳ ACCUMULO
+2026-04-19 01:21:29 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [█████░░░░░░░░░░░░░░░] 210s | ⏳ ACCUMULO
+2026-04-19 01:21:31 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [██████░░░░░░░░░░░░░░] 208s | ⏳ ACCUMULO
+2026-04-19 01:21:32 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [██████░░░░░░░░░░░░░░] 207s | ⏳ ACCUMULO
+2026-04-19 01:21:34 [INFO ] bot_poly — 💲 $75,816.27 | Δ -0.0000% | 📉 DN | [██████░░░░░░░░░░░░░░] 206s | ⏳ ACCUMULO
+2026-04-19 01:21:35 [INFO ] bot_poly — 💲 $75,816.28 | Δ +0.0000% | ➡️ -- | [██████░░░░░░░░░░░░░░] 204s | ⏳ ACCUMULO
+2026-04-19 01:21:36 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [██████░░░░░░░░░░░░░░] 203s | ⏳ ACCUMULO
+2026-04-19 01:21:37 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [██████░░░░░░░░░░░░░░] 202s | ⏳ ACCUMULO
+2026-04-19 01:21:38 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [██████░░░░░░░░░░░░░░] 201s | ⏳ ACCUMULO
+2026-04-19 01:21:39 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [██████░░░░░░░░░░░░░░] 200s | ⏳ ACCUMULO
+2026-04-19 01:21:40 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [██████░░░░░░░░░░░░░░] 199s | ⏳ ACCUMULO
+2026-04-19 01:21:41 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [██████░░░░░░░░░░░░░░] 198s | ⏳ ACCUMULO
+2026-04-19 01:21:42 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [██████░░░░░░░░░░░░░░] 197s | ⏳ ACCUMULO
+2026-04-19 01:21:43 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [██████░░░░░░░░░░░░░░] 196s | ⏳ ACCUMULO
+2026-04-19 01:21:44 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [██████░░░░░░░░░░░░░░] 195s | ⏳ ACCUMULO
+2026-04-19 01:21:45 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 194s | ⏳ ACCUMULO
+2026-04-19 01:21:46 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 193s | ⏳ ACCUMULO
+2026-04-19 01:21:47 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 192s | ⏳ ACCUMULO
+2026-04-19 01:21:49 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 191s | ⏳ ACCUMULO
+2026-04-19 01:21:50 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 189s | ⏳ ACCUMULO
+2026-04-19 01:21:51 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 188s | ⏳ ACCUMULO
+2026-04-19 01:21:52 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 187s | ⏳ ACCUMULO
+2026-04-19 01:21:53 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 186s | ⏳ ACCUMULO
+2026-04-19 01:21:54 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 185s | ⏳ ACCUMULO
+2026-04-19 01:21:55 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 184s | ⏳ ACCUMULO
+2026-04-19 01:21:56 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 183s | ⏳ ACCUMULO
+2026-04-19 01:21:57 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 182s | ⏳ ACCUMULO
+2026-04-19 01:21:58 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 181s | ⏳ ACCUMULO
+2026-04-19 01:21:59 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [███████░░░░░░░░░░░░░] 180s | ⏳ ACCUMULO
+2026-04-19 01:22:00 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 179s | ⏳ ACCUMULO
+2026-04-19 01:22:01 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 178s | ⏳ ACCUMULO
+2026-04-19 01:22:02 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 177s | ⏳ ACCUMULO
+2026-04-19 01:22:05 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 176s | ⏳ ACCUMULO
+2026-04-19 01:22:06 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 173s | ⏳ ACCUMULO
+2026-04-19 01:22:07 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 172s | ⏳ ACCUMULO
+2026-04-19 01:22:08 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 171s | ⏳ ACCUMULO
+2026-04-19 01:22:09 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 170s | ⏳ ACCUMULO
+2026-04-19 01:22:10 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 169s | ⏳ ACCUMULO
+2026-04-19 01:22:11 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 168s | ⏳ ACCUMULO
+2026-04-19 01:22:12 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 167s | ⏳ ACCUMULO
+2026-04-19 01:22:13 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 166s | ⏳ ACCUMULO
+2026-04-19 01:22:14 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [████████░░░░░░░░░░░░] 165s | ⏳ ACCUMULO
+2026-04-19 01:22:15 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 164s | ⏳ ACCUMULO
+2026-04-19 01:22:16 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 163s | ⏳ ACCUMULO
+2026-04-19 01:22:17 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 162s | ⏳ ACCUMULO
+2026-04-19 01:22:18 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 161s | ⏳ ACCUMULO
+2026-04-19 01:22:20 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 160s | ⏳ ACCUMULO
+2026-04-19 01:22:21 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 158s | ⏳ ACCUMULO
+2026-04-19 01:22:22 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 157s | ⏳ ACCUMULO
+2026-04-19 01:22:23 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 156s | ⏳ ACCUMULO
+2026-04-19 01:22:24 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 155s | ⏳ ACCUMULO
+2026-04-19 01:22:25 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 154s | ⏳ ACCUMULO
+2026-04-19 01:22:26 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 153s | ⏳ ACCUMULO
+2026-04-19 01:22:27 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 152s | ⏳ ACCUMULO
+2026-04-19 01:22:28 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 151s | ⏳ ACCUMULO
+2026-04-19 01:22:29 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [█████████░░░░░░░░░░░] 150s | ⏳ ACCUMULO
+2026-04-19 01:22:30 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [██████████░░░░░░░░░░] 149s | 🎯 PRONTO
+2026-04-19 01:22:32 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:22:32 [INFO ] bot_poly —    ↳ 📊 Quota: 68¢ → Payout: 32¢ (ROI: 47%)
+2026-04-19 01:22:32 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0099%
+2026-04-19 01:22:32 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:22:32 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:22:33 [INFO ] bot_poly — 💲 $75,823.77 | Δ +0.0099% | 📈 UP | [██████████░░░░░░░░░░] 146s | 🎯 PRONTO
+2026-04-19 01:22:35 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:22:35 [INFO ] bot_poly —    ↳ 📊 Quota: 68¢ → Payout: 32¢ (ROI: 47%)
+2026-04-19 01:22:35 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0099%
+2026-04-19 01:22:35 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:22:35 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:22:38 [INFO ] bot_poly — 💲 $75,823.78 | Δ +0.0099% | 📈 UP | [██████████░░░░░░░░░░] 143s | 🎯 PRONTO
+2026-04-19 01:22:39 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:22:39 [INFO ] bot_poly —    ↳ 📊 Quota: 69¢ → Payout: 31¢ (ROI: 45%)
+2026-04-19 01:22:39 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0099%
+2026-04-19 01:22:39 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:22:39 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:22:40 [INFO ] bot_poly — 💲 $75,825.51 | Δ +0.0122% | 📈 UP | [██████████░░░░░░░░░░] 139s | 🎯 PRONTO
+2026-04-19 01:22:42 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:22:42 [INFO ] bot_poly —    ↳ 📊 Quota: 69¢ → Payout: 31¢ (ROI: 45%)
+2026-04-19 01:22:42 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0122%
+2026-04-19 01:22:42 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:22:42 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:22:43 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [██████████░░░░░░░░░░] 136s | 🎯 PRONTO
+2026-04-19 01:22:48 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:22:48 [INFO ] bot_poly —    ↳ 📊 Quota: 73¢ → Payout: 27¢ (ROI: 37%)
+2026-04-19 01:22:48 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:22:48 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:22:48 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:22:50 [INFO ] bot_poly — 💲 $75,834.17 | Δ +0.0236% | 📈 UP | [███████████░░░░░░░░░] 129s | 🎯 PRONTO
+2026-04-19 01:22:51 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:22:51 [INFO ] bot_poly —    ↳ 📊 Quota: 74¢ → Payout: 26¢ (ROI: 35%)
+2026-04-19 01:22:51 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:22:51 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:22:51 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:22:53 [INFO ] bot_poly — 💲 $75,834.17 | Δ +0.0236% | 📈 UP | [███████████░░░░░░░░░] 127s | 🎯 PRONTO
+2026-04-19 01:22:54 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:22:54 [INFO ] bot_poly —    ↳ 📊 Quota: 77¢ → Payout: 23¢ (ROI: 30%)
+2026-04-19 01:22:54 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:22:54 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (77¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:22:55 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [███████████░░░░░░░░░] 124s | 🎯 PRONTO
+2026-04-19 01:22:56 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:22:56 [INFO ] bot_poly —    ↳ 📊 Quota: 77¢ → Payout: 23¢ (ROI: 30%)
+2026-04-19 01:22:56 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:22:56 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (77¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:22:57 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [███████████░░░░░░░░░] 122s | 🎯 PRONTO
+2026-04-19 01:22:59 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:22:59 [INFO ] bot_poly —    ↳ 📊 Quota: 77¢ → Payout: 23¢ (ROI: 30%)
+2026-04-19 01:22:59 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:22:59 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (77¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:00 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [████████████░░░░░░░░] 119s | 🎯 PRONTO
+2026-04-19 01:23:01 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:01 [INFO ] bot_poly —    ↳ 📊 Quota: 77¢ → Payout: 23¢ (ROI: 30%)
+2026-04-19 01:23:01 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:01 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (77¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:02 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [████████████░░░░░░░░] 117s | 🎯 PRONTO
+2026-04-19 01:23:03 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:03 [INFO ] bot_poly —    ↳ 📊 Quota: 77¢ → Payout: 23¢ (ROI: 30%)
+2026-04-19 01:23:03 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:03 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (77¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:04 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [████████████░░░░░░░░] 115s | 🎯 PRONTO
+2026-04-19 01:23:05 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:05 [INFO ] bot_poly —    ↳ 📊 Quota: 78¢ → Payout: 22¢ (ROI: 28%)
+2026-04-19 01:23:05 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:05 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (78¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:06 [INFO ] bot_poly — 💲 $75,834.17 | Δ +0.0236% | 📈 UP | [████████████░░░░░░░░] 113s | 🎯 PRONTO
+2026-04-19 01:23:07 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:07 [INFO ] bot_poly —    ↳ 📊 Quota: 77¢ → Payout: 23¢ (ROI: 30%)
+2026-04-19 01:23:07 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:07 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (77¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:09 [INFO ] bot_poly — 💲 $75,834.17 | Δ +0.0236% | 📈 UP | [████████████░░░░░░░░] 111s | 🎯 PRONTO
+2026-04-19 01:23:10 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:10 [INFO ] bot_poly —    ↳ 📊 Quota: 77¢ → Payout: 23¢ (ROI: 30%)
+2026-04-19 01:23:10 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:10 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (77¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:11 [INFO ] bot_poly — 💲 $75,834.17 | Δ +0.0236% | 📈 UP | [████████████░░░░░░░░] 108s | 🎯 PRONTO
+2026-04-19 01:23:12 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:12 [INFO ] bot_poly —    ↳ 📊 Quota: 77¢ → Payout: 23¢ (ROI: 30%)
+2026-04-19 01:23:12 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:12 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (77¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:13 [INFO ] bot_poly — 💲 $75,834.17 | Δ +0.0236% | 📈 UP | [████████████░░░░░░░░] 106s | 🎯 PRONTO
+2026-04-19 01:23:14 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:14 [INFO ] bot_poly —    ↳ 📊 Quota: 78¢ → Payout: 22¢ (ROI: 28%)
+2026-04-19 01:23:14 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:14 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (78¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:15 [INFO ] bot_poly — 💲 $75,834.17 | Δ +0.0236% | 📈 UP | [█████████████░░░░░░░] 104s | 🎯 PRONTO
+2026-04-19 01:23:16 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:16 [INFO ] bot_poly —    ↳ 📊 Quota: 78¢ → Payout: 22¢ (ROI: 28%)
+2026-04-19 01:23:16 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:16 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (78¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:17 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [█████████████░░░░░░░] 102s | 🎯 PRONTO
+2026-04-19 01:23:18 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:18 [INFO ] bot_poly —    ↳ 📊 Quota: 78¢ → Payout: 22¢ (ROI: 28%)
+2026-04-19 01:23:18 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:18 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (78¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:19 [INFO ] bot_poly — 💲 $75,834.17 | Δ +0.0236% | 📈 UP | [█████████████░░░░░░░] 100s | 🎯 PRONTO
+2026-04-19 01:23:20 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:20 [INFO ] bot_poly —    ↳ 📊 Quota: 78¢ → Payout: 22¢ (ROI: 28%)
+2026-04-19 01:23:20 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:20 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (78¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:21 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [█████████████░░░░░░░] 98s | 🎯 PRONTO
+2026-04-19 01:23:22 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:22 [INFO ] bot_poly —    ↳ 📊 Quota: 78¢ → Payout: 22¢ (ROI: 28%)
+2026-04-19 01:23:22 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:22 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (78¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:25 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [█████████████░░░░░░░] 96s | 🎯 PRONTO
+2026-04-19 01:23:26 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:26 [INFO ] bot_poly —    ↳ 📊 Quota: 78¢ → Payout: 22¢ (ROI: 28%)
+2026-04-19 01:23:26 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:26 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (78¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:27 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [█████████████░░░░░░░] 92s | 🎯 PRONTO
+2026-04-19 01:23:28 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:28 [INFO ] bot_poly —    ↳ 📊 Quota: 79¢ → Payout: 21¢ (ROI: 27%)
+2026-04-19 01:23:28 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:28 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (79¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:29 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [█████████████░░░░░░░] 90s | 🎯 PRONTO
+2026-04-19 01:23:30 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:30 [INFO ] bot_poly —    ↳ 📊 Quota: 80¢ → Payout: 20¢ (ROI: 25%)
+2026-04-19 01:23:30 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:30 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (80¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:31 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [██████████████░░░░░░] 88s | 🎯 PRONTO
+2026-04-19 01:23:32 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:32 [INFO ] bot_poly —    ↳ 📊 Quota: 81¢ → Payout: 19¢ (ROI: 23%)
+2026-04-19 01:23:32 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:32 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (81¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:33 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [██████████████░░░░░░] 86s | 🎯 PRONTO
+2026-04-19 01:23:34 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:34 [INFO ] bot_poly —    ↳ 📊 Quota: 82¢ → Payout: 18¢ (ROI: 22%)
+2026-04-19 01:23:34 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:34 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (82¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:35 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [██████████████░░░░░░] 84s | 🎯 PRONTO
+2026-04-19 01:23:36 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:36 [INFO ] bot_poly —    ↳ 📊 Quota: 82¢ → Payout: 18¢ (ROI: 22%)
+2026-04-19 01:23:36 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:36 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (82¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:37 [INFO ] bot_poly — 💲 $75,834.18 | Δ +0.0236% | 📈 UP | [██████████████░░░░░░] 82s | 🎯 PRONTO
+2026-04-19 01:23:38 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:38 [INFO ] bot_poly —    ↳ 📊 Quota: 82¢ → Payout: 18¢ (ROI: 22%)
+2026-04-19 01:23:38 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0236%
+2026-04-19 01:23:38 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (82¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:23:41 [INFO ] bot_poly — 💲 $75,826.33 | Δ +0.0133% | 📈 UP | [██████████████░░░░░░] 80s | 🎯 PRONTO
+2026-04-19 01:23:42 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:42 [INFO ] bot_poly —    ↳ 📊 Quota: 66¢ → Payout: 34¢ (ROI: 52%)
+2026-04-19 01:23:42 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0133%
+2026-04-19 01:23:42 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:23:42 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:23:43 [INFO ] bot_poly — 💲 $75,826.33 | Δ +0.0133% | 📈 UP | [██████████████░░░░░░] 76s | 🎯 PRONTO
+2026-04-19 01:23:45 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:45 [INFO ] bot_poly —    ↳ 📊 Quota: 66¢ → Payout: 34¢ (ROI: 52%)
+2026-04-19 01:23:45 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0133%
+2026-04-19 01:23:45 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:23:45 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:23:46 [INFO ] bot_poly — 💲 $75,826.32 | Δ +0.0132% | 📈 UP | [███████████████░░░░░] 73s | 🎯 PRONTO
+2026-04-19 01:23:47 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:47 [INFO ] bot_poly —    ↳ 📊 Quota: 66¢ → Payout: 34¢ (ROI: 52%)
+2026-04-19 01:23:47 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0132%
+2026-04-19 01:23:47 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:23:47 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:23:48 [INFO ] bot_poly — 💲 $75,826.33 | Δ +0.0133% | 📈 UP | [███████████████░░░░░] 71s | 🎯 PRONTO
+2026-04-19 01:23:49 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:49 [INFO ] bot_poly —    ↳ 📊 Quota: 66¢ → Payout: 34¢ (ROI: 52%)
+2026-04-19 01:23:49 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0133%
+2026-04-19 01:23:49 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:23:49 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:23:50 [INFO ] bot_poly — 💲 $75,826.33 | Δ +0.0133% | 📈 UP | [███████████████░░░░░] 69s | 🎯 PRONTO
+2026-04-19 01:23:51 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:51 [INFO ] bot_poly —    ↳ 📊 Quota: 66¢ → Payout: 34¢ (ROI: 52%)
+2026-04-19 01:23:51 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0133%
+2026-04-19 01:23:51 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:23:52 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:23:53 [INFO ] bot_poly — 💲 $75,826.32 | Δ +0.0132% | 📈 UP | [███████████████░░░░░] 66s | 🎯 PRONTO
+2026-04-19 01:23:54 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:54 [INFO ] bot_poly —    ↳ 📊 Quota: 66¢ → Payout: 34¢ (ROI: 52%)
+2026-04-19 01:23:54 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0132%
+2026-04-19 01:23:54 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:23:54 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:23:56 [INFO ] bot_poly — 💲 $75,826.33 | Δ +0.0133% | 📈 UP | [███████████████░░░░░] 64s | 🎯 PRONTO
+2026-04-19 01:23:57 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:57 [INFO ] bot_poly —    ↳ 📊 Quota: 66¢ → Payout: 34¢ (ROI: 52%)
+2026-04-19 01:23:57 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0133%
+2026-04-19 01:23:57 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:23:58 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:23:59 [INFO ] bot_poly — 💲 $75,826.32 | Δ +0.0132% | 📈 UP | [███████████████░░░░░] 60s | 🎯 PRONTO
+2026-04-19 01:23:59 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:23:59 [INFO ] bot_poly —    ↳ 📊 Quota: 69¢ → Payout: 31¢ (ROI: 45%)
+2026-04-19 01:23:59 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0132%
+2026-04-19 01:23:59 [INFO ] bot_poly —    ↳ 🔫 Invio ordine su Bitcoin Up or Down - April 18, 7:20PM-7:25PM ET...
+2026-04-19 01:24:00 [ERROR] bot_poly —    ↳ ❌ Trade fallito.
+2026-04-19 01:24:01 [INFO ] bot_poly — 💲 $75,826.33 | Δ +0.0133% | 📈 UP | [████████████████░░░░] 58s | 🎯 PRONTO
+2026-04-19 01:24:02 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:02 [INFO ] bot_poly —    ↳ 📊 Quota: 79¢ → Payout: 21¢ (ROI: 27%)
+2026-04-19 01:24:02 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0133%
+2026-04-19 01:24:02 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (79¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:03 [INFO ] bot_poly — 💲 $75,826.33 | Δ +0.0133% | 📈 UP | [████████████████░░░░] 56s | 🎯 PRONTO
+2026-04-19 01:24:04 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:04 [INFO ] bot_poly —    ↳ 📊 Quota: 79¢ → Payout: 21¢ (ROI: 27%)
+2026-04-19 01:24:04 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0133%
+2026-04-19 01:24:04 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (79¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:05 [INFO ] bot_poly — 💲 $75,826.33 | Δ +0.0133% | 📈 UP | [████████████████░░░░] 54s | 🎯 PRONTO
+2026-04-19 01:24:05 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:05 [INFO ] bot_poly —    ↳ 📊 Quota: 81¢ → Payout: 19¢ (ROI: 23%)
+2026-04-19 01:24:05 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0133%
+2026-04-19 01:24:05 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (81¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:06 [INFO ] bot_poly — 💲 $75,826.32 | Δ +0.0132% | 📈 UP | [████████████████░░░░] 53s | 🎯 PRONTO
+2026-04-19 01:24:07 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:07 [INFO ] bot_poly —    ↳ 📊 Quota: 83¢ → Payout: 17¢ (ROI: 20%)
+2026-04-19 01:24:07 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0132%
+2026-04-19 01:24:07 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (83¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:08 [INFO ] bot_poly — 💲 $75,826.32 | Δ +0.0132% | 📈 UP | [████████████████░░░░] 51s | 🎯 PRONTO
+2026-04-19 01:24:09 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:09 [INFO ] bot_poly —    ↳ 📊 Quota: 83¢ → Payout: 17¢ (ROI: 20%)
+2026-04-19 01:24:09 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0132%
+2026-04-19 01:24:09 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (83¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:10 [INFO ] bot_poly — 💲 $75,826.33 | Δ +0.0133% | 📈 UP | [████████████████░░░░] 49s | 🎯 PRONTO
+2026-04-19 01:24:11 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:11 [INFO ] bot_poly —    ↳ 📊 Quota: 84¢ → Payout: 16¢ (ROI: 19%)
+2026-04-19 01:24:11 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0133%
+2026-04-19 01:24:11 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (84¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:13 [INFO ] bot_poly — 💲 $75,830.98 | Δ +0.0194% | 📈 UP | [████████████████░░░░] 47s | 🎯 PRONTO
+2026-04-19 01:24:14 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:14 [INFO ] bot_poly —    ↳ 📊 Quota: 91¢ → Payout: 9¢ (ROI: 10%)
+2026-04-19 01:24:14 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0194%
+2026-04-19 01:24:14 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (91¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:15 [INFO ] bot_poly — 💲 $75,830.98 | Δ +0.0194% | 📈 UP | [█████████████████░░░] 44s | 🎯 PRONTO
+2026-04-19 01:24:16 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:16 [INFO ] bot_poly —    ↳ 📊 Quota: 93¢ → Payout: 7¢ (ROI: 8%)
+2026-04-19 01:24:16 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0194%
+2026-04-19 01:24:16 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (93¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:17 [INFO ] bot_poly — 💲 $75,830.97 | Δ +0.0194% | 📈 UP | [█████████████████░░░] 42s | 🎯 PRONTO
+2026-04-19 01:24:17 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:17 [INFO ] bot_poly —    ↳ 📊 Quota: 94¢ → Payout: 6¢ (ROI: 6%)
+2026-04-19 01:24:17 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0194%
+2026-04-19 01:24:17 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (94¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:18 [INFO ] bot_poly — 💲 $75,830.98 | Δ +0.0194% | 📈 UP | [█████████████████░░░] 41s | 🎯 PRONTO
+2026-04-19 01:24:20 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:20 [INFO ] bot_poly —    ↳ 📊 Quota: 94¢ → Payout: 6¢ (ROI: 6%)
+2026-04-19 01:24:20 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0194%
+2026-04-19 01:24:20 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (94¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:21 [INFO ] bot_poly — 💲 $75,830.98 | Δ +0.0194% | 📈 UP | [█████████████████░░░] 38s | 🎯 PRONTO
+2026-04-19 01:24:22 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:22 [INFO ] bot_poly —    ↳ 📊 Quota: 94¢ → Payout: 6¢ (ROI: 6%)
+2026-04-19 01:24:22 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0194%
+2026-04-19 01:24:22 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (94¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:23 [INFO ] bot_poly — 💲 $75,833.49 | Δ +0.0227% | 📈 UP | [█████████████████░░░] 36s | 🎯 PRONTO
+2026-04-19 01:24:24 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:24 [INFO ] bot_poly —    ↳ 📊 Quota: 94¢ → Payout: 6¢ (ROI: 6%)
+2026-04-19 01:24:24 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0227%
+2026-04-19 01:24:24 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (94¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:25 [INFO ] bot_poly — 💲 $75,841.34 | Δ +0.0331% | 📈 UP | [█████████████████░░░] 34s | 🎯 PRONTO
+2026-04-19 01:24:26 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:26 [INFO ] bot_poly —    ↳ 📊 Quota: 94¢ → Payout: 6¢ (ROI: 6%)
+2026-04-19 01:24:26 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0331%
+2026-04-19 01:24:26 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (94¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:27 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [█████████████████░░░] 32s | 🎯 PRONTO
+2026-04-19 01:24:28 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:28 [INFO ] bot_poly —    ↳ 📊 Quota: 94¢ → Payout: 6¢ (ROI: 6%)
+2026-04-19 01:24:28 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0331%
+2026-04-19 01:24:28 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (94¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:30 [INFO ] bot_poly — 💲 $75,841.34 | Δ +0.0331% | 📈 UP | [█████████████████░░░] 30s | 🎯 PRONTO
+2026-04-19 01:24:32 [INFO ] bot_poly —    ↳ 🎯 ALWAYS IN! UP (YES)
+2026-04-19 01:24:32 [INFO ] bot_poly —    ↳ 📊 Quota: 94¢ → Payout: 6¢ (ROI: 6%)
+2026-04-19 01:24:32 [INFO ] bot_poly —    ↳ 📊 Movimento dal PTB: +0.0331%
+2026-04-19 01:24:32 [WARNING] bot_poly —    ↳ ⚠️ Quota troppo alta (94¢)! Il mercato è già convinto. SKIP.
+2026-04-19 01:24:33 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [██████████████████░░] 26s | 🎯 PRONTO
+2026-04-19 01:24:33 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (26s rimasti)
+2026-04-19 01:24:34 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [██████████████████░░] 25s | 🎯 PRONTO
+2026-04-19 01:24:34 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (25s rimasti)
+2026-04-19 01:24:35 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [██████████████████░░] 24s | 🎯 PRONTO
+2026-04-19 01:24:35 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (24s rimasti)
+2026-04-19 01:24:36 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [██████████████████░░] 23s | 🎯 PRONTO
+2026-04-19 01:24:36 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (23s rimasti)
+2026-04-19 01:24:37 [INFO ] bot_poly — 💲 $75,841.34 | Δ +0.0331% | 📈 UP | [██████████████████░░] 22s | 🎯 PRONTO
+2026-04-19 01:24:37 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (22s rimasti)
+2026-04-19 01:24:38 [INFO ] bot_poly — 💲 $75,841.34 | Δ +0.0331% | 📈 UP | [██████████████████░░] 21s | 🎯 PRONTO
+2026-04-19 01:24:38 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (21s rimasti)
+2026-04-19 01:24:39 [INFO ] bot_poly — 💲 $75,841.34 | Δ +0.0331% | 📈 UP | [██████████████████░░] 20s | 🎯 PRONTO
+2026-04-19 01:24:39 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (20s rimasti)
+2026-04-19 01:24:40 [INFO ] bot_poly — 💲 $75,841.34 | Δ +0.0331% | 📈 UP | [██████████████████░░] 19s | 🎯 PRONTO
+2026-04-19 01:24:40 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (19s rimasti)
+2026-04-19 01:24:41 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [██████████████████░░] 18s | 🎯 PRONTO
+2026-04-19 01:24:41 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (18s rimasti)
+2026-04-19 01:24:42 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [██████████████████░░] 17s | 🎯 PRONTO
+2026-04-19 01:24:42 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (17s rimasti)
+2026-04-19 01:24:43 [INFO ] bot_poly — 💲 $75,841.34 | Δ +0.0331% | 📈 UP | [██████████████████░░] 16s | 🎯 PRONTO
+2026-04-19 01:24:43 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (16s rimasti)
+2026-04-19 01:24:45 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [██████████████████░░] 15s | 🎯 PRONTO
+2026-04-19 01:24:45 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (15s rimasti)
+2026-04-19 01:24:46 [INFO ] bot_poly — 💲 $75,841.34 | Δ +0.0331% | 📈 UP | [███████████████████░] 13s | 🎯 PRONTO
+2026-04-19 01:24:47 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (13s rimasti)
+2026-04-19 01:24:48 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [███████████████████░] 11s | 🎯 PRONTO
+2026-04-19 01:24:48 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (11s rimasti)
+2026-04-19 01:24:49 [INFO ] bot_poly — 💲 $75,841.34 | Δ +0.0331% | 📈 UP | [███████████████████░] 10s | 🎯 PRONTO
+2026-04-19 01:24:49 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (10s rimasti)
+2026-04-19 01:24:50 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [███████████████████░] 9s | 🎯 PRONTO
+2026-04-19 01:24:50 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (9s rimasti)
+2026-04-19 01:24:51 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [███████████████████░] 8s | 🎯 PRONTO
+2026-04-19 01:24:51 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (8s rimasti)
+2026-04-19 01:24:52 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [███████████████████░] 7s | 🎯 PRONTO
+2026-04-19 01:24:52 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (7s rimasti)
+2026-04-19 01:24:53 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [███████████████████░] 6s | 🎯 PRONTO
+2026-04-19 01:24:53 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (6s rimasti)
+2026-04-19 01:24:54 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [███████████████████░] 5s | 🎯 PRONTO
+2026-04-19 01:24:54 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (5s rimasti)
+2026-04-19 01:24:55 [INFO ] bot_poly — 💲 $75,841.35 | Δ +0.0331% | 📈 UP | [███████████████████░] 4s | 🎯 PRONTO
+2026-04-19 01:24:55 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (4s rimasti)
+2026-04-19 01:24:56 [INFO ] bot_poly — 💲 $75,842.54 | Δ +0.0346% | 📈 UP | [███████████████████░] 3s | 🎯 PRONTO
+2026-04-19 01:24:56 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (3s rimasti)
+2026-04-19 01:24:57 [INFO ] bot_poly — 💲 $75,842.53 | Δ +0.0346% | 📈 UP | [███████████████████░] 2s | 🎯 PRONTO
+2026-04-19 01:24:57 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (2s rimasti)
+2026-04-19 01:24:58 [INFO ] bot_poly — 💲 $75,842.54 | Δ +0.0346% | 📈 UP | [███████████████████░] 1s | 🎯 PRONTO
+2026-04-19 01:24:58 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (1s rimasti)
+2026-04-19 01:24:59 [INFO ] bot_poly — 💲 $75,842.53 | Δ +0.0346% | 📈 UP | [███████████████████░] 0s | 🎯 PRONTO
+2026-04-19 01:24:59 [WARNING] bot_poly —    ↳ ⚠️ Troppo tardi per scommettere (0s rimasti)
+2026-04-19 01:25:01 [INFO ] bot_poly —    ⚓ Prezzo Ancorato (STORICO): $75,842.54 (dal buffer Binance)
+2026-04-19 01:25:01 [INFO ] bot_poly — 
+2026-04-19 01:25:01 [INFO ] bot_poly — ============================================================
+2026-04-19 01:25:01 [INFO ] bot_poly — 🆕 NUOVA FINESTRA: Bitcoin Up or Down - April 18, 7:25PM-7:30PM ET
+2026-04-19 01:25:01 [INFO ] bot_poly —    ⚓ Price to Beat: $75,842.54
+2026-04-19 01:25:01 [INFO ] bot_poly —    💲 Prezzo Attuale: $75,842.54
+2026-04-19 01:25:01 [INFO ] bot_poly —    ⏱️  Durata: 300s | Scade tra 299s
+2026-04-19 01:25:01 [INFO ] bot_poly — ============================================================
+2026-04-19 01:25:01 [INFO ] bot_poly — 💲 $75,842.54 | Δ +0.0000% | ➡️ -- | [░░░░░░░░░░░░░░░░░░░░] 299s | ⏳ ACCUMULO
+2026-04-19 01:25:02 [INFO ] bot_poly — 💲 $75,842.53 | Δ -0.0000% | 📉 DN | [░░░░░░░░░░░░░░░░░░░░] 297s | ⏳ ACCUMULO
+2026-04-19 01:25:03 [INFO ] bot_poly — 💲 $75,842.53 | Δ -0.0000% | 📉 DN | [░░░░░░░░░░░░░░░░░░░░] 296s | ⏳ ACCUMULO
+2026-04-19 01:25:04 [INFO ] bot_poly — 💲 $75,842.53 | Δ -0.0000% | 📉 DN | [░░░░░░░░░░░░░░░░░░░░] 295s | ⏳ ACCUMULO
+2026-04-19 01:25:05 [INFO ] bot_poly — 💲 $75,842.53 | Δ -0.0000% | 📉 DN | [░░░░░░░░░░░░░░░░░░░░] 294s | ⏳ ACCUMULO
+2026-04-19 01:25:06 [INFO ] bot_poly — 💲 $75,842.54 | Δ +0.0000% | ➡️ -- | [░░░░░░░░░░░░░░░░░░░░] 293s | ⏳ ACCUMULO
+2026-04-19 01:25:07 [INFO ] bot_poly — 💲 $75,842.54 | Δ +0.0000% | ➡️ -- | [░░░░░░░░░░░░░░░░░░░░] 292s | ⏳ ACCUMULO
+2026-04-19 01:25:08 [INFO ] bot_poly — 💲 $75,842.54 | Δ +0.0000% | ➡️ -- | [░░░░░░░░░░░░░░░░░░░░] 291s | ⏳ ACCUMULO
+2026-04-19 01:25:09 [INFO ] bot_poly — 💲 $75,842.54 | Δ +0.0000% | ➡️ -- | [░░░░░░░░░░░░░░░░░░░░] 290s | ⏳ ACCUMULO
+2026-04-19 01:25:10 [INFO ] bot_poly — 💲 $75,842.54 | Δ +0.0000% | ➡️ -- | [░░░░░░░░░░░░░░░░░░░░] 289s | ⏳ ACCUMULO
+2026-04-19 01:25:11 [INFO ] bot_poly — 💲 $75,842.54 | Δ +0.0000% | ➡️ -- | [░░░░░░░░░░░░░░░░░░░░] 288s | ⏳ ACCUMULO
+2026-04-19 01:25:12 [INFO ] bot_poly — 💲 $75,802.45 | Δ -0.0529% | 📉 DN | [░░░░░░░░░░░░░░░░░░░░] 287s | ⏳ ACCUMULO
+2026-04-19 01:25:13 [INFO ] bot_poly — 💲 $75,802.45 | Δ -0.0529% | 📉 DN | [░░░░░░░░░░░░░░░░░░░░] 286s | ⏳ ACCUMULO
+2026-04-19 01:25:14 [INFO ] bot_poly — 💲 $75,812.07 | Δ -0.0402% | 📉 DN | [░░░░░░░░░░░░░░░░░░░░] 285s | ⏳ ACCUMULO
+2026-04-19 01:25:16 [INFO ] bot_poly — 💲 $75,817.66 | Δ -0.0328% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 284s | ⏳ ACCUMULO
+2026-04-19 01:25:17 [INFO ] bot_poly — 💲 $75,817.99 | Δ -0.0324% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 282s | ⏳ ACCUMULO
+2026-04-19 01:25:19 [INFO ] bot_poly — 💲 $75,818.00 | Δ -0.0324% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 280s | ⏳ ACCUMULO
+2026-04-19 01:25:20 [INFO ] bot_poly — 💲 $75,817.99 | Δ -0.0324% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 279s | ⏳ ACCUMULO
+2026-04-19 01:25:21 [INFO ] bot_poly — 💲 $75,817.99 | Δ -0.0324% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 278s | ⏳ ACCUMULO
+2026-04-19 01:25:22 [INFO ] bot_poly — 💲 $75,818.00 | Δ -0.0324% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 277s | ⏳ ACCUMULO
+2026-04-19 01:25:23 [INFO ] bot_poly — 💲 $75,817.99 | Δ -0.0324% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 276s | ⏳ ACCUMULO
+2026-04-19 01:25:24 [INFO ] bot_poly — 💲 $75,818.00 | Δ -0.0324% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 275s | ⏳ ACCUMULO
+2026-04-19 01:25:25 [INFO ] bot_poly — 💲 $75,818.00 | Δ -0.0324% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 274s | ⏳ ACCUMULO
+2026-04-19 01:25:26 [INFO ] bot_poly — 💲 $75,818.00 | Δ -0.0324% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 273s | ⏳ ACCUMULO
+2026-04-19 01:25:27 [INFO ] bot_poly — 💲 $75,818.00 | Δ -0.0324% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 272s | ⏳ ACCUMULO
+2026-04-19 01:25:28 [INFO ] bot_poly — 💲 $75,823.29 | Δ -0.0254% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 271s | ⏳ ACCUMULO
+2026-04-19 01:25:29 [INFO ] bot_poly — 💲 $75,824.91 | Δ -0.0232% | 📉 DN | [█░░░░░░░░░░░░░░░░░░░] 270s | ⏳ ACCUMULO
+2026-04-19 01:25:30 [INFO ] bot_poly — 💲 $75,825.01 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 269s | ⏳ ACCUMULO
+2026-04-19 01:25:32 [INFO ] bot_poly — 💲 $75,825.00 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 268s | ⏳ ACCUMULO
+2026-04-19 01:25:33 [INFO ] bot_poly — 💲 $75,825.00 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 266s | ⏳ ACCUMULO
+2026-04-19 01:25:34 [INFO ] bot_poly — 💲 $75,825.00 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 265s | ⏳ ACCUMULO
+2026-04-19 01:25:35 [INFO ] bot_poly — 💲 $75,825.00 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 264s | ⏳ ACCUMULO
+2026-04-19 01:25:36 [INFO ] bot_poly — 💲 $75,825.01 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 263s | ⏳ ACCUMULO
+2026-04-19 01:25:37 [INFO ] bot_poly — 💲 $75,825.01 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 262s | ⏳ ACCUMULO
+2026-04-19 01:25:38 [INFO ] bot_poly — 💲 $75,825.01 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 261s | ⏳ ACCUMULO
+2026-04-19 01:25:39 [INFO ] bot_poly — 💲 $75,825.01 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 260s | ⏳ ACCUMULO
+2026-04-19 01:25:40 [INFO ] bot_poly — 💲 $75,825.01 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 259s | ⏳ ACCUMULO
+2026-04-19 01:25:41 [INFO ] bot_poly — 💲 $75,825.01 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 258s | ⏳ ACCUMULO
+2026-04-19 01:25:42 [INFO ] bot_poly — 💲 $75,825.01 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 257s | ⏳ ACCUMULO
+2026-04-19 01:25:43 [INFO ] bot_poly — 💲 $75,825.01 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 256s | ⏳ ACCUMULO
+2026-04-19 01:25:44 [INFO ] bot_poly — 💲 $75,825.00 | Δ -0.0231% | 📉 DN | [██░░░░░░░░░░░░░░░░░░] 255s | ⏳ ACCUMULO
+2026-04-19 01:25:45 [INFO ] bot_poly — 💲 $75,825.01 | Δ -0.0231% | 📉 DN | [███░░░░░░░░░░░░░░░░░] 254s | ⏳ ACCUMULO

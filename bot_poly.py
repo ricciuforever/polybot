@@ -53,7 +53,7 @@ class NitroBotPoly:
         
         BET_AFTER_SEC = 150        # Scommetti dopo 2:30 min dall'inizio
         NO_BET_LAST_SEC = 30       # Stop negli ultimi 30 secondi
-        REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 minuti
+        REDEEM_INTERVAL = 30       # Auto-redeem ogni 30 secondi
         
         while self.running:
             try:
