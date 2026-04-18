@@ -61,9 +61,9 @@ class PolyWatcher:
                             h1, m1 = map(int, times[0])
                             h2, m2 = map(int, times[1])
                             
-                            # Calcolo durata (gestisce AM/PM in modo semplificato ma efficace per le differenze brevi)
+                            # Calcolo durata (solo 5 min esatti)
                             duration = abs((h2 * 60 + m2) - (h1 * 60 + m1))
-                            if duration == 5 or duration == 10 or duration == 15 or duration == 1435:
+                            if duration == 5 or duration == 1435:
                                 is_real_5m = True
                                 
                             # Calcolo Imminenza: deve iniziare tra poco (considerando ET time approssimativo)
