@@ -25,6 +25,43 @@ def save_trade(entry):
     with open(TRADES_LOG, "w") as f:
         json.dump(trades, f, indent=2)
 
+def update_trade_results():
+    """Controlla gli esiti dei trade passati e aggiorna il log."""
+    trades = load_trades_log()
+    if not trades: return
+    
+    updated = False
+    for t in trades:
+        if t.get("result") is not None: continue
+        
+        # Se il mercato è finito da almeno 2 minuti, controlliamo
+        if time.time() > t["market_end"] + 120:
+            try:
+                # Recupera l'esito dal mercato tramite condition_id
+                cid = t.get("condition_id")
+                if not cid: continue
+                
+                resp = requests.get(f"https://gamma-api.polymarket.com/markets?conditionId={cid}", timeout=5)
+                if resp.status_code == 200 and resp.json():
+                    m = resp.json()[0]
+                    if m.get("closed"):
+                        prices = m.get("outcomePrices") # ES: ["0", "1"]
+                        if prices:
+                            win_index = 0 if float(prices[0]) > 0.5 else 1
+                            actual_side = "UP" if win_index == 0 else "DOWN"
+                            
+                            t["result"] = "WIN" if t["side"] == actual_side else "LOSS"
+                            t["payout"] = 1.0 if t["result"] == "WIN" else 0.0
+                            updated = True
+                            log.info(f"📊 Risultato Trade: {t['market']} -> {t['result']} ({actual_side})")
+            except Exception as e:
+                log.warning(f"Errore controllo esito per {t['market']}: {e}")
+    
+    if updated:
+        with open(TRADES_LOG, "w") as f:
+            json.dump(trades, f, indent=2)
+    return updated
+
 class NitroBotPoly:
     def __init__(self):
         self.watcher = PolyWatcher()
@@ -62,8 +99,10 @@ class NitroBotPoly:
         BET_AFTER_SEC = 150        # Scommetti dopo 2:30 min
         NO_BET_LAST_SEC = 30       # Stop ultimi 30 sec
         REDEEM_INTERVAL = 30       # Auto-redeem ogni 30s
+        RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
         MIN_SIGNAL = 0.02          # Skip se |delta| < 0.02% (rumore)
         MAX_ENTRY_PRICE = 0.65     # Non comprare sopra 65c (ROI minimo 54%)
+        last_results_check = 0
 
         while self.running:
             try:
@@ -78,11 +117,24 @@ class NitroBotPoly:
                 if now - last_redeem_check > REDEEM_INTERVAL:
                     redeemed = self.trader.auto_redeem()
                     pol, usdc = self.trader.get_balances()
+                    self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
+                    
                     if redeemed:
                         log.info(f"💰 Riscattate {redeemed} posizioni! Saldo: ${usdc:.2f} USDC")
                     elif usdc < 1.05:
                         log.warning(f"💰 Saldo: ${usdc:.2f} USDC | ⚠️ Sotto soglia minima")
                     last_redeem_check = now
+
+                # 1c. Update esiti (300s)
+                if now - last_results_check > RESULTS_INTERVAL:
+                    if update_trade_results():
+                        # Ricalcola stats per dashboard
+                        trades = load_trades_log()
+                        comp = [t for t in trades if t.get("result") is not None]
+                        wins = sum(1 for t in comp if t["result"] == "WIN")
+                        self.state["stats"] = {"total_bets": len(comp), "won_bets": wins}
+                        log.info(f"📈 Stats Aggiornate: {wins}W - {len(comp)-wins}L")
+                    last_results_check = now
 
                 # 2. Prezzo BTC
                 btc_price = self.feed.get_last_price("BTC")
@@ -191,6 +243,7 @@ class NitroBotPoly:
                                     "anchor": anchor_price,
                                     "btc_at_bet": btc_price,
                                     "market_end": market_end,
+                                    "condition_id": m.get('conditionId'),
                                     "result": None
                                 })
                             else:
