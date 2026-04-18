@@ -62,7 +62,7 @@ const AILogItem = ({ log }) => (
 )
 
 const SettingsModal = ({ isOpen, onClose }) => {
-  const { data: envData, mutate } = useSWR(isOpen ? 'http://localhost:5000/api/env' : null, fetcher)
+  const { data: envData, mutate } = useSWR(isOpen ? '/api/env' : null, fetcher)
   const [formData, setFormData] = useState({})
   
   useEffect(() => {
@@ -71,7 +71,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
 
   const handleSave = async () => {
     try {
-      await postFetcher('http://localhost:5000/api/env', formData)
+      await postFetcher('/api/env', formData)
       alert('Ambiente salvato! Il bot è stato riavviato con i nuovi parametri.')
       onClose()
     } catch (e) {
@@ -136,12 +136,12 @@ const SettingsModal = ({ isOpen, onClose }) => {
 }
 
 export default function App() {
-  const { data: state, error } = useSWR('http://localhost:5000/api/state', fetcher, { refreshInterval: 5000 })
-  const { data: botStatus, mutate: mutateStatus } = useSWR('http://localhost:5000/api/bot/status', fetcher, { refreshInterval: 2000 })
+  const { data: state, error } = useSWR('/api/state', fetcher, { refreshInterval: 5000 })
+  const { data: botStatus, mutate: mutateStatus } = useSWR('/api/bot/status', fetcher, { refreshInterval: 2000 })
   const [settingsOpen, setSettingsOpen] = useState(false)
 
   const toggleBot = async () => {
-    const res = await postFetcher('http://localhost:5000/api/bot/toggle', {})
+    const res = await postFetcher('/api/bot/toggle', {})
     mutateStatus({ ...botStatus, desired: res.desired })
   }
 
@@ -179,7 +179,7 @@ export default function App() {
           <button 
             onClick={() => {
               if(window.confirm("Vuoi vendere tutte le posizioni e recuperare il saldo?")) {
-                fetch('http://localhost:5000/api/liquidate', { method: 'POST' })
+                fetch('/api/liquidate', { method: 'POST' })
                   .then(r => r.json())
                   .then(data => alert(data.message));
               }
