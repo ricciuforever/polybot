@@ -1,14 +1,12 @@
 #!/bin/bash
 cd /var/www/vhosts/emanueletolomei.it/polybot.emanueletolomei.it
 
-# Cerchiamo una versione aggiornata di Python (Polymarket richiede >= 3.9)
-PYTHON_CMD=""
-for cmd in python3.11 python3.10 python3.9 python3; do
-    if command -v $cmd &> /dev/null; then
-        PYTHON_CMD=$cmd
-        break
-    fi
-done
+# Cerchiamo la versione aggiornata di Python (Polymarket richiede >= 3.9.10)
+# Usiamo il path assoluto perché il cron di Plesk ignora /usr/local/bin
+PYTHON_CMD="/usr/local/bin/python3.11"
+if [ ! -f "$PYTHON_CMD" ]; then
+    PYTHON_CMD="python3" # Fallback disperato
+fi
 
 echo "Utilizzando $PYTHON_CMD per la creazione del venv..."
 
