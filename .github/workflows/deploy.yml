@@ -1,0 +1,25 @@
+name: Deploy via SFTP
+
+on:
+  push:
+    branches:
+      - main # O il nome del tuo branch principale
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: SFTP Deploy
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: ${{ secrets.SFTP_PORT }} # solitamente 22
+          local_path: './*'
+          remote_path: '/var/www/vhosts/emanueletolomei.it/polybot.emanueletolomei.it'
+          sftp_only: true
