@@ -1,17 +1,28 @@
 #!/bin/bash
 cd /var/www/vhosts/emanueletolomei.it/polybot.emanueletolomei.it
 
-# Crea il virtual environment isolato se non esiste
-python3 -m venv venv
+# Cerchiamo una versione aggiornata di Python (Polymarket richiede >= 3.9)
+PYTHON_CMD=""
+for cmd in python3.11 python3.10 python3.9 python3; do
+    if command -v $cmd &> /dev/null; then
+        PYTHON_CMD=$cmd
+        break
+    fi
+done
 
-# Aggiorna pip per evitare i crash di sistema
+echo "Utilizzando $PYTHON_CMD per la creazione del venv..."
+
+# Crea il virtual environment isolato
+$PYTHON_CMD -m venv venv
+
+# Aggiorna pip
 venv/bin/python -m pip install --upgrade pip
 
-# Installa o aggiorna le librerie
+# Installa librerie
 venv/bin/pip install -r requirements.txt
 
-# Chiude processi vecchi se esistono (per evitare conflitti di porta 5000)
+# Uccide processi vecchi in memoria
 pkill -f "web_server_v2.py" || true
 
-# Avvia il server in background e salva i log
+# Avvia server
 nohup venv/bin/python web_server_v2.py > dashboard_log.txt 2>&1 &
