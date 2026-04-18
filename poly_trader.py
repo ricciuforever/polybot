@@ -82,7 +82,14 @@ class PolyTrader:
             # Garantiamo valore > 1.05$
             size = round((1.10 / best_price) + 0.1, 2)
             
-            signed = self.client.create_order(OrderArgs(price=best_price, size=size, side=side, token_id=token_id))
+            # Creazione Argomenti Ordine
+            order_args = OrderArgs(price=best_price, size=size, side=side, token_id=token_id)
+            
+            # Se abbiamo un Builder ID, lo associamo all'ordine per tracciamento/commissioni
+            if config.POLY_BUILDER_ID:
+                order_args.builder_id = config.POLY_BUILDER_ID
+                
+            signed = self.client.create_order(order_args)
             resp = self.client.post_order(signed)
             
             if resp.get('success') or resp.get('orderID'):
