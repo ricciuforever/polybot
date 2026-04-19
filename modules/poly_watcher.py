@@ -20,28 +20,29 @@ class PolyWatcher:
         }
 
     def find_btc_markets(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Trova i mercati crypto attivi scansionando i top 500 mercati per volume."""
+        """Trova i mercati crypto attivi"""
         endpoint = f"{self.url}/events"
         params = {
             "active": "true",
             "closed": "false",
-            "limit": 500
+            "limit": 500,
+            "tag_slug": "crypto"
         }
-        
         all_found = []
         try:
             resp = requests.get(endpoint, params=params, timeout=10)
-            if resp.status_code != 200:
-                log.error(f"Errore Gamma API: {resp.status_code}")
-                return []
-            
-            events = resp.json()
             data = []
-            for e in events:
-                if e.get("markets"):
-                    data.extend(e["markets"])
+            if resp.status_code == 200:
+                events = resp.json()
+                for e in events:
+                    if e.get("markets"):
+                        data.extend(e["markets"])
+                        
+            
+            # log.info(f"📡 Gamma API: Ricevuti {len(data)} mercati (BTC+ETH) da analizzare.")
+            # Rimuovo il log per evitare spamming di testo inutile ogni volta che fetchiamo.
                     
-            log.info(f"📡 Gamma API: Ricevuti {len(data)} mercati da analizzare.")
+
             for m in data:
                 q = m.get('question', '').lower()
                 
@@ -64,9 +65,9 @@ class PolyWatcher:
                             start_dt = datetime.strptime(start_date_str.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S%z")
                             now_dt = datetime.now(timezone.utc)
                             
-                            # Filtro: solo il mercato che scade entro i prossimi 0-7 minuti
+                            # Filtro: Mostra i mercati che scadono entro la prossima ora intera
                             diff_sec = (end_dt - now_dt).total_seconds()
-                            if 0 < diff_sec <= 420:
+                            if 0 < diff_sec <= 3605:
                                 tokens = json.loads(clob_ids)
                                 is_crypto_target = any(x in q for x in ["up or down"])
                                 
@@ -88,7 +89,14 @@ class PolyWatcher:
             
             # Ordiniamo dal più imminente in poi (quello currently live)
             all_found.sort(key=lambda x: x['end_timestamp'])
-            return all_found[:1]
+            
+            # Restituiamo il PIU' imminente PER OGNI ASSET!
+            asset_best = {}
+            for m in all_found:
+                if m['asset'] not in asset_best:
+                    asset_best[m['asset']] = m
+                    
+            return list(asset_best.values())
             
         except Exception as e:
             log.error(f"Errore Gamma API: {e}")

@@ -159,9 +159,13 @@ class NitroBotPoly:
                     last_results_check = now
 
                 if not cached_markets:
-                    btc_price = self.feed.get_last_price("BTC")
-                    eth_price = self.feed.get_last_price("ETH")
-                    log.info(f"💲 BTC ${btc_price:,.2f} | ETH ${eth_price:,.2f} | ⏳ Nessun mercato <= 7m trovato al momento.")
+                    prices_log = []
+                    for asset in config.ASSETS:
+                        p = self.feed.get_last_price(asset)
+                        if p > 0: prices_log.append(f"{asset} ${p:,.2f}" if p >= 1 else f"{asset} ${p:,.4f}")
+                    
+                    price_str = " | ".join(prices_log)
+                    if price_str: log.info(f"💲 {price_str} | ⏳ Nessun mercato <= 7m trovato al momento.")
                     await asyncio.sleep(1)
                     continue
 
@@ -213,15 +217,19 @@ class NitroBotPoly:
                     direction = "📈 UP" if movement_pct > 0 else "📉 DN" if movement_pct < 0 else "➡️ --"
 
                     # Barra progresso
-                    progress = min(elapsed / (market_end - market_start), 1.0)
+                    duration = market_end - market_start
+                    progress = min(elapsed / duration, 1.0) if duration > 0 else 1.0
                     bar = "█" * int(progress * 20) + "░" * (20 - int(progress * 20))
 
-                    status = "🎯 PRONTO" if elapsed >= BET_AFTER_SEC and not bet_placed.get(asset) else "⏳ ACCUMULO" if not bet_placed.get(asset) else "✅ PIAZZATA"
+                    # Calcolo dinamicamente quando entrare (ultimi 5 min)
+                    enter_threshold = min(300, duration * 0.2) # Entra negli ultimi 5 minuti o ultimo 20%
+                    
+                    status = "🎯 PRONTO" if remaining <= enter_threshold and not bet_placed.get(asset) else "⏳ ACCUMULO" if not bet_placed.get(asset) else "✅ PIAZZATA"
                     log.info(f"💲 {asset} ${asset_price:,.2f} | Δ {movement_pct:+.4f}% | {direction} | [{bar}] {int(remaining)}s | {status}")
 
                     # ===== 5. DECISIONE — SMART SNIPER v2 =====
                     if not bet_placed.get(asset):
-                        if elapsed < BET_AFTER_SEC:
+                        if remaining > enter_threshold:
                             pass  # Accumulo
                         elif remaining < NO_BET_LAST_SEC:
                             log.warning(f"   ↳ ⚠️ Troppo tardi ({int(remaining)}s rimasti)")
