@@ -68,9 +68,11 @@ def update_trade_results():
                             actual_side = "UP" if win_index == 0 else "DOWN"
                             
                             t["result"] = "WIN" if t["side"] == actual_side else "LOSS"
+                            t["result"] = "WIN" if t["side"] == actual_side else "LOSS"
                             t["payout"] = 1.0 if t["result"] == "WIN" else 0.0
                             updated = True
-                            log.info(f"📊 Risultato Trade: {t['market']} -> {t['result']} ({actual_side})")
+                            pnl = "+1.00 USDC" if t["result"] == "WIN" else "-1.10 USDC" # stima approx
+                            log.info(f"📊 💰 RISULTATO CHIUSURA TRADE: {t['market']} -> {t['result']} ({actual_side}) | PNL: {pnl}")
             except Exception as e:
                 log.warning(f"Errore controllo esito per {t['market']}: {e}")
     
@@ -144,6 +146,7 @@ class NitroBotPoly:
                                     pol, usdc = self.trader.get_balances()
                                     if usdc is not None:
                                         self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
+                                        log.info(f"🏦 SALDI AGGIORNATI -> POL: {pol:.3f} | USDC: {usdc:.2f}")
                                         if redeemed:
                                             log.info(f"💰 ✅ Riscattate {redeemed} posizioni! Saldo: ${usdc:.2f} USDC")
                                         elif usdc < 1.05:
@@ -295,7 +298,7 @@ class NitroBotPoly:
 
                                 if success:
                                     self.last_trade_times[asset] = now
-                                    log.info(f"   ↳ ✅ TRADE ESEGUITO!")
+                                    log.info(f"   ↳ ✅ 💰 TRADE ESEGUITO SU {m['title']} | Prezzo Ingr.: {cost_c}¢ | Direzione: {side}")
 
                                     # Tracking
                                     entry = {
