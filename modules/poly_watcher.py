@@ -3,6 +3,8 @@ import json
 import logging
 from typing import List, Dict, Any
 import config
+from modules.http_utils import apply_ip_binding
+apply_ip_binding()
 
 log = logging.getLogger("poly_watcher")
 

@@ -8,6 +8,8 @@ from eth_account import Account
 import requests
 import re
 import config
+from modules.http_utils import apply_ip_binding
+apply_ip_binding()
 import traceback
 from modules.logger import get_logger
 

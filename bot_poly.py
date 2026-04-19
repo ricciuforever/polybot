@@ -7,6 +7,8 @@ from modules.poly_watcher import PolyWatcher
 from modules.price_feed import BinanceFeed
 from poly_trader import PolyTrader
 import config
+from modules.http_utils import apply_ip_binding
+apply_ip_binding()
 from modules.logger import get_logger
 
 log = get_logger("bot_poly")
