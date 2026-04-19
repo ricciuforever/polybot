@@ -510,52 +510,70 @@ class PolyTrader:
         try:
             url = f"https://data-api.polymarket.com/positions?user={self.my_address}"
             resp = requests.get(url, timeout=10)
-            if resp.status_code == 200:
-                data = resp.json()
-                active = []
-                for p in data:
-                    size = float(p.get('size', 0))
-                    # Filtriamo solo posizioni reali (anche frazionarie)
-                    if size > 0.01:
-                        cond_id = p.get('conditionId') or p.get('condition_id')
-                        if not cond_id: continue
-                        
-                        # Recupero dati mercato per verificare se è attivo nel 2026
-                        try:
-                            g_url = f"https://gamma-api.polymarket.com/markets?conditionId={cond_id}"
-                            g_resp = requests.get(g_url, timeout=5)
-                            if g_resp.status_code == 200:
-                                g_data = g_resp.json()
-                                if g_data:
-                                    market = g_data[0]
-                                    # SALTA se il mercato è chiuso o troppo vecchio
-                                    if market.get('closed') or "2020" in market.get('question', ''):
-                                        continue
-                                        
-                                    title = market.get('question', 'Match')
-                                    
-                                    # Filtro Strategia: Mostriamo solo crypto target e scommesse di prezzo
-                                    q_low = title.lower()
-                                    if not any(x in q_low for x in ["btc", "bitcoin", "eth", "ethereum", "price of", "up or down"]):
-                                        continue
-                                        
-                                    entry = float(p.get('avg_price', 0))
-                                    current = float(p.get('cur_price', 0)) or entry
-                                    pnl = (current - entry) * size
-                                    
-                                    if size * current < 0.01: # Nascondi rimasugli a valore zero
-                                        continue
+            if resp.status_code != 200:
+                return []
 
-                                    active.append({
-                                        "title": title,
-                                        "size": size,
-                                        "side": "YES" if "yes" in p.get('slug', '').lower() else "NO",
-                                        "pnl": pnl,
-                                        "value": size * current
-                                    })
-                        except: pass
-                return active
-            return []
+            data = resp.json()
+            # 1. Filtriamo posizioni con size minima e raccogliamo conditionId
+            active_positions = [p for p in data if float(p.get('size', 0)) > 0.01]
+            if not active_positions:
+                return []
+
+            condition_ids = list(set(p.get('conditionId') or p.get('condition_id') for p in active_positions))
+            condition_ids = [cid for cid in condition_ids if cid]
+
+            if not condition_ids:
+                return []
+
+            # 2. Recupero dati mercato in batch (max 20 per volta per URL length)
+            market_lookup = {}
+            for i in range(0, len(condition_ids), 20):
+                batch = condition_ids[i:i+20]
+                try:
+                    g_url = f"https://gamma-api.polymarket.com/markets"
+                    g_resp = requests.get(g_url, params={"conditionId": batch}, timeout=5)
+                    if g_resp.status_code == 200:
+                        for m in g_resp.json():
+                            cid = m.get('conditionId')
+                            if cid: market_lookup[cid] = m
+                except Exception as e:
+                    log.debug(f"Errore batch gamma-api: {e}")
+
+            # 3. Processiamo le posizioni usando il lookup
+            active = []
+            for p in active_positions:
+                cond_id = p.get('conditionId') or p.get('condition_id')
+                market = market_lookup.get(cond_id)
+                if not market:
+                    continue
+
+                # SALTA se il mercato è chiuso o troppo vecchio
+                if market.get('closed') or "2020" in market.get('question', ''):
+                    continue
+
+                title = market.get('question', 'Match')
+
+                # Filtro Strategia: Mostriamo solo crypto target e scommesse di prezzo
+                q_low = title.lower()
+                if not any(x in q_low for x in ["btc", "bitcoin", "eth", "ethereum", "price of", "up or down"]):
+                    continue
+
+                size = float(p.get('size', 0))
+                entry = float(p.get('avg_price', 0))
+                current = float(p.get('cur_price', 0)) or entry
+                pnl = (current - entry) * size
+
+                if size * current < 0.01: # Nascondi rimasugli a valore zero
+                    continue
+
+                active.append({
+                    "title": title,
+                    "size": size,
+                    "side": "YES" if "yes" in p.get('slug', '').lower() else "NO",
+                    "pnl": pnl,
+                    "value": size * current
+                })
+            return active
         except Exception as e:
             log.warning(f"Errore recupero posizioni: {e}")
             return []
