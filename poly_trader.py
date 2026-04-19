@@ -238,9 +238,11 @@ class PolyTrader:
                     pos_resp = requests.get(pos_url, timeout=10).json()
                     for p in pos_resp:
                         cid = p.get('conditionId') or p.get('condition_id')
-                        if float(p.get('size', 0)) > 0.01 and cid:
-                            if cid not in potential_conditions:
-                                potential_conditions.append(cid)
+                        # Filtro aggressivo: Solo posizioni riscattabili e DOVE NON ABBIAMO PERSO (-100% PnL)
+                        if p.get('redeemable') and float(p.get('percentPnl', -100)) > -50:
+                            if float(p.get('size', 0)) > 0.01 and cid:
+                                if cid not in potential_conditions:
+                                    potential_conditions.append(cid)
                 except: pass
             
 
