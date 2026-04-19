@@ -133,8 +133,8 @@ class NitroBotPoly:
 
                 # 1b. Auto-redeem + saldo (5 min)
                 if now - last_redeem_check > REDEEM_INTERVAL:
-                    log.info(f"💰 Avvio controllo auto-redeem...")
-                    redeemed = self.trader.auto_redeem()
+                    log.info(f"💰 Avvio controllo auto-redeem in background...")
+                    redeemed = await asyncio.to_thread(self.trader.auto_redeem)
                     pol, usdc = self.trader.get_balances()
                     
                     if usdc is not None:

@@ -20,6 +20,7 @@ class PolyTrader:
         self.w3 = Web3(Web3.HTTPProvider(config.POLY_RPC))
         self.account = Account.from_key(config.PRIVATE_KEY)
         self.my_address = self.account.address
+        self.checked_conditions = set()
         
         # 1. Client CLOB
         self.client = ClobClient(
@@ -286,7 +287,7 @@ class PolyTrader:
             log.info(f"   ↳ 🔎 Analisi di {len(potential_conditions)} potenziali riscatti...")
             
             for cond_id in potential_conditions:
-                if cond_id in seen_conditions: continue
+                if cond_id in seen_conditions or cond_id in self.checked_conditions: continue
                 seen_conditions.add(cond_id)
                 
                 try:
@@ -300,7 +301,6 @@ class PolyTrader:
                         is_resolved_onchain = False
 
                     if not is_resolved_onchain:
-                        log.info(f"      ↳ ⏳ {cond_id[:10]}...: Non ancora risolto on-chain.")
                         continue 
                     
                     # --- CONTROLLO BILANCIO (Safe + Metamask) ---
@@ -330,6 +330,7 @@ class PolyTrader:
                             break
                     
                     if found_balance == 0:
+                        self.checked_conditions.add(cond_id)
                         continue
 
                     log.info(f"   ↳ 🎯 TROVATO! {found_balance/1e6} token vincenti su {active_address[:10]}...")
