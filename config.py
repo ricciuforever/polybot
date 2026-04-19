@@ -20,6 +20,10 @@ POLY_BUILDER_ID = os.getenv("POLY_BUILDER_ID", "").strip()
 POLY_RELAYER_KEY = os.getenv("POLY_RELAYER_KEY", "").strip()
 POLY_RELAYER_ADDRESS = os.getenv("WALLET_ADDRESS", "0x27Fb2C57b1149bE45d99070a906753D5A8ad6e3a").strip()
 
+# Source IP Binding (es. IP Finlandia da Plesk)
+BIND_IP = os.getenv("BIND_IP", "").strip()
+
+
 # --- POLYMARKET CONFIG ---
 POLY_CLOB_URL = "https://clob.polymarket.com"
 POLY_GAMMA_URL = "https://gamma-api.polymarket.com"
