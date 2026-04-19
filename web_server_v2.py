@@ -82,7 +82,7 @@ def bot_toggle():
 def get_env():
     env_data = {}
     if os.path.exists('.env'):
-        with open('.env', 'r', encoding='utf-8') as f:
+        with open('.env', 'r', encoding='utf-8', errors='replace') as f:
             for line in f:
                 if line.strip() and not line.strip().startswith('#'):
                     if '=' in line:
@@ -96,7 +96,7 @@ def set_env():
     env_data = request.json or {}
     env_file = ".env"
     if not os.path.exists(env_file):
-        open(env_file, 'w', encoding='utf-8').close()
+        open(env_file, 'w', encoding='utf-8', errors='replace').close()
     
     for k, v in env_data.items():
         set_key(env_file, k, str(v))
@@ -118,7 +118,7 @@ def get_state():
             "wallet": {"pol": 0, "usdc": 0, "address": "N/A"},
             "stats": {"total_bets": 0, "won_bets": 0}
         })
-    with open(STATE_FILE, "r", encoding='utf-8') as f:
+    with open(STATE_FILE, "r", encoding='utf-8', errors='replace') as f:
         return jsonify(json.load(f))
 
 @app.route('/api/trades')
@@ -127,7 +127,7 @@ def get_trades():
     if not os.path.exists(TRADES_LOG):
         return jsonify([])
     try:
-        with open(TRADES_LOG, "r", encoding='utf-8') as f:
+        with open(TRADES_LOG, "r", encoding='utf-8', errors='replace') as f:
             trades = json.load(f)
             # Restituiamo i trade ordinati per data (più recenti prima)
             return jsonify(sorted(trades, key=lambda x: x.get('ts', 0), reverse=True))
@@ -140,7 +140,7 @@ def get_stats():
     if not os.path.exists(TRADES_LOG):
         return jsonify({"total": 0, "wins": 0, "losses": 0, "win_rate": 0})
     try:
-        with open(TRADES_LOG, "r", encoding='utf-8') as f:
+        with open(TRADES_LOG, "r", encoding='utf-8', errors='replace') as f:
             trades = json.load(f)
             comp = [t for t in trades if t.get("result") is not None]
             wins = sum(1 for t in comp if t["result"] == "WIN")
@@ -161,7 +161,7 @@ def get_logs():
     if not os.path.exists("dashboard_log.txt"):
         return jsonify({"logs": []})
     try:
-        with open("dashboard_log.txt", "r", encoding='utf-8') as f:
+        with open("dashboard_log.txt", "r", encoding='utf-8', errors='replace') as f:
             lines = f.readlines()
             # Restituiamo le ultime 50 righe pulite
             return jsonify({"logs": [l.strip() for l in lines[-50:]]})
