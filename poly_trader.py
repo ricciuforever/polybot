@@ -88,7 +88,8 @@ class PolyTrader:
                 signed = self.w3.eth.account.sign_transaction(tx, config.PRIVATE_KEY)
                 self.w3.eth.send_raw_transaction(signed.raw_transaction)
                 log.info("🔓 Inviato sblocco USDC.e")
-        except: pass
+        except Exception as e:
+            log.warning(f"Errore durante l'invio dello sblocco USDC.e: {e}")
 
     def get_balances(self):
         """Recupera il saldo totale USDC (Metamask + Safe) e POL."""
@@ -115,7 +116,8 @@ class PolyTrader:
             if os.path.exists(self.state_path):
                 with open(self.state_path, "r") as f:
                     return set(json.load(f))
-        except: pass
+        except Exception as e:
+            log.debug(f"Nessuno stato caricato o errore lettura: {e}")
         return set()
 
     def _save_checked_conditions(self):
@@ -161,7 +163,8 @@ class PolyTrader:
                     log.info(f"🛡️ Rilevato nuovo spender: {spender}. Invio APPROVAL automatica...")
                     self.approve_spender(spender)
                     return False, "Allowance richiesta. Riprova tra 10 secondi."
-                except: pass
+                except Exception as ex:
+                    log.error(f"Errore durante l'approvazione automatica spender (execute_market_trade): {ex}")
             return False, error_msg
 
     def sniper_trade(self, market: dict, movement_pct: float) -> bool:
@@ -238,7 +241,8 @@ class PolyTrader:
                 try:
                     spender = re.search(r"spender: (0x[a-fA-F0-9]{40})", error_msg).group(1)
                     self.approve_spender(spender)
-                except: pass
+                except Exception as ex:
+                    log.error(f"Errore durante l'approvazione automatica spender (sniper_trade): {ex}")
             return False
 
     def approve_spender(self, spender_address: str):
@@ -574,6 +578,53 @@ class PolyTrader:
                     "value": size * current
                 })
             return active
+            if resp.status_code == 200:
+                data = resp.json()
+                active = []
+                for p in data:
+                    size = float(p.get('size', 0))
+                    # Filtriamo solo posizioni reali (anche frazionarie)
+                    if size > 0.01:
+                        cond_id = p.get('conditionId') or p.get('condition_id')
+                        if not cond_id: continue
+                        
+                        # Recupero dati mercato per verificare se è attivo nel 2026
+                        try:
+                            g_url = f"https://gamma-api.polymarket.com/markets?conditionId={cond_id}"
+                            g_resp = requests.get(g_url, timeout=5)
+                            if g_resp.status_code == 200:
+                                g_data = g_resp.json()
+                                if g_data:
+                                    market = g_data[0]
+                                    # SALTA se il mercato è chiuso o troppo vecchio
+                                    if market.get('closed') or "2020" in market.get('question', ''):
+                                        continue
+                                        
+                                    title = market.get('question', 'Match')
+                                    
+                                    # Filtro Strategia: Mostriamo solo crypto target e scommesse di prezzo
+                                    q_low = title.lower()
+                                    if not any(x in q_low for x in ["btc", "bitcoin", "eth", "ethereum", "price of", "up or down"]):
+                                        continue
+                                        
+                                    entry = float(p.get('avg_price', 0))
+                                    current = float(p.get('cur_price', 0)) or entry
+                                    pnl = (current - entry) * size
+                                    
+                                    if size * current < 0.01: # Nascondi rimasugli a valore zero
+                                        continue
+
+                                    active.append({
+                                        "title": title,
+                                        "size": size,
+                                        "side": "YES" if "yes" in p.get('slug', '').lower() else "NO",
+                                        "pnl": pnl,
+                                        "value": size * current
+                                    })
+                        except Exception as inner_e:
+                            log.debug(f"Errore processamento singola posizione: {inner_e}")
+                return active
+            return []
         except Exception as e:
             log.warning(f"Errore recupero posizioni: {e}")
             return []
@@ -600,7 +651,8 @@ class PolyTrader:
                             side="SELL",
                             token_id=token_id
                         ))
-                    except: pass
+                    except Exception as inner_e:
+                        log.error(f"Errore durante la vendita di emergenza del token {token_id}: {inner_e}")
         except Exception as e:
             log.error(f"Errore durante liquidazione: {e}")
 
