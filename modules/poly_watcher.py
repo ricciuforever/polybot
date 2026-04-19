@@ -76,7 +76,7 @@ class PolyWatcher:
                                                 "end_timestamp": end_dt
                                             })
                 except Exception as e:
-                    pass
+                    log.error(f"Errore scansione bucket {slug}: {e}")
 
         # Ordiniamo dal più imminente in poi (quello currently live)
         all_found.sort(key=lambda x: x['end_timestamp'])
