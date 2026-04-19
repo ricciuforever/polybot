@@ -108,15 +108,15 @@ class NitroBotPoly:
         last_api_call = 0
         API_REFRESH_INTERVAL = 15
 
-        anchor_price = None
-        current_market_id = None
-        bet_placed = False
+        anchor_price = {}
+        current_market_id = {}
+        bet_placed = {}
         last_redeem_check = 0
 
         # === PARAMETRI STRATEGIA SMART SNIPER v2 ===
         BET_AFTER_SEC = 150        # Scommetti dopo 2:30 min
         NO_BET_LAST_SEC = 30       # Stop ultimi 30 sec
-        REDEEM_INTERVAL = 30       # Auto-redeem ogni 30s
+        REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 MIN (EVITA 429)
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
         MIN_SIGNAL = 0.02          # Skip se |delta| < 0.02% (rumore)
         MAX_ENTRY_PRICE = 0.75     # Non comprare sopra 75c (ROI minimo 33%)
@@ -131,17 +131,19 @@ class NitroBotPoly:
                     cached_markets = self.watcher.find_btc_markets(limit=20)
                     last_api_call = now
 
-                # 1b. Auto-redeem + saldo (30s)
+                # 1b. Auto-redeem + saldo (5 min)
                 if now - last_redeem_check > REDEEM_INTERVAL:
                     log.info(f"💰 Avvio controllo auto-redeem...")
                     redeemed = self.trader.auto_redeem()
                     pol, usdc = self.trader.get_balances()
-                    self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
                     
-                    if redeemed:
-                        log.info(f"💰 ✅ Riscattate {redeemed} posizioni! Saldo: ${usdc:.2f} USDC")
-                    elif usdc < 1.05:
-                        log.warning(f"💰 Saldo: ${usdc:.2f} USDC | ⚠️ Sotto soglia minima")
+                    if usdc is not None:
+                        self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
+                        if redeemed:
+                            log.info(f"💰 ✅ Riscattate {redeemed} posizioni! Saldo: ${usdc:.2f} USDC")
+                        elif usdc < 1.05:
+                            log.warning(f"💰 Saldo: ${usdc:.2f} USDC | ⚠️ Sotto soglia minima")
+                    
                     last_redeem_check = now
 
                 # 1c. Update esiti (300s)
@@ -156,129 +158,126 @@ class NitroBotPoly:
                         log.info(f"📈 Stats Aggiornate: {wins}W - {len(comp)-wins}L")
                     last_results_check = now
 
-                # 2. Prezzo BTC
-                btc_price = self.feed.get_last_price("BTC")
+                # Loop su tutti i mercati (es. BTC e ETH simultaneamente)
+                for m in cached_markets:
+                    asset = m.get('asset', 'BTC')
+                    asset_price = self.feed.get_last_price(asset)
 
-                if not cached_markets:
-                    log.info(f"💲 BTC ${btc_price:,.2f} | ⏳ Nessun mercato live.")
-                    await asyncio.sleep(1)
-                    continue
+                    if asset_price == 0:
+                        continue
 
-                m = cached_markets[0]
-                market_start = m['start_timestamp']
-                market_end = m['end_timestamp']
-                elapsed = now - market_start
-                remaining = market_end - now
+                    market_start = m['start_timestamp']
+                    market_end = m['end_timestamp']
+                    elapsed = now - market_start
+                    remaining = market_end - now
 
-                # 3. Nuova finestra -> Ancora prezzo
-                if m['id'] != current_market_id:
-                    current_market_id = m['id']
-                    bet_placed = False
-                    
-                    # Prova prima il PTB Ufficiale
-                    official_ptb = fetch_official_ptb(m.get('slug'))
-                    
-                    if official_ptb:
-                        anchor_price = official_ptb
-                        ptb_source = "OFFICIAL API"
-                    else:
-                        # Fallback su Binance Storico
-                        historical_price = self.feed.get_price_at_time("BTC", market_start)
-                        anchor_price = historical_price if historical_price > 0 else btc_price
-                        ptb_source = "BINANCE FALLBACK"
-                    
-                    log.info(f"")
-                    log.info(f"{'='*60}")
-                    log.info(f"🆕 NUOVA FINESTRA: {m['title']}")
-                    log.info(f"   ⚓ Price to Beat ({ptb_source}): ${anchor_price:,.2f}")
-                    log.info(f"   💲 Prezzo Attuale: ${btc_price:,.2f}")
-                    log.info(f"   ⏱️  Durata: {int(market_end - market_start)}s | Scade tra {int(remaining)}s")
-                    log.info(f"{'='*60}")
-
-                # 4. Movimento dal Price to Beat
-                if anchor_price and anchor_price > 0:
-                    movement_pct = ((btc_price - anchor_price) / anchor_price) * 100
-                else:
-                    movement_pct = 0.0
-
-                direction = "📈 UP" if movement_pct > 0 else "📉 DN" if movement_pct < 0 else "➡️ --"
-
-                # Barra progresso
-                progress = min(elapsed / (market_end - market_start), 1.0)
-                bar = "█" * int(progress * 20) + "░" * (20 - int(progress * 20))
-
-                status = "🎯 PRONTO" if elapsed >= BET_AFTER_SEC and not bet_placed else "⏳ ACCUMULO" if not bet_placed else "✅ PIAZZATA"
-                log.info(f"💲 ${btc_price:,.2f} | Δ {movement_pct:+.4f}% | {direction} | [{bar}] {int(remaining)}s | {status}")
-
-                # ===== 5. DECISIONE — SMART SNIPER v2 =====
-                if not bet_placed:
-                    if elapsed < BET_AFTER_SEC:
-                        pass  # Accumulo
-                    elif remaining < NO_BET_LAST_SEC:
-                        log.warning(f"   ↳ ⚠️ Troppo tardi ({int(remaining)}s rimasti)")
-                        bet_placed = True
-                    elif abs(movement_pct) < MIN_SIGNAL:
-                        # SEGNALE TROPPO DEBOLE -> Skip (evita coin flip con fee negative)
-                        log.info(f"   ↳ 🔇 Segnale debole ({movement_pct:+.4f}% < {MIN_SIGNAL}%). SKIP.")
-                    else:
-                        # SEGNALE VALIDO -> Recupero odds mercato
-                        if movement_pct > 0:
-                            side = "UP"
-                            token_bet = m['token_yes']
+                    # 3. Nuova finestra -> Ancora prezzo
+                    if m['id'] != current_market_id.get(asset):
+                        current_market_id[asset] = m['id']
+                        bet_placed[asset] = False
+                        
+                        # Prova prima il PTB Ufficiale
+                        official_ptb = fetch_official_ptb(m.get('slug'))
+                        
+                        if official_ptb:
+                            anchor_price[asset] = official_ptb
+                            ptb_source = "OFFICIAL API"
                         else:
-                            side = "DOWN"
-                            token_bet = m['token_no']
+                            # Fallback su Binance Storico
+                            historical_price = self.feed.get_price_at_time(asset, market_start)
+                            anchor_price[asset] = historical_price if historical_price > 0 else asset_price
+                            ptb_source = "BINANCE FALLBACK"
+                        
+                        log.info(f"")
+                        log.info(f"{'='*60}")
+                        log.info(f"🆕 NUOVA FINESTRA {asset}: {m['title']}")
+                        log.info(f"   ⚓ Price to Beat ({ptb_source}): ${anchor_price[asset]:,.2f}")
+                        log.info(f"   💲 Prezzo Attuale {asset}: ${asset_price:,.2f}")
+                        log.info(f"   ⏱️  Durata: {int(market_end - market_start)}s | Scade tra {int(remaining)}s")
+                        log.info(f"{'='*60}")
 
-                        # Midpoint del token che vogliamo comprare
-                        try:
-                            resp = requests.get("https://clob.polymarket.com/midpoint",
-                                params={"token_id": token_bet}, timeout=3)
-                            entry_price = float(resp.json().get("mid", 0.50))
-                        except:
-                            entry_price = 0.50
+                    # 4. Movimento dal Price to Beat
+                    ap = anchor_price.get(asset)
+                    if ap and ap > 0:
+                        movement_pct = ((asset_price - ap) / ap) * 100
+                    else:
+                        movement_pct = 0.0
 
-                        cost_c = int(entry_price * 100)
-                        profit_c = 100 - cost_c
-                        roi = (profit_c / cost_c * 100) if cost_c > 0 else 0
+                    direction = "📈 UP" if movement_pct > 0 else "📉 DN" if movement_pct < 0 else "➡️ --"
 
-                        # Il mercato conferma? Se compriamo a <50c = mercato pensa il contrario = noi vediamo prima
-                        market_agrees = entry_price < 0.50
+                    # Barra progresso
+                    progress = min(elapsed / (market_end - market_start), 1.0)
+                    bar = "█" * int(progress * 20) + "░" * (20 - int(progress * 20))
 
-                        log.info(f"   ↳ 📊 Segnale: {side} | Δ {movement_pct:+.4f}%")
-                        log.info(f"   ↳ 📊 Quota: {cost_c}¢ → Payout: {profit_c}¢ (ROI: {roi:.0f}%)")
+                    status = "🎯 PRONTO" if elapsed >= BET_AFTER_SEC and not bet_placed.get(asset) else "⏳ ACCUMULO" if not bet_placed.get(asset) else "✅ PIAZZATA"
+                    log.info(f"💲 {asset} ${asset_price:,.2f} | Δ {movement_pct:+.4f}% | {direction} | [{bar}] {int(remaining)}s | {status}")
 
-                        if entry_price > MAX_ENTRY_PRICE:
-                            log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {int(MAX_ENTRY_PRICE*100)}¢. Payout troppo basso. SKIP.")
-                            bet_placed = True
+                    # ===== 5. DECISIONE — SMART SNIPER v2 =====
+                    if not bet_placed.get(asset):
+                        if elapsed < BET_AFTER_SEC:
+                            pass  # Accumulo
+                        elif remaining < NO_BET_LAST_SEC:
+                            log.warning(f"   ↳ ⚠️ Troppo tardi ({int(remaining)}s rimasti)")
+                            bet_placed[asset] = True
+                        elif abs(movement_pct) < MIN_SIGNAL:
+                            # SEGNALE TROPPO DEBOLE -> Skip
+                            log.info(f"   ↳ 🔇 Segnale debole ({movement_pct:+.4f}% < {MIN_SIGNAL}%). SKIP.")
                         else:
-                            confidence = "FORTE 🔥" if market_agrees else "BUONA"
-                            log.info(f"   ↳ 🎯 BET {side} (confidenza: {confidence})")
-                            log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
-
-                            success = self.trader.sniper_trade(m, movement_pct)
-                            bet_placed = True
-
-                            if success:
-                                self.last_trade_times[m['asset']] = now
-                                log.info(f"   ↳ ✅ TRADE ESEGUITO!")
-
-                                # Tracking
-                                entry = {
-                                    "ts": int(now),
-                                    "market": m['title'],
-                                    "side": side,
-                                    "movement_pct": round(movement_pct, 4),
-                                    "entry_price": entry_price,
-                                    "anchor": anchor_price,
-                                    "btc_at_bet": btc_price,
-                                    "market_end": market_end,
-                                    "condition_id": m.get('conditionId'),
-                                    "result": None
-                                }
-                                save_trade(entry)
-                                self.state["recent_trades"] = [entry] + self.state["recent_trades"][:9]
+                            # SEGNALE VALIDO -> Recupero odds mercato
+                            if movement_pct > 0:
+                                side = "UP"
+                                token_bet = m['token_yes']
                             else:
-                                log.error(f"   ↳ ❌ Trade fallito.")
+                                side = "DOWN"
+                                token_bet = m['token_no']
+
+                            try:
+                                resp = requests.get("https://clob.polymarket.com/midpoint", params={"token_id": token_bet}, timeout=3)
+                                entry_price = float(resp.json().get("mid", 0.50))
+                            except:
+                                entry_price = 0.50
+
+                            cost_c = int(entry_price * 100)
+                            profit_c = 100 - cost_c
+                            roi = (profit_c / cost_c * 100) if cost_c > 0 else 0
+
+                            market_agrees = entry_price < 0.50
+
+                            log.info(f"   ↳ 📊 Segnale {asset}: {side} | Δ {movement_pct:+.4f}%")
+                            log.info(f"   ↳ 📊 Quota: {cost_c}¢ → Payout: {profit_c}¢ (ROI: {roi:.0f}%)")
+
+                            if entry_price > MAX_ENTRY_PRICE:
+                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {int(MAX_ENTRY_PRICE*100)}¢. Payout troppo basso. SKIP.")
+                                bet_placed[asset] = True
+                            else:
+                                confidence = "FORTE 🔥" if market_agrees else "BUONA"
+                                log.info(f"   ↳ 🎯 BET {side} (confidenza: {confidence})")
+                                log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
+
+                                success = self.trader.sniper_trade(m, movement_pct)
+                                bet_placed[asset] = True
+
+                                if success:
+                                    self.last_trade_times[asset] = now
+                                    log.info(f"   ↳ ✅ TRADE ESEGUITO!")
+
+                                    # Tracking
+                                    entry = {
+                                        "ts": int(now),
+                                        "market": m['title'],
+                                        "side": side,
+                                        "movement_pct": round(movement_pct, 4),
+                                        "entry_price": entry_price,
+                                        "anchor": ap,
+                                        "asset_at_bet": asset_price,
+                                        "market_end": market_end,
+                                        "condition_id": m.get('conditionId'),
+                                        "result": None
+                                    }
+                                    save_trade(entry)
+                                    self.state["recent_trades"] = [entry] + self.state["recent_trades"][:9]
+                                else:
+                                    log.error(f"   ↳ ❌ Trade fallito.")
 
                 # 6. Stato dashboard
                 self.state["last_update"] = int(now)

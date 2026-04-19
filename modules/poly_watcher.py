@@ -25,8 +25,7 @@ class PolyWatcher:
         params = {
             "active": "true",
             "closed": "false",
-            "limit": 500,
-            "series_id": "10684" # ID Serie Ufficiale: BTC Up or Down 5m
+            "limit": 500
         }
         
         all_found = []

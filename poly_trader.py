@@ -17,7 +17,7 @@ class PolyTrader:
     """Gestisce il trading on-chain su Polymarket tramite CLOB API."""
     
     def __init__(self):
-        self.w3 = Web3(Web3.HTTPProvider(config.AZURO_RPC))
+        self.w3 = Web3(Web3.HTTPProvider(config.POLY_RPC))
         self.account = Account.from_key(config.PRIVATE_KEY)
         self.my_address = self.account.address
         
@@ -67,11 +67,24 @@ class PolyTrader:
         except: pass
 
     def get_balances(self):
+        """Recupera il saldo totale USDC (Metamask + Safe) e POL."""
         try:
+            # Saldo POL (Gas) - solo Metamask
             pol = self.w3.eth.get_balance(self.my_address)
-            usdc = self.usdc_contract.functions.balanceOf(self.my_address).call()
-            return float(self.w3.from_wei(pol, 'ether')), float(usdc) / 1_000_000
-        except: return 0.0, 0.0
+            
+            # Saldo USDC on Metamask
+            usdc_eoa = self.usdc_contract.functions.balanceOf(self.my_address).call()
+            
+            # Saldo USDC on Safe (se presente)
+            usdc_safe = 0
+            if config.SAFE_ADDRESS:
+                usdc_safe = self.usdc_contract.functions.balanceOf(Web3.to_checksum_address(config.SAFE_ADDRESS)).call()
+            
+            total_usdc = usdc_eoa + usdc_safe
+            return float(self.w3.from_wei(pol, 'ether')), float(total_usdc) / 1_000_000
+        except Exception as e:
+            log.debug(f"⚠️ Errore lettura saldi (probabile 429): {e}")
+            return None, None # Restituisce None per indicare errore di lettura anziché saldo 0
 
     def execute_market_trade(self, token_id: str, amount_usdc: float, side: str = "BUY"):
         try:
@@ -213,24 +226,23 @@ class PolyTrader:
             # --- 1. Raccolta Condition ID da Scansionare ---
             potential_conditions = []
             
-            # A. Dalle Posizioni Attive
-            try:
-                pos_url = f"https://data-api.polymarket.com/positions?user={target_address}"
-                pos_resp = requests.get(pos_url, timeout=10).json()
-                for p in pos_resp:
-                    if float(p.get('size', 0)) > 0.01 and p.get('condition_id'):
-                        potential_conditions.append(p['condition_id'])
-            except: pass
+            addresses_to_check = [self.my_address]
+            if config.SAFE_ADDRESS and config.SAFE_ADDRESS.lower() != self.my_address.lower():
+                addresses_to_check.append(config.SAFE_ADDRESS)
+
+            for target_address in addresses_to_check:
+                # A. Dalle Posizioni Attive
+                try:
+                    pos_url = f"https://data-api.polymarket.com/positions?user={target_address}"
+                    pos_resp = requests.get(pos_url, timeout=10).json()
+                    for p in pos_resp:
+                        cid = p.get('conditionId') or p.get('condition_id')
+                        if float(p.get('size', 0)) > 0.01 and cid:
+                            if cid not in potential_conditions:
+                                potential_conditions.append(cid)
+                except: pass
             
-            # B. Dall'Activity History (Fondamentale per trade chiusi/manuali)
-            try:
-                act_url = f"https://data-api.polymarket.com/activity?user={target_address}&limit=50"
-                act_resp = requests.get(act_url, timeout=10).json()
-                for a in act_resp:
-                    cid = a.get('conditionId')
-                    if cid and cid not in potential_conditions:
-                        potential_conditions.append(cid)
-            except: pass
+
             
             if not potential_conditions:
                 log.info("   ↳ ℹ️ Nessuna attività o posizione trovata.")
@@ -318,7 +330,6 @@ class PolyTrader:
                             break
                     
                     if found_balance == 0:
-                        log.info(f"      ↳ 💨 {cond_id[:10]}...: Risolto, ma bilancio 0 su Safe e Metamask.")
                         continue
 
                     log.info(f"   ↳ 🎯 TROVATO! {found_balance/1e6} token vincenti su {active_address[:10]}...")
@@ -369,7 +380,7 @@ class PolyTrader:
                             log.warning(f"   ↳ ⚠️ Fallimento chiamata Relayer: {e}")
 
                     # --- FALLBACK: LOGICA SAFE PROXY o MANUALE (Richiede POL) ---
-                    if config.SAFE_ADDRESS and config.SAFE_ADDRESS.lower() != self.my_address.lower():
+                    if config.SAFE_ADDRESS and active_address.lower() == config.SAFE_ADDRESS.lower():
                         safe_contract = self.w3.eth.contract(address=Web3.to_checksum_address(config.SAFE_ADDRESS), abi=SAFE_ABI)
                         signature = "0x" + "000000000000000000000000" + self.my_address[2:].lower() + \
                                     "0000000000000000000000000000000000000000000000000000000000000000" + "01"
@@ -477,7 +488,8 @@ class PolyTrader:
                     size = float(p.get('size', 0))
                     # Filtriamo solo posizioni reali (anche frazionarie)
                     if size > 0.01:
-                        cond_id = p.get('condition_id')
+                        cond_id = p.get('conditionId') or p.get('condition_id')
+                        if not cond_id: continue
                         
                         # Recupero dati mercato per verificare se è attivo nel 2026
                         try:
@@ -493,9 +505,9 @@ class PolyTrader:
                                         
                                     title = market.get('question', 'Match')
                                     
-                                    # Filtro Strategia: Mostriamo solo BTC e scommesse di prezzo
+                                    # Filtro Strategia: Mostriamo solo crypto target e scommesse di prezzo
                                     q_low = title.lower()
-                                    if not any(x in q_low for x in ["btc", "bitcoin", "price of", "up or down"]):
+                                    if not any(x in q_low for x in ["btc", "bitcoin", "eth", "ethereum", "price of", "up or down"]):
                                         continue
                                         
                                     entry = float(p.get('avg_price', 0))

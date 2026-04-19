@@ -20,12 +20,6 @@ POLY_BUILDER_ID = os.getenv("POLY_BUILDER_ID", "").strip()
 POLY_RELAYER_KEY = os.getenv("POLY_RELAYER_KEY", "").strip()
 POLY_RELAYER_ADDRESS = os.getenv("WALLET_ADDRESS", "0x27Fb2C57b1149bE45d99070a906753D5A8ad6e3a").strip()
 
-# Azuro V3 (Polygon) - MAINNET Configuration
-AZURO_TOKEN = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"      # USDT su Polygon
-AZURO_LP = "0x0FA7FB5407eA971694652E6E16C12A52625DE1b8"         # Pool USDT Production
-AZURO_CORE = "0xF9548Be470A4e130c90ceA8b179FCD66D2972AC7"       # Core USDT Production
-AZURO_RELAYER = "0x8dA05c0021e6b35865FDC959c54dCeF3A4AbBa9d"    # Relayer USDT Production
-
 # --- POLYMARKET CONFIG ---
 POLY_CLOB_URL = "https://clob.polymarket.com"
 POLY_GAMMA_URL = "https://gamma-api.polymarket.com"
@@ -35,12 +29,6 @@ POLY_USDC = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
 POLY_CTF = "0x4D97DCd97eC945f40cF65F87097ACe5EA0476045"
 POLY_EXCHANGE = "0x4bFb41d5B3570DeFd03C39a9A4D8dE6Bd8B8982E"
 
-# --- AZURO CONFIG (Legacy/Fallback) ---
-AZURO_API_URL = "https://api.onchainfeed.org/api/v1/public"
-AZURO_REST_API = "https://api.onchainfeed.org/api/v1/public"
-AZURO_ENVIRONMENT = "PolygonUSDT" 
-AZURO_PROXY = "0x7043a1215b248a329df05b5cd4da075f70a1a5b4"
-
 # Gestione RPC con Fallback (ChainList)
 RPC_NODES = [
     "https://polygon-public.nodies.app",
@@ -49,23 +37,16 @@ RPC_NODES = [
     "https://rpc-mainnet.matic.quiknode.pro",
     "https://1rpc.io/matic"
 ]
-AZURO_RPC = RPC_NODES[0] # Default
-AZURO_CHAIN_ID = 137
-
-# Subgraphs Azuro V3
-# Client: Per scommesse utente e storia
-AZURO_SUBGRAPH_URL = "https://thegraph.azuro.org/subgraphs/name/azuro-protocol/azuro-api-polygon-v3"
-# Data-Feed: Per quote e match live (Unfiltered)
-AZURO_DATA_FEED_URL = "https://thegraph.onchainfeed.org/subgraphs/name/azuro-protocol/azuro-data-feed-polygon-v3"
-
+POLY_RPC = RPC_NODES[1] # publicnode
 # Asset da monitorare per Prezzi e Mercati (SOLO CRYPTO)
-ASSETS = ["BTC"]
+ASSETS = ["BTC", "ETH"]
 DRY_RUN = False # TORNIAMO LIVE
 BET_SIZE = 1.10
 COOLDOWN_SECONDS = 300 # Attesa di 5 minuti tra scommesse sullo stesso asset
 # Soglie conservative
 THRESHOLDS = {
-    "BTC": 0.08
+    "BTC": 0.08,
+    "ETH": 0.08
 }
 
 ONLY_SHORT_INTERVALS = True # Cerca solo mercati con intervalli (es. 5-15 min)
