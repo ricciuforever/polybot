@@ -119,12 +119,12 @@ class NitroBotPoly:
         last_redeem_check = 0
 
         # === PARAMETRI STRATEGIA SMART SNIPER v2 ===
-        BET_AFTER_SEC = 150        # Scommetti dopo 2:30 min
-        NO_BET_LAST_SEC = 30       # Stop ultimi 30 sec
+        BET_AFTER_SEC = 60         # Scommetti negli ultimi 60 sec
+        NO_BET_LAST_SEC = 15       # Stop ultimi 15 sec
         REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 MIN (EVITA 429)
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
-        MIN_SIGNAL = 0.02          # Skip se |delta| < 0.02% (rumore)
-        MAX_ENTRY_PRICE = 0.75     # Non comprare sopra 75c (ROI minimo 33%)
+        MIN_SIGNAL = 0.05          # Skip se |delta| < 0.05% (rumore)
+        MAX_ENTRY_PRICE = 0.90     # Compra fino a 90c (alta probabilità)
         last_results_check = 0
 
         while self.running:
@@ -238,7 +238,7 @@ class NitroBotPoly:
                     progress = min(elapsed / duration, 1.0) if duration > 0 else 1.0
                     bar = "█" * int(progress * 20) + "░" * (20 - int(progress * 20))
 
-                    # Regola di ingaggio: Entra solo negli ultimi 150 secondi della finestra (2.5 min)
+                    # Regola di ingaggio: Entra solo negli ultimi 60 secondi della finestra
                     # Anche se Polymarket dà startDate vecchie, noi sappiamo che il bucket è di 300s.
                     enter_threshold = BET_AFTER_SEC 
                     
