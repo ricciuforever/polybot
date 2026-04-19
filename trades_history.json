@@ -1,0 +1,14 @@
+[
+  {
+    "ts": 1776557251,
+    "market": "Bitcoin Up or Down - April 18, 8:05PM-8:10PM ET",
+    "side": "UP",
+    "movement_pct": 0.0217,
+    "entry_price": 0.585,
+    "anchor": 75764.79,
+    "btc_at_bet": 75781.26,
+    "market_end": 1776557400.0,
+    "condition_id": "0xd0fac7f7762c8ff14ed56607063d4307191dfe1c791cbaa3ba18c50925325411",
+    "result": null
+  }
+]

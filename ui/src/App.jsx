@@ -117,7 +117,7 @@ const LivePrediction = ({ market, btcPrice }) => {
           <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">{remaining}s REMAINING</span>
         </div>
         <div className="px-3 py-1 bg-neon/10 border border-neon/20 rounded-full">
-          <span className="text-[10px] font-black text-neon uppercase">BTC/USDC PAIR</span>
+          <span className="text-[10px] font-black text-neon uppercase">{market.asset}/USDC PAIR</span>
         </div>
       </div>
 
@@ -128,7 +128,7 @@ const LivePrediction = ({ market, btcPrice }) => {
         </div>
         <div className="text-right">
           <p className="text-[10px] font-bold text-zinc-500 uppercase mb-1">Current Price</p>
-          <p className="text-2xl font-black tracking-tighter text-neon animate-pulse">${btcPrice?.toLocaleString()}</p>
+          <p className="text-2xl font-black tracking-tighter text-neon animate-pulse">${market.current_price?.toLocaleString()}</p>
         </div>
       </div>
 
@@ -181,8 +181,7 @@ export default function App() {
     </div>
   )
 
-  const liveMarket = state.live_games?.length > 0 ? state.live_games[0] : null
-  const btcPrice = state.live_games?.length > 0 ? state.live_games[0].current_price : null
+  const liveMarkets = state.live_games || []
 
   return (
     <div className="min-h-screen bg-[#0a0a0c] text-zinc-100 font-sans selection:bg-neon selection:text-black">
@@ -277,7 +276,16 @@ export default function App() {
               <h2 className="text-lg font-black uppercase tracking-tighter mb-4 flex items-center">
                 <Activity size={20} className="mr-2 text-neon" /> Live Market Tracking
               </h2>
-              <LivePrediction market={liveMarket} btcPrice={btcPrice} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {liveMarkets.map((m, i) => (
+                  <LivePrediction key={m.id || i} market={m} />
+                ))}
+                {liveMarkets.length === 0 && (
+                  <div className="glass-dark p-12 text-center text-zinc-600 italic">
+                    Nessun mercato attivo rilevato.
+                  </div>
+                )}
+              </div>
             </section>
 
             <section tabIndex="0">

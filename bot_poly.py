@@ -25,6 +25,21 @@ def save_trade(entry):
     with open(TRADES_LOG, "w") as f:
         json.dump(trades, f, indent=2)
 
+def fetch_official_ptb(slug):
+    """Tenta di recuperare il Price to Beat ufficiale dall'API di Polymarket."""
+    if not slug: return None
+    try:
+        url = f"https://polymarket.com/api/equity/price-to-beat/{slug}"
+        resp = requests.get(url, timeout=5)
+        if resp.status_code == 200:
+            data = resp.json()
+            if isinstance(data, (int, float)): return float(data)
+            if isinstance(data, dict):
+                return float(data.get('price') or data.get('priceToBeat') or 0)
+    except Exception as e:
+        log.warning(f"Impossibile recuperare PTB ufficiale per {slug}: {e}")
+    return None
+
 def update_trade_results():
     """Controlla gli esiti dei trade passati e aggiorna il log."""
     trades = load_trades_log()
@@ -37,7 +52,6 @@ def update_trade_results():
         # Se il mercato è finito da almeno 2 minuti, controlliamo
         if time.time() > t["market_end"] + 120:
             try:
-                # Recupera l'esito dal mercato tramite condition_id
                 cid = t.get("condition_id")
                 if not cid: continue
                 
@@ -45,7 +59,7 @@ def update_trade_results():
                 if resp.status_code == 200 and resp.json():
                     m = resp.json()[0]
                     if m.get("closed"):
-                        prices = m.get("outcomePrices") # ES: ["0", "1"]
+                        prices = m.get("outcomePrices")
                         if prices:
                             win_index = 0 if float(prices[0]) > 0.5 else 1
                             actual_side = "UP" if win_index == 0 else "DOWN"
@@ -71,6 +85,10 @@ class NitroBotPoly:
         self.running = True
         self.bet_size = config.BET_SIZE
         self.state_file = "bot_state.json"
+        
+        # Stato per ogni asset monitorato
+        self.active_rounds = {asset: {"id": None, "anchor": None, "placed": False} for asset in config.ASSETS}
+        
         self.state = {
             "last_update": 0, "live_games": [], "ai_logs": [],
             "wallet": {"pol": 0, "usdc": 0, "address": self.trader.my_address},
@@ -79,8 +97,8 @@ class NitroBotPoly:
         }
 
     async def run(self):
-        log.info("🚀 NitroBot POLYMARKET (Smart Sniper v2) Avviato!")
-        log.info(f"Monitoraggio Asset: {', '.join(config.ASSETS)}")
+        log.info("🚀 NitroBot POLYMARKET (Smart Sniper v2.1 Multi-Asset) Avviato!")
+        log.info(f"Asset: {', '.join(config.ASSETS)}")
         log.info(f"Wallet: {self.trader.my_address}")
 
         self.feed.start()
@@ -90,20 +108,15 @@ class NitroBotPoly:
         cached_markets = []
         last_api_call = 0
         API_REFRESH_INTERVAL = 15
-
-        anchor_price = None
-        current_market_id = None
-        bet_placed = False
         last_redeem_check = 0
-
-        # === PARAMETRI STRATEGIA SMART SNIPER v2 ===
-        BET_AFTER_SEC = 150        # Scommetti dopo 2:30 min
-        NO_BET_LAST_SEC = 30       # Stop ultimi 30 sec
-        REDEEM_INTERVAL = 30       # Auto-redeem ogni 30s
-        RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
-        MIN_SIGNAL = 0.02          # Skip se |delta| < 0.02% (rumore)
-        MAX_ENTRY_PRICE = 0.65     # Non comprare sopra 65c (ROI minimo 54%)
         last_results_check = 0
+        
+        # PARAMETRI STRATEGIA
+        BET_AFTER_SEC = 150
+        NO_BET_LAST_SEC = 30
+        REDEEM_INTERVAL = 30
+        RESULTS_INTERVAL = 300
+        MAX_ENTRY_PRICE = 0.65
 
         while self.running:
             try:
@@ -111,170 +124,136 @@ class NitroBotPoly:
 
                 # 1. Refresh mercati (15s)
                 if now - last_api_call > API_REFRESH_INTERVAL:
-                    cached_markets = self.watcher.find_btc_markets(limit=20)
+                    cached_markets = self.watcher.find_crypto_markets(limit=50)
                     last_api_call = now
 
                 # 1b. Auto-redeem + saldo (30s)
                 if now - last_redeem_check > REDEEM_INTERVAL:
-                    redeemed = self.trader.auto_redeem()
+                    self.trader.auto_redeem()
                     pol, usdc = self.trader.get_balances()
                     self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
-                    
-                    if redeemed:
-                        log.info(f"💰 Riscattate {redeemed} posizioni! Saldo: ${usdc:.2f} USDC")
-                    elif usdc < 1.05:
-                        log.warning(f"💰 Saldo: ${usdc:.2f} USDC | ⚠️ Sotto soglia minima")
                     last_redeem_check = now
 
                 # 1c. Update esiti (300s)
                 if now - last_results_check > RESULTS_INTERVAL:
                     if update_trade_results():
-                        # Ricalcola stats e recent_trades per dashboard
                         trades = load_trades_log()
                         comp = [t for t in trades if t.get("result") is not None]
                         wins = sum(1 for t in comp if t["result"] == "WIN")
                         self.state["stats"] = {"total_bets": len(comp), "won_bets": wins}
                         self.state["recent_trades"] = sorted(trades, key=lambda x: x.get('ts', 0), reverse=True)[:10]
-                        log.info(f"📈 Stats Aggiornate: {wins}W - {len(comp)-wins}L")
                     last_results_check = now
 
-                # 2. Prezzo BTC
-                btc_price = self.feed.get_last_price("BTC")
+                # 2. Monitoraggio parallelo dei mercati
+                live_games_data = []
+                
+                for m in cached_markets:
+                    asset = m['asset']
+                    market_start = m['start_timestamp']
+                    market_end = m['end_timestamp']
+                    elapsed = now - market_start
+                    remaining = market_end - now
+                    
+                    price = self.feed.get_last_price(asset)
+                    if price == 0: continue
+                    
+                    # Round per asset
+                    round_data = self.active_rounds.get(asset)
+                    if not round_data: continue
 
-                if not cached_markets:
-                    log.info(f"💲 BTC ${btc_price:,.2f} | ⏳ Nessun mercato live.")
-                    await asyncio.sleep(1)
-                    continue
+                    # Nuova finestra?
+                    if m['id'] != round_data['id']:
+                        round_data['id'] = m['id']
+                        round_data['placed'] = False
+                        
+                        # Fetch PTB
+                        official_ptb = fetch_official_ptb(m.get('slug'))
+                        if official_ptb:
+                            round_data['anchor'] = official_ptb
+                            source = "OFFICIAL"
+                        else:
+                            hist = self.feed.get_price_at_time(asset, market_start)
+                            round_data['anchor'] = hist if hist > 0 else price
+                            source = "BINANCE"
+                            
+                        log.info(f"🆕 [{asset}] ROUND: {m['title']} | PTB ({source}): ${round_data['anchor']:,.2f}")
 
-                m = cached_markets[0]
-                market_start = m['start_timestamp']
-                market_end = m['end_timestamp']
-                elapsed = now - market_start
-                remaining = market_end - now
-
-                # 3. Nuova finestra -> Ancora prezzo
-                if m['id'] != current_market_id:
-                    current_market_id = m['id']
-                    bet_placed = False
-
-                    historical_price = self.feed.get_price_at_time("BTC", market_start)
-                    anchor_price = historical_price if historical_price > 0 else btc_price
-
-                    log.info(f"")
-                    log.info(f"{'='*60}")
-                    log.info(f"🆕 NUOVA FINESTRA: {m['title']}")
-                    log.info(f"   ⚓ Price to Beat: ${anchor_price:,.2f}")
-                    log.info(f"   💲 Prezzo Attuale: ${btc_price:,.2f}")
-                    log.info(f"   ⏱️  Durata: {int(market_end - market_start)}s | Scade tra {int(remaining)}s")
-                    log.info(f"{'='*60}")
-
-                # 4. Movimento dal Price to Beat
-                if anchor_price and anchor_price > 0:
-                    movement_pct = ((btc_price - anchor_price) / anchor_price) * 100
-                else:
-                    movement_pct = 0.0
-
-                direction = "📈 UP" if movement_pct > 0 else "📉 DN" if movement_pct < 0 else "➡️ --"
-
-                # Barra progresso
-                progress = min(elapsed / (market_end - market_start), 1.0)
-                bar = "█" * int(progress * 20) + "░" * (20 - int(progress * 20))
-
-                status = "🎯 PRONTO" if elapsed >= BET_AFTER_SEC and not bet_placed else "⏳ ACCUMULO" if not bet_placed else "✅ PIAZZATA"
-                log.info(f"💲 ${btc_price:,.2f} | Δ {movement_pct:+.4f}% | {direction} | [{bar}] {int(remaining)}s | {status}")
-
-                # ===== 5. DECISIONE — SMART SNIPER v2 =====
-                if not bet_placed:
-                    if elapsed < BET_AFTER_SEC:
-                        pass  # Accumulo
+                    # Calcolo Delta
+                    anchor = round_data['anchor']
+                    move_pct = ((price - anchor) / anchor * 100) if anchor > 0 else 0
+                    direction = "📈 UP" if move_pct > 0 else "📉 DN" if move_pct < 0 else "➡️ --"
+                    
+                    # Sniper Logic
+                    status = "🎯 READY"
+                    if round_data['placed']:
+                        status = "✅ BET"
+                    elif elapsed < BET_AFTER_SEC:
+                        status = "⏳ WAIT"
                     elif remaining < NO_BET_LAST_SEC:
-                        log.warning(f"   ↳ ⚠️ Troppo tardi ({int(remaining)}s rimasti)")
-                        bet_placed = True
-                    elif abs(movement_pct) < MIN_SIGNAL:
-                        # SEGNALE TROPPO DEBOLE -> Skip (evita coin flip con fee negative)
-                        log.info(f"   ↳ 🔇 Segnale debole ({movement_pct:+.4f}% < {MIN_SIGNAL}%). SKIP.")
-                    else:
-                        # SEGNALE VALIDO -> Recupero odds mercato
-                        if movement_pct > 0:
-                            side = "UP"
-                            token_bet = m['token_yes']
+                        status = "⚠️ LATE"
+                        round_data['placed'] = True # Non scommettere più
+                    
+                    # Dashboard data
+                    m_ui = m.copy()
+                    m_ui.update({
+                        "current_price": price,
+                        "anchor_price": anchor,
+                        "delta": round(move_pct, 4),
+                        "status": status,
+                        "remaining": int(remaining)
+                    })
+                    live_games_data.append(m_ui)
+
+                    # Esecuzione scommessa
+                    min_signal = config.THRESHOLDS.get(asset, 0.05)
+                    
+                    if status == "🎯 READY":
+                        if abs(move_pct) < min_signal:
+                            log.info(f"   ↳ [{asset}] Skip: segnale debole ({move_pct:+.4f}%)")
                         else:
-                            side = "DOWN"
-                            token_bet = m['token_no']
+                            side = "UP" if move_pct > 0 else "DOWN"
+                            token_bet = m['token_yes'] if side == "UP" else m['token_no']
+                            
+                            try:
+                                resp = requests.get(f"https://clob.polymarket.com/midpoint?token_id={token_bet}", timeout=3)
+                                entry_price = float(resp.json().get("mid", 0.50))
+                            except: entry_price = 0.50
 
-                        # Midpoint del token che vogliamo comprare
-                        try:
-                            resp = requests.get("https://clob.polymarket.com/midpoint",
-                                params={"token_id": token_bet}, timeout=3)
-                            entry_price = float(resp.json().get("mid", 0.50))
-                        except:
-                            entry_price = 0.50
-
-                        cost_c = int(entry_price * 100)
-                        profit_c = 100 - cost_c
-                        roi = (profit_c / cost_c * 100) if cost_c > 0 else 0
-
-                        # Il mercato conferma? Se compriamo a <50c = mercato pensa il contrario = noi vediamo prima
-                        market_agrees = entry_price < 0.50
-
-                        log.info(f"   ↳ 📊 Segnale: {side} | Δ {movement_pct:+.4f}%")
-                        log.info(f"   ↳ 📊 Quota: {cost_c}¢ → Payout: {profit_c}¢ (ROI: {roi:.0f}%)")
-
-                        if entry_price > MAX_ENTRY_PRICE:
-                            log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {int(MAX_ENTRY_PRICE*100)}¢. Payout troppo basso. SKIP.")
-                            bet_placed = True
-                        else:
-                            confidence = "FORTE 🔥" if market_agrees else "BUONA"
-                            log.info(f"   ↳ 🎯 BET {side} (confidenza: {confidence})")
-                            log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
-
-                            success = self.trader.sniper_trade(m, movement_pct)
-                            bet_placed = True
-
-                            if success:
-                                self.last_trade_times[m['asset']] = now
-                                log.info(f"   ↳ ✅ TRADE ESEGUITO!")
-
-                                # Tracking
-                                entry = {
-                                    "ts": int(now),
-                                    "market": m['title'],
-                                    "side": side,
-                                    "movement_pct": round(movement_pct, 4),
-                                    "entry_price": entry_price,
-                                    "anchor": anchor_price,
-                                    "btc_at_bet": btc_price,
-                                    "market_end": market_end,
-                                    "condition_id": m.get('conditionId'),
-                                    "result": None
-                                }
-                                save_trade(entry)
-                                self.state["recent_trades"] = [entry] + self.state["recent_trades"][:9]
+                            if entry_price > MAX_ENTRY_PRICE:
+                                log.warning(f"   ↳ [{asset}] Skip: quota troppo alta ({int(entry_price*100)}¢)")
+                                round_data['placed'] = True
                             else:
-                                log.error(f"   ↳ ❌ Trade fallito.")
+                                log.info(f"   ↳ 🔥 [{asset}] SNIPING {side} | Delta: {move_pct:+.4f}% | Quota: {int(entry_price*100)}¢")
+                                success = self.trader.sniper_trade(m, move_pct)
+                                round_data['placed'] = True
+                                
+                                if success:
+                                    save_trade({
+                                        "ts": int(now), "market": m['title'], "asset": asset,
+                                        "side": side, "movement_pct": round(move_pct, 4),
+                                        "entry_price": entry_price, "anchor": anchor,
+                                        "market_end": market_end, "condition_id": m.get('conditionId')
+                                    })
 
-                # 6. Stato dashboard
+                # 3. Update Stato UI
+                self.state["live_games"] = live_games_data
                 self.state["last_update"] = int(now)
                 with open(self.state_file, "w") as f:
                     json.dump(self.state, f, indent=2)
 
+                # Log sintetico ogni secondo
+                summary = " | ".join([f"{g['asset']}: {g['delta']:+.2f}%" for g in live_games_data])
+                if summary: print(f"\r[{time.strftime('%H:%M:%S')}] {summary}", end="", flush=True)
+
             except Exception as e:
-                log.error(f"❌ Errore loop: {e}")
+                log.error(f"❌ Errore Loop: {e}")
 
             await asyncio.sleep(1)
 
 if __name__ == "__main__":
-    # Statistiche all'avvio
-    trades = load_trades_log()
-    if trades:
-        completed = [t for t in trades if t.get("result") is not None]
-        if completed:
-            wins = sum(1 for t in completed if t["result"] == "WIN")
-            log.info(f"📈 Storico: {len(completed)} trades | {wins}W/{len(completed)-wins}L | Win rate: {wins/len(completed)*100:.0f}%")
-
     bot = NitroBotPoly()
     try:
         asyncio.run(bot.run())
     except KeyboardInterrupt:
         bot.feed.stop()
-        log.info("Chiusura Bot... Bye!")
+        print("\nChiusura Bot...")

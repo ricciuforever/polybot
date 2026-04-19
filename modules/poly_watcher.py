@@ -19,14 +19,14 @@ class PolyWatcher:
             "XRP": ["ripple", "xrp"]
         }
 
-    def find_btc_markets(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Trova i mercati crypto attivi scansionando i top 500 mercati per volume."""
+    def find_crypto_markets(self, limit: int = 50) -> List[Dict[str, Any]]:
+        """Trova i mercati crypto attivi per tutti gli asset configurati."""
         endpoint = f"{self.url}/events"
         params = {
             "active": "true",
             "closed": "false",
             "limit": 500,
-            "series_id": "10684" # ID Serie Ufficiale: BTC Up or Down 5m
+            "series_id": "10684" # ID Serie Ufficiale: Crypto Up or Down 5m
         }
         
         all_found = []
@@ -53,7 +53,8 @@ class PolyWatcher:
                         matched_asset = asset
                         break
                 
-                if matched_asset:
+                # Considera solo gli asset in configurazione
+                if matched_asset and matched_asset in config.ASSETS:
                     clob_ids = m.get('clobTokenIds')
                     end_date_str = m.get('endDate')
                     start_date_str = m.get('eventStartTime') or m.get('startDate')
@@ -74,6 +75,7 @@ class PolyWatcher:
                                 if is_crypto_target:
                                     all_found.append({
                                         "id": m['id'],
+                                        "slug": m.get('slug'),
                                         "title": m['question'],
                                         "conditionId": m['conditionId'],
                                         "token_yes": tokens[0],
@@ -83,12 +85,17 @@ class PolyWatcher:
                                         "start_timestamp": start_dt.timestamp(),
                                         "end_timestamp": end_dt.timestamp()
                                     })
-                        except Exception as e: 
+                        except Exception: 
                             pass
             
-            # Ordiniamo dal più imminente in poi (quello currently live)
-            all_found.sort(key=lambda x: x['end_timestamp'])
-            return all_found[:1]
+            # Filtriamo per avere UN SOLO mercato (il più imminente) per ogni asset
+            best_per_asset = {}
+            for m in all_found:
+                asset = m['asset']
+                if asset not in best_per_asset or m['end_timestamp'] < best_per_asset[asset]['end_timestamp']:
+                    best_per_asset[asset] = m
+            
+            return list(best_per_asset.values())
             
         except Exception as e:
             log.error(f"Errore Gamma API: {e}")

@@ -57,13 +57,17 @@ AZURO_SUBGRAPH_URL = "https://thegraph.azuro.org/subgraphs/name/azuro-protocol/a
 AZURO_DATA_FEED_URL = "https://thegraph.onchainfeed.org/subgraphs/name/azuro-protocol/azuro-data-feed-polygon-v3"
 
 # Asset da monitorare per Prezzi e Mercati (SOLO CRYPTO)
-ASSETS = ["BTC"]
+ASSETS = ["BTC", "ETH", "SOL", "XRP", "DOGE"]
 DRY_RUN = False # TORNIAMO LIVE
 BET_SIZE = 1.10
 COOLDOWN_SECONDS = 300 # Attesa di 5 minuti tra scommesse sullo stesso asset
-# Soglie conservative
+# Soglie conservative (minima variazione % per scommettere)
 THRESHOLDS = {
-    "BTC": 0.08
+    "BTC": 0.02,
+    "ETH": 0.03,
+    "SOL": 0.05,
+    "XRP": 0.04,
+    "DOGE": 0.06
 }
 
 ONLY_SHORT_INTERVALS = True # Cerca solo mercati con intervalli (es. 5-15 min)
