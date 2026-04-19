@@ -11,6 +11,10 @@ sys.modules['poly_trader'] = MagicMock()
 sys.modules['config'] = MagicMock()
 sys.modules['modules.logger'] = MagicMock()
 sys.modules['requests'] = MagicMock()
+sys.modules['requests.adapters'] = MagicMock()
+sys.modules['urllib3'] = MagicMock()
+sys.modules['urllib3.util'] = MagicMock()
+sys.modules['urllib3.util.connection'] = MagicMock()
 
 # Import the functions to test
 from bot_poly import load_trades_log, save_trade, TRADES_LOG
