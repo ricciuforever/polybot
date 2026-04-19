@@ -17,6 +17,8 @@ SAFE_ADDRESS = os.getenv("SAFE_ADDRESS", "0xf70ce42b1bbebcc1deee5315506373ba7e53
 # Polymarket API & Builder (Nuove chiavi)
 POLY_API_KEY = os.getenv("POLY_API_KEY", "").strip()
 POLY_BUILDER_ID = os.getenv("POLY_BUILDER_ID", "").strip()
+POLY_RELAYER_KEY = os.getenv("POLY_RELAYER_KEY", "").strip()
+POLY_RELAYER_ADDRESS = os.getenv("WALLET_ADDRESS", "0x27Fb2C57b1149bE45d99070a906753D5A8ad6e3a").strip()
 
 # Azuro V3 (Polygon) - MAINNET Configuration
 AZURO_TOKEN = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"      # USDT su Polygon
@@ -57,17 +59,13 @@ AZURO_SUBGRAPH_URL = "https://thegraph.azuro.org/subgraphs/name/azuro-protocol/a
 AZURO_DATA_FEED_URL = "https://thegraph.onchainfeed.org/subgraphs/name/azuro-protocol/azuro-data-feed-polygon-v3"
 
 # Asset da monitorare per Prezzi e Mercati (SOLO CRYPTO)
-ASSETS = ["BTC", "ETH", "SOL", "XRP", "DOGE"]
+ASSETS = ["BTC"]
 DRY_RUN = False # TORNIAMO LIVE
 BET_SIZE = 1.10
 COOLDOWN_SECONDS = 300 # Attesa di 5 minuti tra scommesse sullo stesso asset
-# Soglie conservative (minima variazione % per scommettere)
+# Soglie conservative
 THRESHOLDS = {
-    "BTC": 0.02,
-    "ETH": 0.03,
-    "SOL": 0.05,
-    "XRP": 0.04,
-    "DOGE": 0.06
+    "BTC": 0.08
 }
 
 ONLY_SHORT_INTERVALS = True # Cerca solo mercati con intervalli (es. 5-15 min)
