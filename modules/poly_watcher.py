@@ -21,83 +21,70 @@ class PolyWatcher:
 
     def find_btc_markets(self, limit: int = 50) -> List[Dict[str, Any]]:
         """Trova i mercati crypto attivi"""
-        endpoint = f"{self.url}/events"
-        params = {
-            "active": "true",
-            "closed": "false",
-            "limit": 500,
-            "tag_slug": "crypto"
-        }
+        import time
+        from datetime import datetime, timezone
+        
+        now_ts = int(time.time())
+        rounded_down = (now_ts // 300) * 300
+        
         all_found = []
-        try:
-            resp = requests.get(endpoint, params=params, timeout=10)
-            data = []
-            if resp.status_code == 200:
-                events = resp.json()
-                for e in events:
-                    if e.get("markets"):
-                        data.extend(e["markets"])
-                        
-            
-            # log.info(f"📡 Gamma API: Ricevuti {len(data)} mercati (BTC+ETH) da analizzare.")
-            # Rimuovo il log per evitare spamming di testo inutile ogni volta che fetchiamo.
-                    
+        # Verifichiamo sia il bucket attuale che il prossimo per coprire i cambi di ciclo
+        buckets_to_check = [rounded_down, rounded_down + 300]
+        
+        for asset in self.crypto_keywords.keys():
+            for bucket_ts in buckets_to_check:
+                slug = f"{asset.lower()}-updown-5m-{bucket_ts}"
+                endpoint = f"{self.url}/events"
+                params = {"slug": slug}
+                
+                try:
+                    resp = requests.get(endpoint, params=params, timeout=3)
+                    if resp.status_code == 200:
+                        data = resp.json()
+                        if data and isinstance(data, list) and len(data) > 0:
+                            e = data[0]
+                            markets = e.get("markets", [])
+                            for m in markets:
+                                q = m.get('question', '').lower()
+                                if 'up or down' in q:
+                                    clob_ids = m.get('clobTokenIds')
+                                    if clob_ids:
+                                        tokens = json.loads(clob_ids)
+                                        start_dt_str = e.get('eventStartTime') or m.get('startDate')
+                                        end_dt_str = m.get('endDate')
+                                        
+                                        try:
+                                            start_dt = datetime.fromisoformat(start_dt_str.replace('Z', '+00:00')).timestamp() if start_dt_str else float(bucket_ts)
+                                            end_dt = datetime.fromisoformat(end_dt_str.replace('Z', '+00:00')).timestamp() if end_dt_str else float(bucket_ts + 300)
+                                        except Exception:
+                                            start_dt = float(bucket_ts)
+                                            end_dt = float(bucket_ts + 300)
+                                            
+                                        diff_sec = end_dt - time.time()
+                                        
+                                        if 0 < diff_sec <= 420:
+                                            all_found.append({
+                                                "id": m['id'],
+                                                "slug": m.get('slug'),
+                                                "title": m['question'],
+                                                "conditionId": m['conditionId'],
+                                                "token_yes": tokens[0],
+                                                "token_no": tokens[1],
+                                                "volume": float(m.get('volume', 0)),
+                                                "asset": asset,
+                                                "start_timestamp": start_dt,
+                                                "end_timestamp": end_dt
+                                            })
+                except Exception as e:
+                    pass
 
-            for m in data:
-                q = m.get('question', '').lower()
+        # Ordiniamo dal più imminente in poi (quello currently live)
+        all_found.sort(key=lambda x: x['end_timestamp'])
+        
+        # Restituiamo il PIU' imminente PER OGNI ASSET limitato all'asset richiesto (o tutti)
+        asset_best = {}
+        for m in all_found:
+            if m['asset'] not in asset_best:
+                asset_best[m['asset']] = m
                 
-                # Identifica l'asset
-                matched_asset = None
-                for asset, aliases in self.crypto_keywords.items():
-                    if any(alias in q for alias in aliases):
-                        matched_asset = asset
-                        break
-                
-                if matched_asset:
-                    clob_ids = m.get('clobTokenIds')
-                    end_date_str = m.get('endDate')
-                    start_date_str = m.get('eventStartTime') or m.get('startDate')
-                    
-                    if clob_ids and end_date_str and start_date_str:
-                        try:
-                            from datetime import datetime, timezone
-                            end_dt = datetime.strptime(end_date_str.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S%z")
-                            start_dt = datetime.strptime(start_date_str.replace('Z', '+0000'), "%Y-%m-%dT%H:%M:%S%z")
-                            now_dt = datetime.now(timezone.utc)
-                            
-                            # Filtro: Mostra i mercati che scadono entro la prossima ora intera
-                            diff_sec = (end_dt - now_dt).total_seconds()
-                            if 0 < diff_sec <= 3605:
-                                tokens = json.loads(clob_ids)
-                                is_crypto_target = any(x in q for x in ["up or down"])
-                                
-                                if is_crypto_target:
-                                    all_found.append({
-                                        "id": m['id'],
-                                        "slug": m.get('slug'),
-                                        "title": m['question'],
-                                        "conditionId": m['conditionId'],
-                                        "token_yes": tokens[0],
-                                        "token_no": tokens[1],
-                                        "volume": float(m.get('volume', 0)),
-                                        "asset": matched_asset,
-                                        "start_timestamp": start_dt.timestamp(),
-                                        "end_timestamp": end_dt.timestamp()
-                                    })
-                        except Exception as e: 
-                            pass
-            
-            # Ordiniamo dal più imminente in poi (quello currently live)
-            all_found.sort(key=lambda x: x['end_timestamp'])
-            
-            # Restituiamo il PIU' imminente PER OGNI ASSET!
-            asset_best = {}
-            for m in all_found:
-                if m['asset'] not in asset_best:
-                    asset_best[m['asset']] = m
-                    
-            return list(asset_best.values())
-            
-        except Exception as e:
-            log.error(f"Errore Gamma API: {e}")
-            return []
+        return list(asset_best.values())

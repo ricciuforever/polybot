@@ -166,9 +166,11 @@ class NitroBotPoly:
                     
                     price_str = " | ".join(prices_log)
                     if price_str: log.info(f"💲 {price_str} | ⏳ Nessun mercato <= 7m trovato al momento.")
+                    self.state["live_games"] = []
                     await asyncio.sleep(1)
                     continue
 
+                live_games_data = []
                 # Loop su tutti i mercati (es. BTC e ETH simultaneamente)
                 for m in cached_markets:
                     asset = m.get('asset', 'BTC')
@@ -226,6 +228,14 @@ class NitroBotPoly:
                     
                     status = "🎯 PRONTO" if remaining <= enter_threshold and not bet_placed.get(asset) else "⏳ ACCUMULO" if not bet_placed.get(asset) else "✅ PIAZZATA"
                     log.info(f"💲 {asset} ${asset_price:,.2f} | Δ {movement_pct:+.4f}% | {direction} | [{bar}] {int(remaining)}s | {status}")
+
+                    live_games_data.append({
+                        "id": current_market_id.get(asset, asset),
+                        "title": f"[{asset}] {m['title']}",
+                        "anchor_price": ap if ap else 0.0,
+                        "current_price": asset_price,
+                        "volume": 0
+                    })
 
                     # ===== 5. DECISIONE — SMART SNIPER v2 =====
                     if not bet_placed.get(asset):
@@ -295,6 +305,7 @@ class NitroBotPoly:
                                     log.error(f"   ↳ ❌ Trade fallito.")
 
                 # 6. Stato dashboard
+                self.state["live_games"] = live_games_data
                 self.state["last_update"] = int(now)
                 with open(self.state_file, "w") as f:
                     json.dump(self.state, f, indent=2)
@@ -308,7 +319,7 @@ def kill_zombies():
     import subprocess
     my_pid = str(os.getpid())
     try:
-        cmd = 'wmic process where "name=\'python.exe\'" get commandline,processid'
+        cmd = 'wmic process where "name like \'%python%\'" get commandline,processid'
         output = subprocess.check_output(cmd, shell=True, text=True)
         for line in output.splitlines():
             if 'bot_poly.py' in line and my_pid not in line:
