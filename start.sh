@@ -24,6 +24,6 @@ venv/bin/python -m pip install --upgrade pip
 venv/bin/pip install -r requirements.txt
 
 echo "Avvio del Server Web (Manager) in Background..."
-nohup venv/bin/python web_server_v2.py > dashboard_log.txt 2>&1 &
+nohup venv/bin/python web_server_v2.py > web_server.log 2>&1 &
 
 echo "Bot e Server avviati correttamente in background."

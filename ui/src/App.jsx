@@ -15,7 +15,8 @@ import {
   ArrowDownRight,
   Clock,
   BarChart3,
-  RefreshCw
+  RefreshCw,
+  Terminal
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -155,7 +156,8 @@ export default function App() {
   const { data: state, mutate: mutateState } = useSWR('/api/state', fetcher, { refreshInterval: 2000 })
   const { data: stats } = useSWR('/api/stats', fetcher, { refreshInterval: 10000 })
   const { data: trades } = useSWR('/api/trades', fetcher, { refreshInterval: 10000 })
-  const { data: botStatus, mutate: mutateStatus } = useSWR('/api/bot/status', fetcher, { refreshInterval: 2000 })
+    const { data: botStatus, mutate: mutateStatus } = useSWR('/api/bot/status', fetcher, { refreshInterval: 2000 })
+  const { data: systemLogs } = useSWR('/api/logs', fetcher, { refreshInterval: 2000 })
   
   const [isRefreshing, setIsRefreshing] = useState(false)
 
@@ -300,6 +302,35 @@ export default function App() {
                     </div>
                   </div>
                 ))}
+              </div>
+                        </section>
+
+            <section tabIndex="0" className="mt-8">
+              <h2 className="text-lg font-black uppercase tracking-tighter mb-4 flex items-center">
+                <Terminal size={20} className="mr-2 text-zinc-400" /> System Live Logs
+              </h2>
+              <div className="glass-dark p-4 rounded-xl border border-white/5 h-64 overflow-y-auto font-mono text-[10px] custom-scrollbar bg-black/80">
+                {systemLogs?.logs && systemLogs.logs.length > 0 ? (
+                  <div className="space-y-1">
+                    {systemLogs.logs.map((logLine, idx) => (
+                      <div key={idx} className="text-zinc-400">
+                        {logLine.includes('ERROR') ? (
+                           <span className="text-red-400">{logLine}</span>
+                        ) : logLine.includes('WARNING') ? (
+                           <span className="text-yellow-400">{logLine}</span>
+                        ) : logLine.includes('WIN') || logLine.includes('✅') || logLine.includes('+') ? (
+                           <span className="text-green-400">{logLine}</span>
+                        ) : logLine.includes('LOSS') || logLine.includes('❌') || logLine.includes('-') ? (
+                           <span className="text-red-400">{logLine}</span>
+                        ) : (
+                           <span>{logLine}</span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-zinc-600 italic text-center py-10">No logs available...</div>
+                )}
               </div>
             </section>
           </div>
