@@ -158,6 +158,13 @@ class NitroBotPoly:
                         log.info(f"📈 Stats Aggiornate: {wins}W - {len(comp)-wins}L")
                     last_results_check = now
 
+                if not cached_markets:
+                    btc_price = self.feed.get_last_price("BTC")
+                    eth_price = self.feed.get_last_price("ETH")
+                    log.info(f"💲 BTC ${btc_price:,.2f} | ETH ${eth_price:,.2f} | ⏳ Nessun mercato <= 7m trovato al momento.")
+                    await asyncio.sleep(1)
+                    continue
+
                 # Loop su tutti i mercati (es. BTC e ETH simultaneamente)
                 for m in cached_markets:
                     asset = m.get('asset', 'BTC')
