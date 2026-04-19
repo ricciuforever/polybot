@@ -6,13 +6,22 @@ import subprocess
 import threading
 import time
 import sys
+import secrets
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__, static_folder=os.path.join(BASE_DIR, 'ui/dist'), static_url_path='')
 CORS(app)
 
 def check_auth(username, password):
-    return username == 'ricciuforever' and password == 'Giusy.7@'
+    expected_username = os.getenv("AUTH_USERNAME")
+    expected_password = os.getenv("AUTH_PASSWORD")
+    if not expected_username or not expected_password:
+        return False
+    return (secrets.compare_digest(username, expected_username) and
+            secrets.compare_digest(password, expected_password))
 
 def authenticate():
     return Response('Login Required', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
