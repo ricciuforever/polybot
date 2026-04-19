@@ -86,6 +86,7 @@ class NitroBotPoly:
         self.trader = PolyTrader()
         self.last_trade_times = {}
         self.running = True
+        self.redeem_lock = asyncio.Lock() # Per prevenire esecuzioni multiple contemporanee
         self.bet_size = config.BET_SIZE
         self.state_file = "bot_state.json"
         self.state = {
@@ -131,20 +132,29 @@ class NitroBotPoly:
                     cached_markets = self.watcher.find_btc_markets(limit=20)
                     last_api_call = now
 
-                # 1b. Auto-redeem + saldo (5 min)
+                # 1b. Auto-redeem + saldo (5 min) - NON BLOCCANTE
                 if now - last_redeem_check > REDEEM_INTERVAL:
-                    log.info(f"💰 Avvio controllo auto-redeem in background...")
-                    redeemed = await asyncio.to_thread(self.trader.auto_redeem)
-                    pol, usdc = self.trader.get_balances()
-                    
-                    if usdc is not None:
-                        self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
-                        if redeemed:
-                            log.info(f"💰 ✅ Riscattate {redeemed} posizioni! Saldo: ${usdc:.2f} USDC")
-                        elif usdc < 1.05:
-                            log.warning(f"💰 Saldo: ${usdc:.2f} USDC | ⚠️ Sotto soglia minima")
-                    
-                    last_redeem_check = now
+                    if not self.redeem_lock.locked():
+                        log.info(f"💰 Avvio controllo auto-redeem in background...")
+                        
+                        async def background_redeem():
+                            async with self.redeem_lock:
+                                try:
+                                    redeemed = await asyncio.to_thread(self.trader.auto_redeem)
+                                    pol, usdc = self.trader.get_balances()
+                                    if usdc is not None:
+                                        self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
+                                        if redeemed:
+                                            log.info(f"💰 ✅ Riscattate {redeemed} posizioni! Saldo: ${usdc:.2f} USDC")
+                                        elif usdc < 1.05:
+                                            log.warning(f"💰 Saldo: ${usdc:.2f} USDC | ⚠️ Sotto soglia minima")
+                                except Exception as e:
+                                    log.error(f"❌ Errore riscatto background: {e}")
+
+                        asyncio.create_task(background_redeem())
+                        last_redeem_check = now
+                    else:
+                        log.debug("💰 Riscatto già in corso, salto questo ciclo.")
 
                 # 1c. Update esiti (300s)
                 if now - last_results_check > RESULTS_INTERVAL:
@@ -223,8 +233,9 @@ class NitroBotPoly:
                     progress = min(elapsed / duration, 1.0) if duration > 0 else 1.0
                     bar = "█" * int(progress * 20) + "░" * (20 - int(progress * 20))
 
-                    # Calcolo dinamicamente quando entrare (ultimi 5 min)
-                    enter_threshold = min(300, duration * 0.2) # Entra negli ultimi 5 minuti o ultimo 20%
+                    # Regola di ingaggio: Entra solo negli ultimi 150 secondi della finestra (2.5 min)
+                    # Anche se Polymarket dà startDate vecchie, noi sappiamo che il bucket è di 300s.
+                    enter_threshold = BET_AFTER_SEC 
                     
                     status = "🎯 PRONTO" if remaining <= enter_threshold and not bet_placed.get(asset) else "⏳ ACCUMULO" if not bet_placed.get(asset) else "✅ PIAZZATA"
                     log.info(f"💲 {asset} ${asset_price:,.2f} | Δ {movement_pct:+.4f}% | {direction} | [{bar}] {int(remaining)}s | {status}")

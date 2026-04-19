@@ -20,7 +20,8 @@ class PolyTrader:
         self.w3 = Web3(Web3.HTTPProvider(config.POLY_RPC))
         self.account = Account.from_key(config.PRIVATE_KEY)
         self.my_address = self.account.address
-        self.checked_conditions = set()
+        self.state_path = "data/checked_conditions.json"
+        self.checked_conditions = self._load_checked_conditions()
         
         # 1. Client CLOB
         self.client = ClobClient(
@@ -46,9 +47,31 @@ class PolyTrader:
         # 3. Approval USDC.e
         self.ensure_allowance()
 
-        # ABI ERC20
+        # ABIs
         self.usdc_abi = [{"constant": True, "inputs": [{"name": "_owner", "type": "address"}], "name": "balanceOf", "outputs": [{"name": "balance", "type": "uint256"}], "type": "function"}, {"constant": False, "inputs": [{"name": "_spender", "type": "address"}, {"name": "_value", "type": "uint256"}], "name": "approve", "outputs": [{"name": "success", "type": "bool"}], "type": "function"}]
+        self.safe_abi = [
+            {"inputs": [], "name": "nonce", "outputs": [{"name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"},
+            {"inputs": [
+                {"name": "to", "type": "address"}, {"name": "value", "type": "uint256"}, {"name": "data", "type": "bytes"},
+                {"name": "operation", "type": "uint8"}, {"name": "safeTxGas", "type": "uint256"}, {"name": "baseGas", "type": "uint256"},
+                {"name": "gasPrice", "type": "uint256"}, {"name": "gasToken", "type": "address"}, {"name": "refundReceiver", "type": "address"},
+                {"name": "signatures", "type": "bytes"}
+            ], "name": "execTransaction", "outputs": [{"name": "success", "type": "bool"}], "stateMutability": "nonpayable", "type": "function"}
+        ]
+        self.redeem_abi = [
+            {"inputs": [{"name": "collateralToken", "type": "address"}, {"name": "parentCollectionId", "type": "bytes32"}, {"name": "conditionId", "type": "bytes32"}, {"name": "indexSets", "type": "uint256[]"}], "name": "redeemPositions", "outputs": [], "stateMutability": "nonpayable", "type": "function"},
+            {"inputs": [{"name": "", "type": "bytes32"}, {"name": "", "type": "uint256"}], "name": "payoutNumerators", "outputs": [{"name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"},
+            {"inputs": [{"name": "owner", "type": "address"}, {"name": "id", "type": "uint256"}], "name": "balanceOf", "outputs": [{"name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"},
+            {"inputs": [{"name": "parentCollectionId", "type": "bytes32"}, {"name": "conditionId", "type": "bytes32"}, {"name": "indexSet", "type": "uint256"}], "name": "getCollectionId", "outputs": [{"name": "", "type": "bytes32"}], "stateMutability": "view", "type": "function"}
+        ]
+        
+        # Contratti
         self.usdc_contract = self.w3.eth.contract(address=Web3.to_checksum_address(config.POLY_USDC), abi=self.usdc_abi)
+        self.ctf_contract = self.w3.eth.contract(address=Web3.to_checksum_address(config.POLY_CTF), abi=self.redeem_abi)
+        if config.SAFE_ADDRESS:
+            self.safe_contract = self.w3.eth.contract(address=Web3.to_checksum_address(config.SAFE_ADDRESS), abi=self.safe_abi)
+        else:
+            self.safe_contract = None
 
     def ensure_allowance(self):
         try:
@@ -86,6 +109,22 @@ class PolyTrader:
         except Exception as e:
             log.debug(f"⚠️ Errore lettura saldi (probabile 429): {e}")
             return None, None # Restituisce None per indicare errore di lettura anziché saldo 0
+
+    def _load_checked_conditions(self):
+        try:
+            if os.path.exists(self.state_path):
+                with open(self.state_path, "r") as f:
+                    return set(json.load(f))
+        except: pass
+        return set()
+
+    def _save_checked_conditions(self):
+        try:
+            os.makedirs(os.path.dirname(self.state_path), exist_ok=True)
+            with open(self.state_path, "w") as f:
+                json.dump(list(self.checked_conditions), f)
+        except Exception as e:
+            log.error(f"Errore salvataggio stati: {e}")
 
     def execute_market_trade(self, token_id: str, amount_usdc: float, side: str = "BUY"):
         try:
@@ -231,81 +270,73 @@ class PolyTrader:
             if config.SAFE_ADDRESS and config.SAFE_ADDRESS.lower() != self.my_address.lower():
                 addresses_to_check.append(config.SAFE_ADDRESS)
 
-            for target_address in addresses_to_check:
-                # A. Dalle Posizioni Attive
+            for addr in addresses_to_check:
+                # A. Dalle Posizioni Attive (API)
                 try:
-                    pos_url = f"https://data-api.polymarket.com/positions?user={target_address}"
+                    pos_url = f"https://data-api.polymarket.com/positions?user={addr}"
                     pos_resp = requests.get(pos_url, timeout=10).json()
+                    log.debug(f"      Check API {addr[:10]}... trovate {len(pos_resp)} posizioni.")
                     for p in pos_resp:
                         cid = p.get('conditionId') or p.get('condition_id')
-                        # Filtro aggressivo: Solo posizioni riscattabili e DOVE NON ABBIAMO PERSO (-100% PnL)
-                        if p.get('redeemable') and float(p.get('percentPnl', -100)) > -50:
-                            if float(p.get('size', 0)) > 0.01 and cid:
-                                if cid not in potential_conditions:
-                                    potential_conditions.append(cid)
-                except: pass
+                        # Filtro Rilassato: Proviamo a riscattare tutto ciò che ha una size minima.
+                        if float(p.get('size', 0)) > 0.01 and cid:
+                            if cid not in potential_conditions:
+                                potential_conditions.append(cid)
+                except Exception as e:
+                    log.debug(f"      Errore fetch API per {addr[:10]}: {e}")
+            
+            # B. Dalla Cronologia Locale (Backup)
+            try:
+                if os.path.exists("trades_history.json"):
+                    with open("trades_history.json", "r") as f:
+                        hist_data = json.load(f)
+                        added_h = 0
+                        for trade in hist_data:
+                            cid = trade.get('condition_id')
+                            if cid and cid not in potential_conditions:
+                                potential_conditions.append(cid)
+                                added_h += 1
+                        if added_h > 0:
+                            log.info(f"   ↳ 📚 Aggiunti {added_h} ID dalla cronologia locale.")
+            except Exception as e:
+                log.warning(f"   ↳ ⚠️ Errore lettura storico: {e}")
             
 
             
             if not potential_conditions:
-                log.info("   ↳ ℹ️ Nessuna attività o posizione trovata.")
+                log.info("   ↳ ℹ️ Nessuna scommessa da verificare.")
                 return 0
 
-            # ABI e Variabili Contratto
-            SAFE_ABI = [
-                {"inputs": [], "name": "nonce", "outputs": [{"name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"},
-                {"inputs": [
-                    {"name": "to", "type": "address"}, {"name": "value", "type": "uint256"}, {"name": "data", "type": "bytes"},
-                    {"name": "operation", "type": "uint8"}, {"name": "safeTxGas", "type": "uint256"}, {"name": "baseGas", "type": "uint256"},
-                    {"name": "gasPrice", "type": "uint256"}, {"name": "gasToken", "type": "address"}, {"name": "refundReceiver", "type": "address"},
-                    {"name": "signatures", "type": "bytes"}
-                ], "name": "execTransaction", "outputs": [{"name": "success", "type": "bool"}], "stateMutability": "nonpayable", "type": "function"}
-            ]
-            REDEEM_ABI = [
-                {
-                    "inputs": [
-                        {"name": "collateralToken", "type": "address"}, {"name": "parentCollectionId", "type": "bytes32"},
-                        {"name": "conditionId", "type": "bytes32"}, {"name": "indexSets", "type": "uint256[]"}
-                    ],
-                    "name": "redeemPositions", "outputs": [], "stateMutability": "nonpayable", "type": "function"
-                },
-                {
-                    "inputs": [{"name": "", "type": "bytes32"}, {"name": "", "type": "uint256"}],
-                    "name": "payoutNumerators", "outputs": [{"name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"
-                },
-                {
-                    "inputs": [{"name": "owner", "type": "address"}, {"name": "id", "type": "uint256"}],
-                    "name": "balanceOf", "outputs": [{"name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"
-                },
-                {
-                    "inputs": [{"name": "parentCollectionId", "type": "bytes32"}, {"name": "conditionId", "type": "bytes32"}, {"name": "indexSet", "type": "uint256"}],
-                    "name": "getCollectionId", "outputs": [{"name": "", "type": "bytes32"}], "stateMutability": "view", "type": "function"
-                }
-            ]
-            ctf_contract = self.w3.eth.contract(address=Web3.to_checksum_address(config.POLY_CTF), abi=REDEEM_ABI)
             usdc_token = Web3.to_checksum_address(config.POLY_USDC)
             parent = b'\x00' * 32
 
-            log.info(f"   ↳ 🔎 Analisi di {len(potential_conditions)} potenziali riscatti...")
+            log.info(f"   ↳ 🔎 Verifica on-chain di {len(potential_conditions)} mercati...")
             
+            count = 0
             for cond_id in potential_conditions:
-                if cond_id in seen_conditions or cond_id in self.checked_conditions: continue
-                seen_conditions.add(cond_id)
+                if cond_id in self.checked_conditions: continue
+                
+                count += 1
+                if count % 20 == 0:
+                    log.info(f"      ... verificati {count}/{len(potential_conditions)} mercati")
                 
                 try:
-                    # --- CONTROLLO ON-CHAIN ---
+                    # --- CONTROLLO ON-CHAIN RISOLUZIONE ---
                     try:
-                        p0 = ctf_contract.functions.payoutNumerators(cond_id, 0).call()
-                        p1 = ctf_contract.functions.payoutNumerators(cond_id, 1).call()
-                        is_resolved_onchain = (p0 > 0 or p1 > 0)
+                        p0 = self.ctf_contract.functions.payoutNumerators(cond_id, 0).call()
+                        p1 = self.ctf_contract.functions.payoutNumerators(cond_id, 1).call()
+                        is_resolved = (p0 > 0 or p1 > 0)
                     except Exception as e:
-                        log.debug(f"      ↳ Errore tecnico check on-chain per {cond_id[:10]}: {e}")
-                        is_resolved_onchain = False
+                        if "429" in str(e):
+                            log.warning("      ⚠️ Rate limit RPC (429). Pausa di 2 secondi...")
+                            import time
+                            time.sleep(2)
+                        continue
 
-                    if not is_resolved_onchain:
+                    if not is_resolved:
                         continue 
                     
-                    # --- CONTROLLO BILANCIO (Safe + Metamask) ---
+                    # --- CONTROLLO BILANCIO ---
                     found_balance = 0
                     active_index = 0
                     active_address = None
@@ -314,22 +345,15 @@ class PolyTrader:
                         payout = p0 if idx == 1 else p1
                         if payout == 0: continue
                         
-                        coll_id = ctf_contract.functions.getCollectionId(parent, cond_id, idx).call()
-                        # TokenID in CTF = keccak256(abi.encodePacked(collateralToken, collectionId))
-                        # IMPORTANTE: abi.encodePacked non aggiunge padding all'indirizzo (20 bytes)
+                        coll_id = self.ctf_contract.functions.getCollectionId(parent, cond_id, idx).call()
                         token_id = int(Web3.keccak(hexstr=usdc_token[2:].lower() + coll_id.hex()).hex(), 16)
                         
-                        # Check Safe
-                        b_safe = ctf_contract.functions.balanceOf(Web3.to_checksum_address(target_address), token_id).call()
-                        if b_safe > 0:
-                            found_balance, active_index, active_address = b_safe, idx, target_address
-                            break
-                        
-                        # Check Metamask (EOA)
-                        b_eoa = ctf_contract.functions.balanceOf(Web3.to_checksum_address(self.my_address), token_id).call()
-                        if b_eoa > 0:
-                            found_balance, active_index, active_address = b_eoa, idx, self.my_address
-                            break
+                        for test_addr in addresses_to_check:
+                            bal = self.ctf_contract.functions.balanceOf(Web3.to_checksum_address(test_addr), token_id).call()
+                            if bal > 0:
+                                found_balance, active_index, active_address = bal, idx, test_addr
+                                break
+                        if found_balance > 0: break
                     
                     if found_balance == 0:
                         self.checked_conditions.add(cond_id)
@@ -341,7 +365,7 @@ class PolyTrader:
                     
                     # Generazione redeem_data compatibile con Web3 v7
                     try:
-                        dummy_tx = ctf_contract.functions.redeemPositions(
+                        dummy_tx = self.ctf_contract.functions.redeemPositions(
                             usdc_token, parent, cond_bytes, [1, 2]
                         ).build_transaction({
                             'from': self.my_address, 'nonce': 0, 'gas': 1, 'gasPrice': 1
@@ -382,13 +406,12 @@ class PolyTrader:
                         except Exception as e:
                             log.warning(f"   ↳ ⚠️ Fallimento chiamata Relayer: {e}")
 
-                    # --- FALLBACK: LOGICA SAFE PROXY o MANUALE (Richiede POL) ---
-                    if config.SAFE_ADDRESS and active_address.lower() == config.SAFE_ADDRESS.lower():
-                        safe_contract = self.w3.eth.contract(address=Web3.to_checksum_address(config.SAFE_ADDRESS), abi=SAFE_ABI)
+                    # --- FALLBACK: LOGICA SAFE PROXY o MANUALE ---
+                    if config.SAFE_ADDRESS and active_address.lower() == config.SAFE_ADDRESS.lower() and self.safe_contract:
                         signature = "0x" + "000000000000000000000000" + self.my_address[2:].lower() + \
                                     "0000000000000000000000000000000000000000000000000000000000000000" + "01"
                         
-                        tx = safe_contract.functions.execTransaction(
+                        tx = self.safe_contract.functions.execTransaction(
                             Web3.to_checksum_address(config.POLY_CTF), 0, redeem_data, 0, 0, 0, 0,
                             "0x0000000000000000000000000000000000000000", "0x0000000000000000000000000000000000000000",
                             Web3.to_bytes(hexstr=signature)
@@ -400,7 +423,7 @@ class PolyTrader:
                         })
                         log.info(f"   ↳ 🛡️ Invio via SAFE Proxy (pagando gas in POL)...")
                     else:
-                        tx = ctf_contract.functions.redeemPositions(
+                        tx = self.ctf_contract.functions.redeemPositions(
                             usdc_token, parent, cond_bytes, [1, 2]
                         ).build_transaction({
                             'from': self.my_address,
@@ -421,6 +444,9 @@ class PolyTrader:
 
                 except Exception as e:
                     log.error(f"   ↳ ❌ Errore per {cond_id}: {e}")
+            
+            # Salva gli ID verificati per il prossimo avvio
+            self._save_checked_conditions()
             
             # --- 3. AUTO-WITHDRAW (Sposta da Safe a Metamask) ---
             if redeemed > 0 or True: # Controlliamo sempre alla fine del ciclo

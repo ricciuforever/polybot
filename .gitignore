@@ -1,8 +1,33 @@
 .env
-bot_state.json
-node_modules/
-__pycache__/
-*.log
+.env.local
 .DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+ENV/
+.venv/
+.pytest_cache/
+
+# Logs & Data
+*.log
+dashboard_log.txt
+trades_history.json
+bot_state.json
+data/
+logs/
+history.txt
+
+# UI Assets (Keep source, ignore build artifacts if necessary, but keep dist for current server)
+ui/node_modules/
+# ui/dist/  # Tenuto perché servito direttamente dal web server v2
+
+# IDEs
+.vscode/
+.idea/
 .gemini/
 .agent/
+.history/
