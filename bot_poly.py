@@ -125,6 +125,7 @@ class NitroBotPoly:
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
         MIN_SIGNAL = 0.05          # Skip se |delta| < 0.05% (rumore)
         MAX_ENTRY_PRICE = 0.90     # Compra fino a 90c (alta probabilità)
+        MIN_ENTRY_PRICE = 0.75     # Compra solo da 75c in su (certezza alta)
         last_results_check = 0
 
         while self.running:
@@ -289,6 +290,9 @@ class NitroBotPoly:
 
                             if entry_price > MAX_ENTRY_PRICE:
                                 log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {int(MAX_ENTRY_PRICE*100)}¢. Payout troppo basso. SKIP.")
+                                bet_placed[asset] = True
+                            elif entry_price < MIN_ENTRY_PRICE:
+                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ < {int(MIN_ENTRY_PRICE*100)}¢. Troppo rischiosa (underdog). SKIP.")
                                 bet_placed[asset] = True
                             else:
                                 confidence = "FORTE 🔥" if market_agrees else "BUONA"
