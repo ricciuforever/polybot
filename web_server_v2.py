@@ -46,8 +46,19 @@ def bot_manager():
                 BOT_PROCESS = subprocess.Popen([sys.executable, "bot_poly.py"])
         else:
             if BOT_PROCESS is not None and BOT_PROCESS.poll() is None:
-                BOT_PROCESS.terminate()
-                BOT_PROCESS.wait()
+                import os, signal
+                try:
+                    os.kill(BOT_PROCESS.pid, signal.SIGTERM)
+                    BOT_PROCESS.wait(timeout=3)
+                except Exception:
+                    pass
+                if BOT_PROCESS.poll() is None:
+                    try:
+                        os.kill(BOT_PROCESS.pid, signal.SIGKILL)
+                        BOT_PROCESS.wait()
+                    except Exception:
+                        pass
+                BOT_PROCESS = None
         time.sleep(2)
 
 threading.Thread(target=bot_manager, daemon=True).start()
