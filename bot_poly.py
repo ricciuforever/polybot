@@ -289,7 +289,26 @@ class NitroBotPoly:
 
             await asyncio.sleep(1)
 
+def kill_zombies():
+    import subprocess
+    my_pid = str(os.getpid())
+    try:
+        cmd = 'wmic process where "name=\'python.exe\'" get commandline,processid'
+        output = subprocess.check_output(cmd, shell=True, text=True)
+        for line in output.splitlines():
+            if 'bot_poly.py' in line and my_pid not in line:
+                parts = line.strip().split()
+                if parts:
+                    zombie_pid = parts[-1]
+                    if zombie_pid.isdigit() and zombie_pid != my_pid:
+                        log.warning(f"🧟 Trovata istanza zombie del bot (PID {zombie_pid}). La uccido...")
+                        subprocess.run(f"taskkill /PID {zombie_pid} /F", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception as e:
+        log.error(f"Errore controllo zombie: {e}")
+
 if __name__ == "__main__":
+    kill_zombies()
+    
     # Statistiche all'avvio
     trades = load_trades_log()
     if trades:
@@ -302,5 +321,7 @@ if __name__ == "__main__":
     try:
         asyncio.run(bot.run())
     except KeyboardInterrupt:
-        bot.feed.stop()
-        log.info("Chiusura Bot... Bye!")
+        log.info("Chiusura Bot forzata... Bye!")
+        try: bot.feed.stop() 
+        except: pass
+        os._exit(0)
