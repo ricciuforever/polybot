@@ -674,7 +674,11 @@ class PolyTrader:
                             token_id=token_id
                         ))
                         resp = self.client.post_order(signed_order)
-                        log.info(f"✅ Ordine SELL piazzato per {token_id[:10]} | Resp: {resp}")
+                        
+                        if resp.get('success') or resp.get('orderID') or resp.get('order_id'):
+                            log.info(f"✅ Ordine SELL (TP) ESEGUITO per {token_id[:10]} | Resp: {resp}")
+                        else:
+                            log.error(f"❌ Ordine SELL (TP) RIFIUTATO dal CLOB: {resp}")
                     except Exception as e:
                         log.error(f"❌ Errore durante la vendita Take Profit: {e}")
         except Exception as e:
