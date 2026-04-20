@@ -23,9 +23,20 @@ fi
 venv/bin/pip install -r requirements.txt
 
 echo "Avvio Auto-Redeemer in Background..."
-nohup venv/bin/python auto_redeemer.py > auto_redeemer.log 2>&1 &
+nohup venv/bin/python auto_redeemer.py >> auto_redeemer.log 2>&1 &
 
 echo "Avvio del Server Web (Manager) in Background..."
-nohup venv/bin/python web_server_v2.py > web_server.log 2>&1 &
+nohup venv/bin/python web_server_v2.py >> web_server.log 2>&1 &
 
 echo "Bot e Server avviati correttamente in background."
+
+# Rotazione manuale semplice dei log bash per evitare che superino ~1MB
+for logfile in auto_redeemer.log web_server.log; do
+    if [ -f "$logfile" ]; then
+        filesize=$(stat -c%s "$logfile")
+        if [ "$filesize" -gt 1048576 ]; then
+            tail -c 50000 "$logfile" > "${logfile}.tmp"
+            mv "${logfile}.tmp" "$logfile"
+        fi
+    fi
+done
