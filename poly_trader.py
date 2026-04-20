@@ -205,21 +205,23 @@ class PolyTrader:
             else:
                 best_price = 0.50
                 log.warning(f"   ⚠️ Nessun ASK trovato, uso prezzo default: ${best_price}")
-            
             # Calcolo size (numero di shares da comprare)
             size = round(bet_size / best_price, 2)
-            log.info(f"   📋 Size stimata: {size} shares (Market Buy)")
             
-            # Creazione vero Market Order per riempimento immediato
-            from py_clob_client.clob_types import MarketOrderArgs
-            order_args = MarketOrderArgs(
-                amount=size,
+            # Pad the price to guarantee fill (Market Order behavior via Limit)
+            buy_price = round(min(0.99, best_price + 0.02), 2)
+            log.info(f"   📋 Size stimata: {size} shares | Prezzo limite: ${buy_price} (Market Buy sweep)")
+            
+            from py_clob_client.clob_types import OrderArgs
+            order_args = OrderArgs(
+                price=buy_price,
+                size=size,
                 side="BUY",
                 token_id=token_id
             )
             
-            log.info(f"   📋 Firma ordine Market in corso...")
-            signed = self.client.create_market_order(order_args)
+            log.info(f"   📋 Firma ordine in corso...")
+            signed = self.client.create_order(order_args)
             
             log.info(f"   📋 Invio ordine al CLOB...")
             
@@ -717,9 +719,10 @@ class PolyTrader:
                 if size > 0.1 and token_id:
                     log.info(f"🚨 LIQUIDAZIONE: Vendo token {token_id}")
                     try:
-                        from py_clob_client.clob_types import MarketOrderArgs
-                        signed_order = self.client.create_market_order(MarketOrderArgs(
-                            amount=round(size, 2),
+                        from py_clob_client.clob_types import OrderArgs
+                        signed_order = self.client.create_order(OrderArgs(
+                            price=0.01, # Prezzo limite minimo per sweep quasi totale
+                            size=round(size, 2),
                             side="SELL",
                             token_id=token_id
                         ))
