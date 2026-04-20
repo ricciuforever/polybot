@@ -354,7 +354,7 @@ export default function App() {
                   </thead>
                   <tbody className="divide-y divide-white/5">
                     {trades && trades.length > 0 ? (
-                      trades.map((t, i) => (
+                      trades.slice(0, 20).map((t, i) => (
                         <TradeRow key={i} trade={t} />
                       ))
                     ) : (
