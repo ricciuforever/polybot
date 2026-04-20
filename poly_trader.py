@@ -249,10 +249,15 @@ class PolyTrader:
             # Gestione Allowance automatica
             error_msg = str(e)
             if "allowance" in error_msg.lower():
-                log.info(f"   🛡️ Problema di allowance rilevato, provo ad approvare...")
+                # l'errore può essere di balance/allowance condiviso
+                log.info(f"   🛡️ Problema di saldo/allowance rilevato dal CLOB.")
                 try:
-                    spender = re.search(r"spender: (0x[a-fA-F0-9]{40})", error_msg).group(1)
-                    self.approve_spender(spender)
+                    import re
+                    match = re.search(r"spender: (0x[a-fA-F0-9]{40})", error_msg)
+                    if match:
+                        self.approve_spender(match.group(1))
+                    else:
+                        pass # Errore di semplice mancanza di usdc sufficiente
                 except Exception as ex:
                     log.error(f"Errore durante l'approvazione automatica spender (sniper_trade): {ex}")
             return False
