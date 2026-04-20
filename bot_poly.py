@@ -115,18 +115,19 @@ class NitroBotPoly:
 
         anchor_price = {}
         current_market_id = {}
-        bet_placed = {}
+        bet_placed = {} # dict of asset -> list of sides bought
         last_redeem_check = 0
 
         # === PARAMETRI STRATEGIA SMART SNIPER v2 ===
-        BET_AFTER_SEC = 60         # Scommetti negli ultimi 60 sec
+        BET_AFTER_SEC = 240        # Entra dopo 60s (ne mancano 240 alla fine)
         NO_BET_LAST_SEC = 15       # Stop ultimi 15 sec
         REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 MIN (EVITA 429)
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
         MIN_SIGNAL = 0.05          # Skip se |delta| < 0.05% (rumore)
-        MAX_ENTRY_PRICE = 0.90     # Compra fino a 90c (alta probabilità)
-        MIN_ENTRY_PRICE = 0.75     # Compra solo da 75c in su (certezza alta)
+        MAX_ENTRY_PRICE = 0.55     # Limite massimo (hedging)
+        MIN_ENTRY_PRICE = 0.05     # Acquista anche underdogs economici
         last_results_check = 0
+        last_tp_check = 0
 
         while self.running:
             try:
@@ -189,7 +190,7 @@ class NitroBotPoly:
                     # 3. Nuova finestra -> Ancora prezzo
                     if m['id'] != current_market_id.get(asset):
                         current_market_id[asset] = m['id']
-                        bet_placed[asset] = False
+                        bet_placed[asset] = []
                         
                         # Prova prima il PTB Ufficiale
                         official_ptb = fetch_official_ptb(m.get('slug'))
@@ -229,7 +230,7 @@ class NitroBotPoly:
                     # Anche se Polymarket dà startDate vecchie, noi sappiamo che il bucket è di 300s.
                     enter_threshold = BET_AFTER_SEC 
                     
-                    status = "🎯 PRONTO" if remaining <= enter_threshold and not bet_placed.get(asset) else "⏳ ACCUMULO" if not bet_placed.get(asset) else "✅ PIAZZATA"
+                    status = "🎯 PRONTO" if remaining <= enter_threshold and len(bet_placed.get(asset, [])) < 2 else "⏳ ACCUMULO" if len(bet_placed.get(asset, [])) < 2 else "✅ PIAZZATA"
                     log.info(f"💲 {asset} ${asset_price:,.2f} | Δ {movement_pct:+.4f}% | {direction} | [{bar}] {int(remaining)}s | {status}")
 
                     live_games_data.append({
@@ -241,12 +242,12 @@ class NitroBotPoly:
                     })
 
                     # ===== 5. DECISIONE — SMART SNIPER v2 =====
-                    if not bet_placed.get(asset):
+                    if len(bet_placed.get(asset, [])) < 2:
                         if remaining > enter_threshold:
                             pass  # Accumulo
                         elif remaining < NO_BET_LAST_SEC:
                             log.warning(f"   ↳ ⚠️ Troppo tardi ({int(remaining)}s rimasti)")
-                            bet_placed[asset] = True
+                            bet_placed[asset] = ["UP", "DOWN"] # Skip permanently for this market
                         elif abs(movement_pct) < MIN_SIGNAL:
                             # SEGNALE TROPPO DEBOLE -> Skip
                             log.info(f"   ↳ 🔇 Segnale debole ({movement_pct:+.4f}% < {MIN_SIGNAL}%). SKIP.")
@@ -258,6 +259,9 @@ class NitroBotPoly:
                             else:
                                 side = "DOWN"
                                 token_bet = m['token_no']
+
+                            if side in bet_placed.get(asset, []):
+                                continue # Già comprato questo lato
 
                             try:
                                 resp = requests.get("https://clob.polymarket.com/midpoint", params={"token_id": token_bet}, timeout=3)
@@ -276,19 +280,19 @@ class NitroBotPoly:
 
                             if entry_price > MAX_ENTRY_PRICE:
                                 log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {int(MAX_ENTRY_PRICE*100)}¢. Payout troppo basso. SKIP.")
-                                bet_placed[asset] = True
+                                pass # Non compra questo lato ora, proverà al prossimo giro
                             elif entry_price < MIN_ENTRY_PRICE:
                                 log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ < {int(MIN_ENTRY_PRICE*100)}¢. Troppo rischiosa (underdog). SKIP.")
-                                bet_placed[asset] = True
+                                pass # Non compra questo lato ora, proverà al prossimo giro
                             else:
                                 confidence = "FORTE 🔥" if market_agrees else "BUONA"
                                 log.info(f"   ↳ 🎯 BET {side} (confidenza: {confidence})")
                                 log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
 
                                 success = self.trader.sniper_trade(m, movement_pct)
-                                bet_placed[asset] = True
 
                                 if success:
+                                    bet_placed[asset].append(side)
                                     self.last_trade_times[asset] = now
                                     log.info(f"   ↳ ✅ 💰 TRADE ESEGUITO SU {m['title']} | Prezzo Ingr.: {cost_c}¢ | Direzione: {side}")
 
