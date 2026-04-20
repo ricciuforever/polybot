@@ -120,7 +120,7 @@ class NitroBotPoly:
 
         # === PARAMETRI STRATEGIA HIGH PROBABILITY (SURE WIN) ===
         BET_AFTER_SEC = 240        # Monitoriamo quasi tutta l'ampiezza dell'evento
-        NO_BET_LAST_SEC = 15       # Stop ultimi 15 sec per stabilità CLOB
+        NO_BET_LAST_SEC = 0        # Nessuno stop finale, operativi fino all'ultimo secondo
         REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 MIN (EVITA 429)
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
         MIN_SIGNAL = 0.02          # Basta un segnale di direzionalità minima (+/- 0.02%)
