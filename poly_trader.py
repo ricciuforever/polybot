@@ -683,9 +683,9 @@ class PolyTrader:
                         # Format size to max 2 decimals to avoid CLOB precision errors
                         formatted_size = round(size, 2)
                         
-                        signed_order = self.client.create_order(OrderArgs(
-                            price=current_price, # Mettiamo a mercato centrando il Bid
-                            size=formatted_size,
+                        from py_clob_client.clob_types import MarketOrderArgs
+                        signed_order = self.client.create_market_order(MarketOrderArgs(
+                            amount=formatted_size,
                             side="SELL",
                             token_id=token_id
                         ))
@@ -717,12 +717,13 @@ class PolyTrader:
                 if size > 0.1 and token_id:
                     log.info(f"🚨 LIQUIDAZIONE: Vendo token {token_id}")
                     try:
-                        self.client.create_order(OrderArgs(
-                            price=0.05, # Prezzo molto basso per garantire fill immediato
-                            size=size,
+                        from py_clob_client.clob_types import MarketOrderArgs
+                        signed_order = self.client.create_market_order(MarketOrderArgs(
+                            amount=round(size, 2),
                             side="SELL",
                             token_id=token_id
                         ))
+                        self.client.post_order(signed_order)
                     except Exception as inner_e:
                         log.error(f"Errore durante la vendita di emergenza del token {token_id}: {inner_e}")
         except Exception as e:
