@@ -277,10 +277,10 @@ class NitroBotPoly:
                             log.info(f"   ↳ 📊 Check Mercato: Esito Favorito -> {side} | Quota: {cost_c}¢ (ROI: {roi:.0f}%)")
 
                             if entry_price > MAX_ENTRY_PRICE:
-                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {int(MAX_ENTRY_PRICE*100)}¢. Guadagno troppo esiguo. ATTESA.")
+                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {round(MAX_ENTRY_PRICE*100)}¢. Guadagno troppo esiguo. ATTESA.")
                                 pass 
                             elif entry_price < MIN_ENTRY_PRICE:
-                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ < {int(MIN_ENTRY_PRICE*100)}¢. Probabilità ancora troppo bassa. ATTESA.")
+                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ < {round(MIN_ENTRY_PRICE*100)}¢. Probabilità ancora troppo bassa. ATTESA.")
                                 pass 
                             else:
                                 log.info(f"   ↳ 🎯 BET {side} (Confidenza ALTISSIMA: {cost_c}%)")
