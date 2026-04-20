@@ -124,7 +124,7 @@ class NitroBotPoly:
         REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 MIN (EVITA 429)
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
         MIN_SIGNAL = 0.02          # Basta un segnale di direzionalità minima (+/- 0.02%)
-        MAX_ENTRY_PRICE = 0.95     # Guadagno minimo del 5% per share
+        MAX_ENTRY_PRICE = 0.85     # Tetto MASSIMO di acquisto rigoroso a 85¢
         MIN_ENTRY_PRICE = 0.80     # Entriamo solo se il mercato assegna già >80% di probabilità
         last_results_check = 0
         last_tp_check = 0
@@ -286,7 +286,7 @@ class NitroBotPoly:
                                 log.info(f"   ↳ 🎯 BET {side} (Confidenza ALTISSIMA: {cost_c}%)")
                                 log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
 
-                                success = self.trader.sniper_trade(m, side)
+                                success = self.trader.sniper_trade(m, side, limit_price=MAX_ENTRY_PRICE)
 
                                 if success:
                                     bet_placed[asset].append(side)

@@ -169,7 +169,7 @@ class PolyTrader:
                     log.error(f"Errore durante l'approvazione automatica spender (execute_market_trade): {ex}")
             return False, error_msg
 
-    def sniper_trade(self, market: dict, target_side: str) -> bool:
+    def sniper_trade(self, market: dict, target_side: str, limit_price: float = 0.85) -> bool:
         """Metodo principale per la strategia Sniper: traduce il mercato in un ordine CLOB."""
         try:
             # Determina direzione
@@ -196,21 +196,13 @@ class PolyTrader:
             log.info(f"   📋 Token ID: {token_id[:20]}...")
             log.info(f"   📋 Saldo: ${usdc_balance:.2f} | Importo: ${bet_size:.2f}")
             
-            # Recupero order book
-            ob = self.client.get_order_book(token_id)
+            # Usiamo il Limit Price ESATTO richiesto (nessun rialzo per spread)
+            buy_price = round(limit_price, 2)
             
-            if ob.asks:
-                best_price = float(ob.asks[0].price)
-                log.info(f"   📋 Miglior prezzo ASK: ${best_price}")
-            else:
-                best_price = 0.50
-                log.warning(f"   ⚠️ Nessun ASK trovato, uso prezzo default: ${best_price}")
-            # Calcolo size (numero di shares da comprare)
-            size = round(bet_size / best_price, 2)
+            # Calcolo size basato sul prezzo limite esatto configurato
+            size = round(bet_size / buy_price, 2)
             
-            # Pad the price to guarantee fill (Market Order behavior via Limit)
-            buy_price = round(min(0.99, best_price + 0.02), 2)
-            log.info(f"   📋 Size stimata: {size} shares | Prezzo limite: ${buy_price} (Market Buy sweep)")
+            log.info(f"   📋 Size stimata: {size} shares | Prezzo ASSOLUTO limite: ${buy_price} (Limit Fill)")
             
             from py_clob_client.clob_types import OrderArgs
             order_args = OrderArgs(
