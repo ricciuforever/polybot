@@ -318,9 +318,16 @@ class PolyTrader:
                 log.warning(f"   ↳ ⚠️ Errore lettura storico: {e}")
             
 
+            # Pre-filtro: Rimuoviamo quelli già verificati per non inquinare la lista
+            potential_conditions = [c for c in potential_conditions if c not in self.checked_conditions]
             
+            # Limite: Controlla solo i primi 50 (i più recenti)
+            MAX_LIMIT = 50
+            if len(potential_conditions) > MAX_LIMIT:
+                potential_conditions = potential_conditions[:MAX_LIMIT]
+
             if not potential_conditions:
-                log.info("   ↳ ℹ️ Nessuna scommessa da verificare.")
+                log.info("   ↳ ℹ️ Nessuna scommessa pendente da verificare.")
                 return 0
 
             usdc_token = Web3.to_checksum_address(config.POLY_USDC)
