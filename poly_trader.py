@@ -208,18 +208,18 @@ class PolyTrader:
             
             # Calcolo size (numero di shares da comprare)
             size = round(bet_size / best_price, 2)
-            log.info(f"   📋 Size ordine: {size} shares @ ${best_price}")
+            log.info(f"   📋 Size stimata: {size} shares (Market Buy)")
             
-            # Creazione ordine
-            order_args = OrderArgs(
-                price=best_price,
-                size=size,
+            # Creazione vero Market Order per riempimento immediato
+            from py_clob_client.clob_types import MarketOrderArgs
+            order_args = MarketOrderArgs(
+                amount=size,
                 side="BUY",
                 token_id=token_id
             )
             
-            log.info(f"   📋 Firma ordine in corso...")
-            signed = self.client.create_order(order_args)
+            log.info(f"   📋 Firma ordine Market in corso...")
+            signed = self.client.create_market_order(order_args)
             
             log.info(f"   📋 Invio ordine al CLOB...")
             
