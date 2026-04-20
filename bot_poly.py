@@ -140,14 +140,18 @@ class NitroBotPoly:
 
                 # 1b. Aggiornamento saldi (5 min) - Veloce, NON BLOCCANTE
                 if now - last_redeem_check > REDEEM_INTERVAL:
-                    try:
-                        self.trader.auto_redeem()
-                        pol, usdc = self.trader.get_balances()
-                        if usdc is not None:
-                            self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
-                            # log.info(f"🏦 SALDI AGGIORNATI -> POL: {pol:.3f} | USDC: {usdc:.2f}")
-                    except Exception as e:
-                        log.error(f"Errore update saldi: {e}")
+                    async def background_redeem():
+                        if self.redeem_lock.locked(): return
+                        async with self.redeem_lock:
+                            try:
+                                await asyncio.to_thread(self.trader.auto_redeem)
+                                pol, usdc = await asyncio.to_thread(self.trader.get_balances)
+                                if usdc is not None:
+                                    self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
+                            except Exception as e:
+                                log.error(f"Errore update saldi bg: {e}")
+                                
+                    asyncio.create_task(background_redeem())
                     last_redeem_check = now
 
                 # 1c. Update esiti (300s)
