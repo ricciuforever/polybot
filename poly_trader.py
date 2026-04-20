@@ -169,11 +169,11 @@ class PolyTrader:
                     log.error(f"Errore durante l'approvazione automatica spender (execute_market_trade): {ex}")
             return False, error_msg
 
-    def sniper_trade(self, market: dict, movement_pct: float) -> bool:
+    def sniper_trade(self, market: dict, target_side: str) -> bool:
         """Metodo principale per la strategia Sniper: traduce il mercato in un ordine CLOB."""
         try:
             # Determina direzione
-            if movement_pct > 0:
+            if target_side == "UP":
                 token_id = market['token_yes']
                 direction = "UP → BUY YES"
             else:

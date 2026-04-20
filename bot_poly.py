@@ -248,48 +248,45 @@ class NitroBotPoly:
                         elif remaining < NO_BET_LAST_SEC:
                             log.warning(f"   ↳ ⚠️ Troppo tardi ({int(remaining)}s rimasti)")
                             bet_placed[asset] = ["UP", "DOWN"] # Skip permanently for this market
-                        elif abs(movement_pct) < MIN_SIGNAL:
-                            # SEGNALE TROPPO DEBOLE -> Skip
-                            log.info(f"   ↳ 🔇 Segnale debole ({movement_pct:+.4f}% < {MIN_SIGNAL}%). SKIP.")
                         else:
-                            # SEGNALE VALIDO -> Recupero odds mercato
-                            if movement_pct > 0:
+                            # Verifica indipendente della probabilità dal mercato Polymarket
+                            try:
+                                resp_y = requests.get("https://clob.polymarket.com/midpoint", params={"token_id": m['token_yes']}, timeout=3)
+                                price_yes = float(resp_y.json().get("mid", 0.50))
+                            except: price_yes = 0.50
+                            
+                            try:
+                                resp_n = requests.get("https://clob.polymarket.com/midpoint", params={"token_id": m['token_no']}, timeout=3)
+                                price_no = float(resp_n.json().get("mid", 0.50))
+                            except: price_no = 0.50
+
+                            if price_yes >= price_no:
                                 side = "UP"
-                                token_bet = m['token_yes']
+                                entry_price = price_yes
                             else:
                                 side = "DOWN"
-                                token_bet = m['token_no']
-
+                                entry_price = price_no
+                                
                             if side in bet_placed.get(asset, []):
                                 continue # Già comprato questo lato
-
-                            try:
-                                resp = requests.get("https://clob.polymarket.com/midpoint", params={"token_id": token_bet}, timeout=3)
-                                entry_price = float(resp.json().get("mid", 0.50))
-                            except:
-                                entry_price = 0.50
 
                             cost_c = int(entry_price * 100)
                             profit_c = 100 - cost_c
                             roi = (profit_c / cost_c * 100) if cost_c > 0 else 0
 
-                            market_agrees = entry_price < 0.50
-
-                            log.info(f"   ↳ 📊 Segnale {asset}: {side} | Δ {movement_pct:+.4f}%")
-                            log.info(f"   ↳ 📊 Quota: {cost_c}¢ → Payout: {profit_c}¢ (ROI: {roi:.0f}%)")
+                            log.info(f"   ↳ 📊 Check Mercato: Esito Favorito -> {side} | Quota: {cost_c}¢ (ROI: {roi:.0f}%)")
 
                             if entry_price > MAX_ENTRY_PRICE:
                                 log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {int(MAX_ENTRY_PRICE*100)}¢. Guadagno troppo esiguo. ATTESA.")
-                                pass # Non compra questo lato ora, proverà al prossimo giro
+                                pass 
                             elif entry_price < MIN_ENTRY_PRICE:
                                 log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ < {int(MIN_ENTRY_PRICE*100)}¢. Probabilità ancora troppo bassa. ATTESA.")
-                                pass # Non compra questo lato ora, proverà al prossimo giro
+                                pass 
                             else:
-                                confidence = "FORTE 🔥" if market_agrees else "BUONA"
-                                log.info(f"   ↳ 🎯 BET {side} (confidenza: {confidence})")
+                                log.info(f"   ↳ 🎯 BET {side} (Confidenza ALTISSIMA: {cost_c}%)")
                                 log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
 
-                                success = self.trader.sniper_trade(m, movement_pct)
+                                success = self.trader.sniper_trade(m, side)
 
                                 if success:
                                     bet_placed[asset].append(side)
