@@ -118,14 +118,14 @@ class NitroBotPoly:
         bet_placed = {} # dict of asset -> list of sides bought
         last_redeem_check = 0
 
-        # === PARAMETRI STRATEGIA SMART SNIPER v2 ===
-        BET_AFTER_SEC = 240        # Entra dopo 60s (ne mancano 240 alla fine)
-        NO_BET_LAST_SEC = 15       # Stop ultimi 15 sec
+        # === PARAMETRI STRATEGIA HIGH PROBABILITY (SURE WIN) ===
+        BET_AFTER_SEC = 240        # Monitoriamo quasi tutta l'ampiezza dell'evento
+        NO_BET_LAST_SEC = 15       # Stop ultimi 15 sec per stabilità CLOB
         REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 MIN (EVITA 429)
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
-        MIN_SIGNAL = 0.05          # Skip se |delta| < 0.05% (rumore)
-        MAX_ENTRY_PRICE = 0.55     # Limite massimo (hedging)
-        MIN_ENTRY_PRICE = 0.05     # Acquista anche underdogs economici
+        MIN_SIGNAL = 0.02          # Basta un segnale di direzionalità minima (+/- 0.02%)
+        MAX_ENTRY_PRICE = 0.95     # Guadagno minimo del 5% per share
+        MIN_ENTRY_PRICE = 0.80     # Entriamo solo se il mercato assegna già >80% di probabilità
         last_results_check = 0
         last_tp_check = 0
 
@@ -279,10 +279,10 @@ class NitroBotPoly:
                             log.info(f"   ↳ 📊 Quota: {cost_c}¢ → Payout: {profit_c}¢ (ROI: {roi:.0f}%)")
 
                             if entry_price > MAX_ENTRY_PRICE:
-                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {int(MAX_ENTRY_PRICE*100)}¢. Payout troppo basso. SKIP.")
+                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {int(MAX_ENTRY_PRICE*100)}¢. Guadagno troppo esiguo. ATTESA.")
                                 pass # Non compra questo lato ora, proverà al prossimo giro
                             elif entry_price < MIN_ENTRY_PRICE:
-                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ < {int(MIN_ENTRY_PRICE*100)}¢. Troppo rischiosa (underdog). SKIP.")
+                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ < {int(MIN_ENTRY_PRICE*100)}¢. Probabilità ancora troppo bassa. ATTESA.")
                                 pass # Non compra questo lato ora, proverà al prossimo giro
                             else:
                                 confidence = "FORTE 🔥" if market_agrees else "BUONA"
@@ -314,10 +314,10 @@ class NitroBotPoly:
                                 else:
                                     log.error(f"   ↳ ❌ Trade fallito.")
 
-                # Check take profit regularly (every ~5 seconds)
-                if now - last_tp_check > 5:
-                    self.trader.check_take_profit(threshold=config.TAKE_PROFIT_THRESHOLD)
-                    last_tp_check = now
+                # La vendita anticipata (Take Profit) è stata rimossa. 
+                # Con la nuova strategia "Sure Win", deteniamo la posizione fino
+                # a risoluzione (~5 min) e incassiamo tramite auto-redeem.
+
 
                 # 6. Stato dashboard
                 self.state["live_games"] = live_games_data
