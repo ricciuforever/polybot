@@ -659,14 +659,15 @@ class PolyTrader:
                         if sell_price <= 0:
                             continue
 
-                        self.client.create_order(OrderArgs(
+                        signed_order = self.client.create_order(OrderArgs(
                             price=sell_price,
                             size=formatted_size,
                             side="SELL",
                             token_id=token_id,
                             fee_rate_bps=0
                         ))
-                        log.info(f"✅ Ordine SELL piazzato per {token_id[:10]}")
+                        resp = self.client.post_order(signed_order)
+                        log.info(f"✅ Ordine SELL piazzato per {token_id[:10]} | Resp: {resp}")
                     except Exception as e:
                         log.error(f"❌ Errore durante la vendita Take Profit: {e}")
         except Exception as e:

@@ -64,4 +64,4 @@ CHAIN_ID = 137
 def validate():
     if not DRY_RUN and (not PRIVATE_KEY or not WALLET_ADDRESS):
         raise EnvironmentError("Mancano credenziali nel .env")
-TAKE_PROFIT_THRESHOLD = 0.25 # 20c profitto su singola posizione per triggerare la vendita
+TAKE_PROFIT_THRESHOLD = 0.20 # 20c profitto su singola posizione per triggerare la vendita
