@@ -647,24 +647,31 @@ class PolyTrader:
                     continue
 
                 entry_price = float(p.get('avg_price', 0))
-                current_price = float(p.get('cur_price', 0)) or entry_price
                 token_id = p.get('asset')
+                
+                if not token_id:
+                    continue
+                    
+                # Ottieni il prezzo reale dal Book aggiornato!
+                try:
+                    ob = self.client.get_order_book(token_id)
+                    current_price = float(ob.bids[0].price) if ob.bids else 0
+                except Exception as e:
+                    # In caso di errore API, fallback
+                    log.debug(f"Impossibile leggere book per take profit {token_id}: {e}")
+                    current_price = float(p.get('cur_price', 0)) or entry_price
 
                 if current_price - entry_price >= threshold:
-                    log.info(f"🎯 TAKE PROFIT TRIGGERED! Token {token_id[:10]}... | Entry: ${entry_price:.2f} | Current: ${current_price:.2f} | Size: {size}")
+                    log.info(f"🎯 TAKE PROFIT TRIGGERED! Token {token_id[:10]}... | Entry: ${entry_price:.2f} | Current (Bid): ${current_price:.2f} | Size: {size}")
                     try:
                         # Format size to max 2 decimals to avoid CLOB precision errors
                         formatted_size = round(size, 2)
-                        sell_price = round(current_price - 0.01, 2)
-                        if sell_price <= 0:
-                            continue
-
+                        
                         signed_order = self.client.create_order(OrderArgs(
-                            price=sell_price,
+                            price=current_price, # Mettiamo a mercato centrando il Bid
                             size=formatted_size,
                             side="SELL",
-                            token_id=token_id,
-                            fee_rate_bps=0
+                            token_id=token_id
                         ))
                         resp = self.client.post_order(signed_order)
                         log.info(f"✅ Ordine SELL piazzato per {token_id[:10]} | Resp: {resp}")
