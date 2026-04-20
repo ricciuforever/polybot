@@ -314,6 +314,10 @@ class NitroBotPoly:
                                 else:
                                     log.error(f"   ↳ ❌ Trade fallito.")
 
+                # Check take profit regularly (every ~5 seconds using a basic counter or time check)
+                if int(now) % 5 == 0:
+                    self.trader.check_take_profit(threshold=config.TAKE_PROFIT_THRESHOLD)
+
                 # 6. Stato dashboard
                 self.state["live_games"] = live_games_data
                 self.state["last_update"] = int(now)
