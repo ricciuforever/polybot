@@ -137,30 +137,16 @@ class NitroBotPoly:
                     cached_markets = self.watcher.find_btc_markets(limit=20)
                     last_api_call = now
 
-                # 1b. Auto-redeem + saldo (5 min) - NON BLOCCANTE
+                # 1b. Aggiornamento saldi (5 min) - Veloce, NON BLOCCANTE
                 if now - last_redeem_check > REDEEM_INTERVAL:
-                    if not self.redeem_lock.locked():
-                        log.info(f"💰 Avvio controllo auto-redeem in background...")
-                        
-                        async def background_redeem():
-                            async with self.redeem_lock:
-                                try:
-                                    redeemed = await asyncio.to_thread(self.trader.auto_redeem)
-                                    pol, usdc = self.trader.get_balances()
-                                    if usdc is not None:
-                                        self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
-                                        log.info(f"🏦 SALDI AGGIORNATI -> POL: {pol:.3f} | USDC: {usdc:.2f}")
-                                        if redeemed:
-                                            log.info(f"💰 ✅ Riscattate {redeemed} posizioni! Saldo: ${usdc:.2f} USDC")
-                                        elif usdc < 1.05:
-                                            log.warning(f"💰 Saldo: ${usdc:.2f} USDC | ⚠️ Sotto soglia minima")
-                                except Exception as e:
-                                    log.error(f"❌ Errore riscatto background: {e}")
-
-                        asyncio.create_task(background_redeem())
-                        last_redeem_check = now
-                    else:
-                        log.debug("💰 Riscatto già in corso, salto questo ciclo.")
+                    try:
+                        pol, usdc = self.trader.get_balances()
+                        if usdc is not None:
+                            self.state["wallet"] = {"pol": float(pol), "usdc": float(usdc), "address": self.trader.my_address}
+                            # log.info(f"🏦 SALDI AGGIORNATI -> POL: {pol:.3f} | USDC: {usdc:.2f}")
+                    except Exception as e:
+                        log.error(f"Errore update saldi: {e}")
+                    last_redeem_check = now
 
                 # 1c. Update esiti (300s)
                 if now - last_results_check > RESULTS_INTERVAL:
