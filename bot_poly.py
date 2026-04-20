@@ -327,18 +327,31 @@ class NitroBotPoly:
 
 def kill_zombies():
     import subprocess
+    import os
     my_pid = str(os.getpid())
     try:
-        cmd = 'wmic process where "name like \'%python%\'" get commandline,processid'
-        output = subprocess.check_output(cmd, shell=True, text=True)
-        for line in output.splitlines():
-            if 'bot_poly.py' in line and my_pid not in line:
-                parts = line.strip().split()
-                if parts:
-                    zombie_pid = parts[-1]
-                    if zombie_pid.isdigit() and zombie_pid != my_pid:
-                        log.warning(f"🧟 Trovata istanza zombie del bot (PID {zombie_pid}). La uccido...")
-                        subprocess.run(f"taskkill /PID {zombie_pid} /F", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if os.name == 'nt': # Windows
+            cmd = 'wmic process where "name like \'%python%\'" get commandline,processid'
+            output = subprocess.check_output(cmd, shell=True, text=True)
+            for line in output.splitlines():
+                if 'bot_poly.py' in line and my_pid not in line:
+                    parts = line.strip().split()
+                    if parts:
+                        zombie_pid = parts[-1]
+                        if zombie_pid.isdigit() and zombie_pid != my_pid:
+                            log.warning(f"🧟 Trovata istanza zombie del bot (PID {zombie_pid}). La uccido...")
+                            subprocess.run(f"taskkill /PID {zombie_pid} /F", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        else: # Linux/Mac
+            cmd = "ps -eo pid,command"
+            output = subprocess.check_output(cmd, shell=True, text=True)
+            for line in output.splitlines():
+                if 'bot_poly.py' in line and my_pid not in line:
+                    parts = line.strip().split()
+                    if parts:
+                        zombie_pid = parts[0]
+                        if zombie_pid.isdigit() and zombie_pid != my_pid:
+                            log.warning(f"🧟 Trovata istanza zombie del bot (PID {zombie_pid}). La uccido...")
+                            subprocess.run(f"kill -9 {zombie_pid}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except Exception as e:
         log.error(f"Errore controllo zombie: {e}")
 
