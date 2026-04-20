@@ -222,7 +222,23 @@ class PolyTrader:
             signed = self.client.create_order(order_args)
             
             log.info(f"   📋 Invio ordine al CLOB...")
-            resp = self.client.post_order(signed)
+            
+            # --- Retry Logic per 425 Service Not Ready ---
+            max_retries = 3
+            resp = {}
+            for attempt in range(max_retries):
+                try:
+                    resp = self.client.post_order(signed)
+                    break
+                except Exception as api_e:
+                    if "425" in str(api_e) or "not ready" in str(api_e).lower():
+                        if attempt < max_retries - 1:
+                            import time
+                            log.warning(f"   ⚠️ Polymarket non pronto (425). Ritento in 2s... ({attempt+1}/{max_retries})")
+                            time.sleep(2)
+                            continue
+                    raise api_e # Rilancia se non è 425 o abbiamo finito i retries
+            # ---------------------------------------------
             
             log.info(f"   📋 Risposta CLOB: {resp}")
             
