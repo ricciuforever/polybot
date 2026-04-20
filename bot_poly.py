@@ -118,14 +118,14 @@ class NitroBotPoly:
         bet_placed = {} # dict of asset -> list of sides bought
         last_redeem_check = 0
 
-        # === PARAMETRI STRATEGIA HIGH PROBABILITY (SURE WIN) ===
-        BET_AFTER_SEC = 240        # Monitoriamo quasi tutta l'ampiezza dell'evento
-        NO_BET_LAST_SEC = 0        # Nessuno stop finale, operativi fino all'ultimo secondo
+        # === PARAMETRI STRATEGIA DOUBLE BUY (REVERSE HEDGING) ===
+        BET_AFTER_SEC = 150        # Entriamo da metà partita (150s) per seguire il trend o copririci se inverte
+        NO_BET_LAST_SEC = 0        # Nessun ordine negli ultimi 0s, operativo per hedging fino all'ultimissimo secondo
         REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 MIN (EVITA 429)
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
         MIN_SIGNAL = 0.02          # Basta un segnale di direzionalità minima (+/- 0.02%)
-        MAX_ENTRY_PRICE = 0.85     # Tetto MASSIMO di acquisto rigoroso a 85¢
-        MIN_ENTRY_PRICE = 0.80     # Entriamo solo se il mercato assegna già >80% di probabilità
+        MAX_ENTRY_PRICE = 0.58     # Acquistiamo fno a 58c. Molto margine per cross-over in caso di hedging
+        MIN_ENTRY_PRICE = 0.42     # Acquistiamo già da 42c se il favor sta arrivando dal basso
         last_results_check = 0
         last_tp_check = 0
 
