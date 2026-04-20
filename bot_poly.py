@@ -288,6 +288,13 @@ class NitroBotPoly:
                                 log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ < {round(MIN_ENTRY_PRICE*100)}¢. Probabilità ancora troppo bassa. ATTESA.")
                                 pass 
                             else:
+                                # Anti-PingPong: Se stiamo per fare hedging (seconda bet), attendiamo che il trend sia confermato
+                                # e non sia solo una micro-oscillazione sull'equatore 0.50.
+                                if len(bet_placed.get(asset, [])) == 1:
+                                    last_t = self.last_trade_times.get(asset, 0)
+                                    if now - last_t < 15:
+                                        log.warning(f"   ↳ ⚠️ MICRO-OSCILLAZIONE. Attesa 15s prima di hedgare...")
+                                        continue
                                 log.info(f"   ↳ 🎯 BET {side} (Confidenza ALTISSIMA: {cost_c}%)")
                                 log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
 
