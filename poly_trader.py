@@ -653,11 +653,18 @@ class PolyTrader:
                 if current_price - entry_price >= threshold:
                     log.info(f"🎯 TAKE PROFIT TRIGGERED! Token {token_id[:10]}... | Entry: ${entry_price:.2f} | Current: ${current_price:.2f} | Size: {size}")
                     try:
+                        # Format size to max 2 decimals to avoid CLOB precision errors
+                        formatted_size = round(size, 2)
+                        sell_price = round(current_price - 0.01, 2)
+                        if sell_price <= 0:
+                            continue
+
                         self.client.create_order(OrderArgs(
-                            price=current_price - 0.01, # Vendi poco sotto per fill immediato
-                            size=size,
+                            price=sell_price,
+                            size=formatted_size,
                             side="SELL",
-                            token_id=token_id
+                            token_id=token_id,
+                            fee_rate_bps=0
                         ))
                         log.info(f"✅ Ordine SELL piazzato per {token_id[:10]}")
                     except Exception as e:

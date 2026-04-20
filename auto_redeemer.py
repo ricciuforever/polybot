@@ -22,7 +22,7 @@ def run_redeemer():
             log.error(f"❌ Errore critico nel processo di auto-redeem: {e}")
 
         # Pausa di 5 minuti (300 secondi)
-        time.sleep(300)
+        time.sleep(30)
 
 if __name__ == "__main__":
     run_redeemer()
