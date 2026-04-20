@@ -18,8 +18,7 @@ class PolyWatcher:
             "ETH": ["ethereum", "eth"],
             "DOGE": ["dogecoin", "doge"],
             "SOL": ["solana", "sol"],
-            "XRP": ["ripple", "xrp"],
-            "HYPE": ["hype", "hyperliquid"]
+            "XRP": ["ripple", "xrp"]
         }
 
     def find_btc_markets(self, limit: int = 50) -> List[Dict[str, Any]]:
