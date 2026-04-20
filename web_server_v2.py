@@ -141,7 +141,7 @@ def get_trades():
         with open(TRADES_LOG, "r", encoding='utf-8', errors='replace') as f:
             trades = json.load(f)
             # Restituiamo i trade ordinati per data (più recenti prima)
-            return jsonify(sorted(trades, key=lambda x: x.get('ts', 0), reverse=True))
+            return jsonify(sorted(trades, key=lambda x: x.get('ts', 0), reverse=True)[:20])
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
