@@ -554,7 +554,7 @@ class PolyTrader:
                     continue
 
                 # SALTA se il mercato è chiuso o troppo vecchio
-                if market.get('closed') or "2020" in market.get('question', ''):
+                if "2020" in market.get('question', ''):
                     continue
 
                 title = market.get('question', 'Match')
@@ -599,7 +599,7 @@ class PolyTrader:
                                 if g_data:
                                     market = g_data[0]
                                     # SALTA se il mercato è chiuso o troppo vecchio
-                                    if market.get('closed') or "2020" in market.get('question', ''):
+                                    if "2020" in market.get('question', ''):
                                         continue
                                         
                                     title = market.get('question', 'Match')
@@ -631,7 +631,42 @@ class PolyTrader:
             log.warning(f"Errore recupero posizioni: {e}")
             return []
 
+
+    def check_take_profit(self, threshold=0.20):
+        """Scansiona le posizioni attive e vende se il profitto per share supera la soglia."""
+        try:
+            url = f"https://data-api.polymarket.com/positions?user={self.my_address}"
+            resp = requests.get(url, timeout=10)
+            if resp.status_code != 200:
+                return
+
+            positions = resp.json()
+            for p in positions:
+                size = float(p.get('size', 0))
+                if size <= 0.01:
+                    continue
+
+                entry_price = float(p.get('avg_price', 0))
+                current_price = float(p.get('cur_price', 0)) or entry_price
+                token_id = p.get('asset')
+
+                if current_price - entry_price >= threshold:
+                    log.info(f"🎯 TAKE PROFIT TRIGGERED! Token {token_id[:10]}... | Entry: ${entry_price:.2f} | Current: ${current_price:.2f} | Size: {size}")
+                    try:
+                        self.client.create_order(OrderArgs(
+                            price=current_price - 0.01, # Vendi poco sotto per fill immediato
+                            size=size,
+                            side="SELL",
+                            token_id=token_id
+                        ))
+                        log.info(f"✅ Ordine SELL piazzato per {token_id[:10]}")
+                    except Exception as e:
+                        log.error(f"❌ Errore durante la vendita Take Profit: {e}")
+        except Exception as e:
+            log.warning(f"Errore in check_take_profit: {e}")
+
     def emergency_sell_all(self):
+
         """Vende le posizioni e CANCELLA tutti gli ordini aperti per sbloccare i fondi."""
         try:
             # 1. Cancella tutti gli ordini aperti (sblocca USDC.e impegnati)
