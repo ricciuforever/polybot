@@ -125,7 +125,7 @@ class NitroBotPoly:
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
         MIN_SIGNAL = 0.02          # Basta un segnale di direzionalità minima (+/- 0.02%)
         MAX_ENTRY_PRICE = 0.95     # Guadagno minimo del 5% per share
-        MIN_ENTRY_PRICE = 0.85     # Entriamo solo se il mercato assegna già >85% di probabilità
+        MIN_ENTRY_PRICE = 0.80     # Entriamo solo se il mercato assegna già >80% di probabilità
         last_results_check = 0
         last_tp_check = 0
 
