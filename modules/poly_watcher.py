@@ -73,6 +73,7 @@ class PolyWatcher:
                                                 "token_yes": tokens[0],
                                                 "token_no": tokens[1],
                                                 "volume": float(m.get('volume', 0)),
+                                                "description": m.get('description', ''),
                                                 "asset": asset,
                                                 "start_timestamp": start_dt,
                                                 "end_timestamp": end_dt

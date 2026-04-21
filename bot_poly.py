@@ -83,6 +83,25 @@ def update_trade_results():
             json.dump(trades, f, indent=2)
     return updated
 
+def extract_ptb_from_text(text):
+    """Estrae il prezzo (PTB) dal testo (titolo o descrizione)."""
+    if not text: return None
+    import re
+    # Cerca formati tipo $65,432.10 o 65432.10 o $65432
+    patterns = [
+        r'\$([0-9,]+(\.[0-9]+)?)', # Con simbolo $
+        r'above\s+([0-9,]+(\.[0-9]+)?)', # Dopo "above"
+        r'below\s+([0-9,]+(\.[0-9]+)?)'  # Dopo "below"
+    ]
+    for p in patterns:
+        match = re.search(p, text)
+        if match:
+            try:
+                val_str = match.group(1).replace(',', '')
+                return float(val_str)
+            except: continue
+    return None
+
 class NitroBotPoly:
     def __init__(self):
         self.watcher = PolyWatcher()
@@ -197,14 +216,27 @@ class NitroBotPoly:
                         current_market_id[asset] = m['id']
                         bet_placed[asset] = []
                         
-                        # Prova prima il PTB Ufficiale
+                        # --- NUOVA LOGICA DETERMINAZIONE PTB ---
+                        # 1. Prova PTB Ufficiale tramite Endpoint (se disponibile)
                         official_ptb = fetch_official_ptb(m.get('slug'))
+                        
+                        # 2. Prova estrazione da Descrizione (Gamma API)
+                        desc_ptb = extract_ptb_from_text(m.get('description'))
+                        
+                        # 3. Prova estrazione da Titolo/Domanda
+                        title_ptb = extract_ptb_from_text(m.get('title'))
                         
                         if official_ptb:
                             anchor_price[asset] = official_ptb
                             ptb_source = "OFFICIAL API"
+                        elif desc_ptb:
+                            anchor_price[asset] = desc_ptb
+                            ptb_source = "DESCRIPTION TEXT"
+                        elif title_ptb:
+                            anchor_price[asset] = title_ptb
+                            ptb_source = "TITLE TEXT"
                         else:
-                            # Fallback su Binance Storico
+                            # 4. Fallback su Binance Storico (Meno preciso ma meglio di niente)
                             historical_price = self.feed.get_price_at_time(asset, market_start)
                             anchor_price[asset] = historical_price if historical_price > 0 else asset_price
                             ptb_source = "BINANCE FALLBACK"
