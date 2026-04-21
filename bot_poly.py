@@ -136,6 +136,7 @@ class NitroBotPoly:
         self.redeem_lock = asyncio.Lock() # Per prevenire esecuzioni multiple contemporanee
         self.bet_size = config.BET_SIZE
         self.state_file = "bot_state.json"
+        self.in_progress = set() # Asset attualmente in fase di trade
         self.state = {
             "last_update": 0, "live_games": [], "ai_logs": [],
             "wallet": {"pol": 0, "usdc": 0, "address": self.trader.my_address},
@@ -162,7 +163,7 @@ class NitroBotPoly:
         last_redeem_check = 0
 
         # === PARAMETRI STRATEGIA MOMENTUM SNIPER ===
-        BET_AFTER_SEC = 220        # Entriamo a -80s dalla fine (momento di grande direzionalità)
+        BET_AFTER_SEC = 240        # Entriamo a -60s dalla fine (più aggressivo per prendere quote migliori)
         NO_BET_LAST_SEC = 0        # Nessun ordine limite in chiusura
         REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 MIN (EVITA 429)
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
@@ -317,7 +318,7 @@ class NitroBotPoly:
                             log.warning(f"   ↳ ⚠️ Troppo tardi ({int(remaining)}s rimasti)")
                             bet_placed[asset] = ["UP", "DOWN"] # Skip permanently for this market
                         else:
-                            # Verifica indipendente della probabilità dal mercato Polymarket
+                            # Recupero quote per determinare il prezzo di ingresso
                             try:
                                 resp_y = requests.get("https://clob.polymarket.com/midpoint", params={"token_id": m['token_yes']}, timeout=3)
                                 price_yes = float(resp_y.json().get("mid", 0.50))
@@ -328,21 +329,24 @@ class NitroBotPoly:
                                 price_no = float(resp_n.json().get("mid", 0.50))
                             except: price_no = 0.50
 
-                            if price_yes >= price_no:
+                            # --- NUOVA LOGICA: SEGUE BINANCE NON LE QUOTE ---
+                            if movement_pct >= 0.005:
                                 side = "UP"
                                 entry_price = price_yes
-                            else:
+                            elif movement_pct <= -0.005:
                                 side = "DOWN"
                                 entry_price = price_no
+                            else:
+                                continue # Trend incerto, non rischiare
                                 
-                            if side in bet_placed.get(asset, []):
-                                continue # Già comprato questo lato
+                            if asset in self.in_progress:
+                                continue # Già in fase di invio ordine
 
                             cost_c = int(entry_price * 100)
                             profit_c = 100 - cost_c
                             roi = (profit_c / cost_c * 100) if cost_c > 0 else 0
 
-                            log.info(f"   ↳ 📊 Check Mercato: Esito Favorito -> {side} | Quota: {cost_c}¢ (ROI: {roi:.0f}%)")
+                            log.info(f"   ↳ 📊 Check Mercato: Esito Suggerito -> {side} | Quota: {cost_c}¢ (ROI: {roi:.0f}%)")
 
                             if entry_price > MAX_ENTRY_PRICE:
                                 log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {round(MAX_ENTRY_PRICE*100)}¢. Guadagno troppo esiguo. ATTESA.")
@@ -351,33 +355,42 @@ class NitroBotPoly:
                                 log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ < {round(MIN_ENTRY_PRICE*100)}¢. Probabilità ancora troppo bassa. ATTESA.")
                                 pass 
                             else:
-                                log.info(f"   ↳ 🎯 BET {side} (Confidenza ALTISSIMA: {cost_c}%)")
-                                log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
+                                # Pre-lock per evitare corse critiche del loop da 1s
+                                self.in_progress.add(asset)
+                                log.info(f"   ↳ 🎯 BET {side} (Confidenza ALTISSIMA via Binance: Δ {movement_pct:+.4f}%)")
+                                
+                                async def bg_trade(market, side, asset, price, ap, asset_p, m_end, m_pct):
+                                    try:
+                                        log.info(f"   ↳ 🔫 Invio ordine su {market['title']}...")
+                                        success = await asyncio.to_thread(self.trader.sniper_trade, market, side, limit_price=MAX_ENTRY_PRICE)
 
-                                success = self.trader.sniper_trade(m, side, limit_price=MAX_ENTRY_PRICE)
+                                        if success:
+                                            bet_placed[asset].append(side)
+                                            self.last_trade_times[asset] = time.time()
+                                            log.info(f"   ↳ ✅ 💰 TRADE ESEGUITO SU {market['title']} | Prezzo Ingr.: {int(price*100)}¢ | Direzione: {side}")
 
-                                if success:
-                                    bet_placed[asset].append(side)
-                                    self.last_trade_times[asset] = now
-                                    log.info(f"   ↳ ✅ 💰 TRADE ESEGUITO SU {m['title']} | Prezzo Ingr.: {cost_c}¢ | Direzione: {side}")
+                                            entry = {
+                                                "ts": int(time.time()),
+                                                "market": market['title'],
+                                                "side": side,
+                                                "movement_pct": round(m_pct, 4),
+                                                "entry_price": price,
+                                                "anchor": ap,
+                                                "asset_at_bet": asset_p,
+                                                "market_end": m_end,
+                                                "condition_id": market.get('conditionId'),
+                                                "result": None
+                                            }
+                                            save_trade(entry)
+                                            self.state["recent_trades"] = [entry] + self.state["recent_trades"][:9]
+                                        else:
+                                            log.error(f"   ↳ ❌ Trade fallito per {market['title']}.")
+                                    except Exception as e:
+                                        log.error(f"❌ Errore critico in bg_trade: {e}")
+                                    finally:
+                                        self.in_progress.remove(asset)
 
-                                    # Tracking
-                                    entry = {
-                                        "ts": int(now),
-                                        "market": m['title'],
-                                        "side": side,
-                                        "movement_pct": round(movement_pct, 4),
-                                        "entry_price": entry_price,
-                                        "anchor": ap,
-                                        "asset_at_bet": asset_price,
-                                        "market_end": market_end,
-                                        "condition_id": m.get('conditionId'),
-                                        "result": None
-                                    }
-                                    save_trade(entry)
-                                    self.state["recent_trades"] = [entry] + self.state["recent_trades"][:9]
-                                else:
-                                    log.error(f"   ↳ ❌ Trade fallito.")
+                                asyncio.create_task(bg_trade(m, side, asset, entry_price, ap, asset_price, market_end, movement_pct))
 
                 # La vendita anticipata (Take Profit) è stata rimossa. 
                 # Con la nuova strategia "Sure Win", deteniamo la posizione fino
