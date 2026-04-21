@@ -174,8 +174,8 @@ class NitroBotPoly:
         REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 MIN (EVITA 429)
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
         MIN_SIGNAL = 0.02          # Basta un segnale di direzionalità minima (+/- 0.02%)
-        MAX_ENTRY_PRICE = 0.72     # Massimo ingresso a 72c (ROI ~40%)
         MIN_ENTRY_PRICE = 0.65     # Minimo ingresso a 65c (sicurezza che sia in trend forte)
+        MAX_ENTRY_PRICE = 0.72     # Massimo ingresso a 72c (ROI ~40%)
         last_results_check = 0
         last_tp_check = 0
         last_state_save = 0  # Per ridurre I/O su disco
