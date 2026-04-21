@@ -307,12 +307,12 @@ class NitroBotPoly:
                     progress = min(elapsed / duration, 1.0) if duration > 0 else 1.0
                     bar = "█" * int(progress * 10) + "░" * (10 - int(progress * 10)) # Barra più corta per log puliti
 
-                    # Regola di ingaggio
+                    # Regola di ingaggio: adesso supportiamo l'hedging (max 2 trades per asset)
                     enter_threshold = BET_AFTER_SEC 
-                    status = "🎯 PRONTO" if remaining <= enter_threshold and len(bet_placed.get(asset, [])) < 1 else "⏳ ACCUMULO" if len(bet_placed.get(asset, [])) < 1 else "✅ PIAZZATA"
+                    status = "🎯 PRONTO (HEDGING)" if (remaining <= enter_threshold and len(bet_placed.get(asset, [])) < 2) else "⏳ ACCUMULO" if len(bet_placed.get(asset, [])) < 2 else "✅ PIAZZATE ENTRAMBE"
                     
                     # LOG FILTRATO: Mostra dettagli ogni 5 secondi, o sempre se siamo negli ultimi 60s
-                    if int(now) % 5 == 0 or remaining <= 60 or status == "🎯 PRONTO":
+                    if int(now) % 5 == 0 or remaining <= 60 or "PRONTO" in status:
                         log.info(f"💲 {asset} ${asset_price:,.2f} | Δ {movement_pct:+.4f}% | [{bar}] {int(remaining)}s | {status}")
 
                     live_games_data.append({
@@ -323,8 +323,8 @@ class NitroBotPoly:
                         "volume": 0
                     })
 
-                    # ===== 5. DECISIONE — SMART SNIPER v2 =====
-                    if len(bet_placed.get(asset, [])) < 1:
+                    # ===== 5. DECISIONE — SMART SNIPER v2 (HEDGING ENABLED) =====
+                    if len(bet_placed.get(asset, [])) < 2:
                         if remaining > enter_threshold:
                             pass  # Accumulo
                         elif remaining < NO_BET_LAST_SEC:
@@ -363,6 +363,10 @@ class NitroBotPoly:
                                 
                             if asset in self.in_progress:
                                 continue # Già in fase di invio ordine
+
+                            # HEDGING CHECK: non scommettere due volte sulla stessa direzione!
+                            if side in bet_placed.get(asset, []):
+                                continue
 
                             cost_c = int(entry_price * 100)
                             profit_c = 100 - cost_c
