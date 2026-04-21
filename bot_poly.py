@@ -179,6 +179,8 @@ class NitroBotPoly:
         MIN_ENTRY_PRICE = 0.65     # Minimo ingresso a 65c (sicurezza che sia in trend forte)
         last_results_check = 0
         last_tp_check = 0
+        last_state_save = 0  # Per ridurre I/O su disco
+        midpoint_cache = {}  # Per ridurre I/O su rete (quotes)
 
         while self.running:
             try:
@@ -304,14 +306,15 @@ class NitroBotPoly:
                     # Barra progresso
                     duration = market_end - market_start
                     progress = min(elapsed / duration, 1.0) if duration > 0 else 1.0
-                    bar = "█" * int(progress * 20) + "░" * (20 - int(progress * 20))
+                    bar = "█" * int(progress * 10) + "░" * (10 - int(progress * 10)) # Barra più corta per log puliti
 
-                    # Regola di ingaggio: Entra solo negli ultimi 60 secondi della finestra
-                    # Anche se Polymarket dà startDate vecchie, noi sappiamo che il bucket è di 300s.
+                    # Regola di ingaggio
                     enter_threshold = BET_AFTER_SEC 
-                    
                     status = "🎯 PRONTO" if remaining <= enter_threshold and len(bet_placed.get(asset, [])) < 1 else "⏳ ACCUMULO" if len(bet_placed.get(asset, [])) < 1 else "✅ PIAZZATA"
-                    log.info(f"💲 {asset} ${asset_price:,.2f} | Δ {movement_pct:+.4f}% | {direction} | [{bar}] {int(remaining)}s | {status}")
+                    
+                    # LOG FILTRATO: Mostra dettagli ogni 5 secondi, o sempre se siamo negli ultimi 60s
+                    if int(now) % 5 == 0 or remaining <= 60 or status == "🎯 PRONTO":
+                        log.info(f"💲 {asset} ${asset_price:,.2f} | Δ {movement_pct:+.4f}% | [{bar}] {int(remaining)}s | {status}")
 
                     live_games_data.append({
                         "id": current_market_id.get(asset, asset),
@@ -329,15 +332,25 @@ class NitroBotPoly:
                             log.warning(f"   ↳ ⚠️ Troppo tardi ({int(remaining)}s rimasti)")
                             bet_placed[asset] = ["UP", "DOWN"] # Skip permanently for this market
                         else:
-                            # Recupero quote per determinare il prezzo di ingresso (In thread separato per evitare freeze)
-                            def get_midpoint(token_id):
-                                try:
-                                    r = requests.get("https://clob.polymarket.com/midpoint", params={"token_id": token_id}, timeout=3)
-                                    return float(r.json().get("mid", 0.50))
-                                except: return 0.50
+                            # Recupero quote con cache di 2 secondi per non saturare CLOB API
+                            async def get_cached_midpoint(token_id):
+                                cache_key = token_id
+                                if cache_key in midpoint_cache:
+                                    val, ts = midpoint_cache[cache_key]
+                                    if now - ts < 2: return val
+                                
+                                def _fetch():
+                                    try:
+                                        r = requests.get("https://clob.polymarket.com/midpoint", params={"token_id": token_id}, timeout=3)
+                                        return float(r.json().get("mid", 0.50))
+                                    except: return 0.50
+                                
+                                val = await asyncio.to_thread(_fetch)
+                                midpoint_cache[cache_key] = (val, now)
+                                return val
 
-                            price_yes = await asyncio.to_thread(get_midpoint, m['token_yes'])
-                            price_no = await asyncio.to_thread(get_midpoint, m['token_no'])
+                            price_yes = await get_cached_midpoint(m['token_yes'])
+                            price_no = await get_cached_midpoint(m['token_no'])
 
                             # --- NUOVA LOGICA: SEGUE BINANCE NON LE QUOTE ---
                             if movement_pct >= 0.005:
@@ -407,14 +420,16 @@ class NitroBotPoly:
                 # a risoluzione (~5 min) e incassiamo tramite auto-redeem.
 
 
-                # 6. Stato dashboard (Scrittura Atomica per PHP)
-                self.state["live_games"] = live_games_data
-                self.state["last_update"] = int(now)
-                temp_file = self.state_file + ".tmp"
-                with open(temp_file, "w") as f:
-                    json.dump(self.state, f, indent=2)
-                import os
-                os.replace(temp_file, self.state_file)
+                # 6. Stato dashboard (Salvataggio ogni 5s per ridurre I/O su disco)
+                if now - last_state_save > 5:
+                    self.state["live_games"] = live_games_data
+                    self.state["last_update"] = int(now)
+                    temp_file = self.state_file + ".tmp"
+                    with open(temp_file, "w") as f:
+                        json.dump(self.state, f, indent=2)
+                    import os
+                    os.replace(temp_file, self.state_file)
+                    last_state_save = now
 
             except Exception as e:
                 log.error(f"❌ Errore loop: {e}")
