@@ -152,11 +152,47 @@ const LivePrediction = ({ market, btcPrice }) => {
   )
 }
 
+const LogEvent = ({ logLine, idx }) => {
+  let icon = <Activity size={12} />
+  let color = "text-zinc-400"
+  let bg = "bg-white/5"
+  let message = logLine
+
+  if (logLine.includes('NUOVA FINESTRA')) {
+    icon = <Gamepad2 size={12} />; color = "text-neon"; bg = "bg-neon/10";
+    message = logLine.split('—')[1] || logLine;
+  } else if (logLine.includes('🎯 BET') || logLine.includes('🔫 Invio ordine')) {
+    icon = <Target size={12} />; color = "text-accent"; bg = "bg-accent/10";
+  } else if (logLine.includes('✅') || logLine.includes('WIN')) {
+    icon = <TrendingUp size={12} />; color = "text-green-400"; bg = "bg-green-500/10";
+  } else if (logLine.includes('❌') || logLine.includes('LOSS')) {
+    icon = <X size={12} />; color = "text-red-400"; bg = "bg-red-500/10";
+  } else if (logLine.includes('💰 Riscatto')) {
+    icon = <Wallet size={12} />; color = "text-indigo-400"; bg = "bg-indigo-500/10";
+  } else if (logLine.includes('⚓ Price to Beat')) {
+    icon = <Shield size={12} />; color = "text-zinc-300";
+  }
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, x: -10 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: idx * 0.05 }}
+      className={`flex items-center p-3 rounded-xl ${bg} border border-white/5 mb-2`}
+    >
+      <div className={`p-1.5 rounded-lg ${color} mr-3 bg-black/20`}>
+        {icon}
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className={`text-[10px] font-bold ${color} truncate`}>{message}</p>
+      </div>
+    </motion.div>
+  )
+}
+
 export default function App() {
   const { data: state, mutate: mutateState } = useSWR('/api/state', fetcher, { refreshInterval: 2000 })
-  const { data: stats } = useSWR('/api/stats', fetcher, { refreshInterval: 10000 })
-  const { data: trades } = useSWR('/api/trades', fetcher, { refreshInterval: 10000 })
-    const { data: botStatus, mutate: mutateStatus } = useSWR('/api/bot/status', fetcher, { refreshInterval: 2000 })
+  const { data: botStatus, mutate: mutateStatus } = useSWR('/api/bot/status', fetcher, { refreshInterval: 2000 })
   const { data: systemLogs } = useSWR('/api/logs', fetcher, { refreshInterval: 2000 })
   
   const [isRefreshing, setIsRefreshing] = useState(false)
@@ -185,6 +221,7 @@ export default function App() {
 
   const liveMarket = state.live_games?.length > 0 ? state.live_games[0] : null
   const btcPrice = state.live_games?.length > 0 ? state.live_games[0].current_price : null
+  const stats = state.stats || { pnl: 0, win_rate: 0, wins: 0, losses: 0, volume: 0 }
 
   return (
     <div className="min-h-screen bg-[#0a0a0c] text-zinc-100 font-sans selection:bg-neon selection:text-black">
@@ -197,7 +234,7 @@ export default function App() {
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tighter flex items-center uppercase">
-                NitroBot <span className="text-neon ml-2">V2.1</span>
+                NitroBot <span className="text-neon ml-2">V2.5</span>
               </h1>
               <div className="flex items-center space-x-2">
                 <div className={`w-2 h-2 rounded-full ${botStatus.running ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
@@ -247,23 +284,23 @@ export default function App() {
           <StatCard 
             icon={BarChart3} 
             title="Total PNL" 
-            value={formatCurrency((stats?.wins || 0) - (stats?.losses || 0) * 1.1)} 
+            value={formatCurrency(stats.pnl)} 
             subValue="Verified Profit"
-            color="green-500" 
+            color={stats.pnl >= 0 ? "green-500" : "red-500"} 
             delay={0.2}
           />
           <StatCard 
             icon={Target} 
             title="Win Rate" 
-            value={`${stats?.win_rate || 0}%`} 
-            subValue={`${stats?.wins || 0} Wins / ${stats?.losses || 0} Losses`}
+            value={`${stats.win_rate}%`} 
+            subValue={`${stats.wins} Wins / ${stats.losses} Losses`}
             color="neon" 
             delay={0.3}
           />
           <StatCard 
             icon={TrendingUp} 
             title="Total Volume" 
-            value={formatCurrency((stats?.total || 0) * 1.1)} 
+            value={formatCurrency(stats.volume)} 
             subValue="CLOB Activity"
             color="accent" 
             delay={0.4}
@@ -273,7 +310,7 @@ export default function App() {
         {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Left Column: Predictions & Stats */}
+          {/* Left Column: Predictions & Infographic Logs */}
           <div className="lg:col-span-8 space-y-8">
             <section tabIndex="0">
               <h2 className="text-lg font-black uppercase tracking-tighter mb-4 flex items-center">
@@ -282,54 +319,22 @@ export default function App() {
               <LivePrediction market={liveMarket} btcPrice={btcPrice} />
             </section>
 
-            <section tabIndex="0">
-              <div className="flex justify-between items-center mb-6">
-                 <h2 className="text-lg font-black uppercase tracking-tighter flex items-center">
-                  <BarChart3 size={20} className="mr-2 text-indigo-400" /> Performance Analysis
-                </h2>
-                <span className="text-[10px] font-bold text-zinc-500 uppercase">Last 24 Hours</span>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="glass p-4">
-                    <div className="flex items-center justify-between mb-2">
-                       <span className="text-[10px] font-bold text-zinc-500 uppercase">Asset {i === 1 ? 'BTC' : i === 2 ? 'ETH' : 'SOL'}</span>
-                       <span className="text-[10px] font-black text-green-400">+12%</span>
-                    </div>
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                       <motion.div initial={{ width: 0 }} animate={{ width: `${60+i*10}%` }} className="h-full bg-gradient-to-r from-neon to-indigo-500" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-                        </section>
-
             <section tabIndex="0" className="mt-8">
               <h2 className="text-lg font-black uppercase tracking-tighter mb-4 flex items-center">
-                <Terminal size={20} className="mr-2 text-zinc-400" /> System Live Logs
+                <Terminal size={20} className="mr-2 text-zinc-400" /> Live Event Feed
               </h2>
-              <div className="glass-dark p-4 rounded-xl border border-white/5 h-64 overflow-y-auto font-mono text-[10px] custom-scrollbar bg-black/80">
+              <div className="glass-dark p-6 rounded-2xl border border-white/5 h-[400px] overflow-y-auto custom-scrollbar bg-black/40">
                 {systemLogs?.logs && systemLogs.logs.length > 0 ? (
-                  <div className="space-y-1">
-                    {systemLogs.logs.map((logLine, idx) => (
-                      <div key={idx} className="text-zinc-400">
-                        {logLine.includes('ERROR') ? (
-                           <span className="text-red-400">{logLine}</span>
-                        ) : logLine.includes('WARNING') ? (
-                           <span className="text-yellow-400">{logLine}</span>
-                        ) : logLine.includes('WIN') || logLine.includes('✅') || logLine.includes('+') ? (
-                           <span className="text-green-400">{logLine}</span>
-                        ) : logLine.includes('LOSS') || logLine.includes('❌') || logLine.includes('-') ? (
-                           <span className="text-red-400">{logLine}</span>
-                        ) : (
-                           <span>{logLine}</span>
-                        )}
-                      </div>
+                  <div className="flex flex-col-reverse">
+                    {systemLogs.logs.slice(-50).map((logLine, idx) => (
+                      <LogEvent key={idx} logLine={logLine} idx={idx} />
                     ))}
                   </div>
                 ) : (
-                  <div className="text-zinc-600 italic text-center py-10">No logs available...</div>
+                  <div className="flex flex-col items-center justify-center h-full text-zinc-600 italic">
+                    <Activity size={32} className="mb-4 opacity-20" />
+                    <p className="text-sm">Waiting for system events...</p>
+                  </div>
                 )}
               </div>
             </section>
@@ -338,28 +343,38 @@ export default function App() {
           {/* Right Column: Trade History */}
           <div className="lg:col-span-4 flex flex-col h-full">
             <h2 className="text-lg font-black uppercase tracking-tighter mb-4 flex items-center">
-              <Clock size={20} className="mr-2 text-accent" /> Trade History
+              <Clock size={20} className="mr-2 text-accent" /> Recent Trades (Max 20)
             </h2>
-            <div className="glass-dark flex-1 overflow-hidden flex flex-col">
+            <div className="glass-dark flex-1 overflow-hidden flex flex-col rounded-3xl border border-white/5 bg-black/20">
               <div className="flex-1 overflow-y-auto custom-scrollbar">
                 <table className="w-full text-left">
-                  <thead className="sticky top-0 bg-[#16161a] text-[10px] font-black text-zinc-500 uppercase tracking-widest border-b border-white/5">
+                  <thead className="sticky top-0 bg-[#0a0a0c] text-[10px] font-black text-zinc-500 uppercase tracking-widest border-b border-white/5">
                     <tr>
-                      <th className="px-5 py-3">Market</th>
-                      <th className="px-5 py-3">Side</th>
-                      <th className="px-5 py-3">Price</th>
-                      <th className="px-5 py-3">Result</th>
-                      <th className="px-5 py-3 text-right">PNL</th>
+                      <th className="px-5 py-4 font-black">Market</th>
+                      <th className="px-5 py-4 font-black text-center">Side</th>
+                      <th className="px-5 py-4 text-right">Result</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5">
-                    {trades && trades.length > 0 ? (
-                      trades.slice(0, 20).map((t, i) => (
-                        <TradeRow key={i} trade={t} />
+                    {state.recent_trades && state.recent_trades.length > 0 ? (
+                      state.recent_trades.map((t, i) => (
+                        <tr key={i} className="hover:bg-white/5 transition-colors">
+                          <td className="px-5 py-4 italic text-xs font-medium text-zinc-300">
+                             {t.market.split(' ')[0]} {t.market.split(' ').slice(-1)}
+                          </td>
+                          <td className="px-5 py-4 text-center">
+                             <span className={`text-[10px] font-bold ${t.side === 'UP' ? 'text-neon' : 'text-accent'}`}>{t.side}</span>
+                          </td>
+                          <td className="px-5 py-4 text-right">
+                             <span className={`text-[10px] font-black px-2 py-1 rounded-full ${t.result === 'WIN' ? 'bg-green-500/10 text-green-400' : t.result === 'LOSS' ? 'bg-red-500/10 text-red-400' : 'bg-white/5 text-zinc-500'}`}>
+                                {t.result || 'PENDING'}
+                             </span>
+                          </td>
+                        </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="5" className="px-5 py-12 text-center text-zinc-600 italic text-sm">
+                        <td colSpan="3" className="px-5 py-12 text-center text-zinc-600 italic text-sm">
                           No recent trades found.
                         </td>
                       </tr>
@@ -367,8 +382,8 @@ export default function App() {
                   </tbody>
                 </table>
               </div>
-              <div className="p-4 bg-white/5 border-t border-white/5 text-center">
-                <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Connected: {state.wallet.address.substring(0,6)}...{state.wallet.address.substring(38)}</p>
+              <div className="p-5 bg-white/5 border-t border-white/5 text-center">
+                <p className="text-[10px] font-black text-neon uppercase tracking-[0.2em] animate-pulse">Live Dashboard Active</p>
               </div>
             </div>
           </div>

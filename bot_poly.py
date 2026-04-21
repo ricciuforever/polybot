@@ -45,9 +45,13 @@ def fetch_official_ptb(slug):
     return None
 
 def update_trade_results():
-    """Controlla gli esiti dei trade passati e aggiorna il log."""
+    """Controlla gli esiti dei trade passati e ricalcola le statistiche globali."""
     trades = load_trades_log()
-    if not trades: return
+    if not trades: 
+        return {
+            "wins": 0, "losses": 0, "pnl": 0, "volume": 0, "win_rate": 0,
+            "recent": []
+        }
     
     updated = False
     for t in trades:
@@ -56,7 +60,6 @@ def update_trade_results():
         # Se il mercato è finito da almeno 2 minuti, controlliamo
         if time.time() > t["market_end"] + 120:
             try:
-                # Recupera l'esito dal mercato tramite condition_id
                 cid = t.get("condition_id")
                 if not cid: continue
                 
@@ -64,24 +67,45 @@ def update_trade_results():
                 if resp.status_code == 200 and resp.json():
                     m = resp.json()[0]
                     if m.get("closed"):
-                        prices = m.get("outcomePrices") # ES: ["0", "1"]
+                        prices = m.get("outcomePrices")
                         if prices:
                             win_index = 0 if float(prices[0]) > 0.5 else 1
                             actual_side = "UP" if win_index == 0 else "DOWN"
                             
                             t["result"] = "WIN" if t["side"] == actual_side else "LOSS"
-                            t["result"] = "WIN" if t["side"] == actual_side else "LOSS"
                             t["payout"] = 1.0 if t["result"] == "WIN" else 0.0
                             updated = True
-                            pnl = "+1.00 USDC" if t["result"] == "WIN" else "-1.10 USDC" # stima approx
-                            log.info(f"📊 💰 RISULTATO CHIUSURA TRADE: {t['market']} -> {t['result']} ({actual_side}) | PNL: {pnl}")
+                            pnl_str = "+1.00 USDC" if t["result"] == "WIN" else "-1.10 USDC"
+                            log.info(f"📊 RISULTATO: {t['market']} -> {t['result']} | {pnl_str}")
             except Exception as e:
                 log.warning(f"Errore controllo esito per {t['market']}: {e}")
     
     if updated:
         with open(TRADES_LOG, "w") as f:
             json.dump(trades, f, indent=2)
-    return updated
+
+    # Calcolo statistiche aggiornate
+    completed = [t for t in trades if t.get("result") is not None]
+    wins = sum(1 for t in completed if t["result"] == "WIN")
+    losses = sum(1 for t in completed if t["result"] == "LOSS")
+    total = len(completed)
+    
+    # Stima PNL (1.10 è il costo medio per scommessa da 1.05-1.15 USDC)
+    # Una WIN restituisce 1.00 di profitto NETTO (su 1 share)
+    # Una LOSS perde l'intero investimento (~1.10 USDC)
+    pnl = (wins * 1.0) - (losses * 1.1)
+    volume = sum(float(t.get("entry_price", 0.70)) * 1.5 for t in trades) # stima volume CLOB
+    win_rate = (wins / total * 100) if total > 0 else 0
+    
+    return {
+        "wins": wins,
+        "losses": losses,
+        "total": total,
+        "pnl": round(pnl, 2),
+        "volume": round(volume, 2),
+        "win_rate": round(win_rate, 1),
+        "recent": sorted(trades, key=lambda x: x.get('ts', 0), reverse=True)[:20]
+    }
 
 def extract_ptb_from_text(text):
     """Estrae il prezzo (PTB) dal testo (titolo o descrizione)."""
@@ -173,17 +197,24 @@ class NitroBotPoly:
                     asyncio.create_task(background_redeem())
                     last_redeem_check = now
 
-                # 1c. Update esiti (300s)
-                if now - last_results_check > RESULTS_INTERVAL:
-                    if update_trade_results():
-                        # Ricalcola stats e recent_trades per dashboard
-                        trades = load_trades_log()
-                        comp = [t for t in trades if t.get("result") is not None]
-                        wins = sum(1 for t in comp if t["result"] == "WIN")
-                        self.state["stats"] = {"total_bets": len(comp), "won_bets": wins}
-                        self.state["recent_trades"] = sorted(trades, key=lambda x: x.get('ts', 0), reverse=True)[:10]
-                        log.info(f"📈 Stats Aggiornate: {wins}W - {len(comp)-wins}L")
-                    last_results_check = now
+                # 1c. Update esiti e Statistiche (Ogni 5 min)
+                if now - last_results_check > RESULTS_INTERVAL or last_results_check == 0:
+                    try:
+                        res = await asyncio.to_thread(update_trade_results)
+                        self.state["stats"] = {
+                            "total": res["total"],
+                            "wins": res["wins"],
+                            "losses": res["losses"],
+                            "pnl": res["pnl"],
+                            "volume": res["volume"],
+                            "win_rate": res["win_rate"]
+                        }
+                        self.state["recent_trades"] = res["recent"]
+                        log.info(f"📈 Stats Dashboard: {res['wins']}W - {res['losses']}L | PNL: ${res['pnl']} | WR: {res['win_rate']}%")
+                        last_results_check = now
+                    except Exception as e:
+                        log.error(f"Errore aggiornamento stats: {e}")
+                        last_results_check = now # Evita loop infiniti su errore
 
                 if not cached_markets:
                     prices_log = []
