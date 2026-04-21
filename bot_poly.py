@@ -384,11 +384,14 @@ class NitroBotPoly:
                 # a risoluzione (~5 min) e incassiamo tramite auto-redeem.
 
 
-                # 6. Stato dashboard
+                # 6. Stato dashboard (Scrittura Atomica per PHP)
                 self.state["live_games"] = live_games_data
                 self.state["last_update"] = int(now)
-                with open(self.state_file, "w") as f:
+                temp_file = self.state_file + ".tmp"
+                with open(temp_file, "w") as f:
                     json.dump(self.state, f, indent=2)
+                import os
+                os.replace(temp_file, self.state_file)
 
             except Exception as e:
                 log.error(f"❌ Errore loop: {e}")
