@@ -1,13 +1,14 @@
+# config.py - Configurato per Binance-First Sniper
 import os
-import google.generativeai as genai
+# import google.generativeai as genai # Rimosso: causa FutureWarning e non usato
 from dotenv import load_dotenv
 load_dotenv()
 
 DRY_RUN = False
 
-# Configurazione Google Gemini
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel('gemini-2.0-flash') # Uso modello stabile 2.0 Flash
+# Configurazione Google Gemini (DISABILITATA - Non usata)
+# genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+# model = genai.GenerativeModel('gemini-2.0-flash') 
 
 PRIVATE_KEY = os.getenv("PRIVATE_KEY", "").strip()
 if PRIVATE_KEY and not PRIVATE_KEY.startswith("0x"): PRIVATE_KEY = "0x" + PRIVATE_KEY

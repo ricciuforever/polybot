@@ -54,8 +54,12 @@ def update_trade_results():
         }
     
     updated = False
+    checked_count = 0
+    MAX_CHECKS_PER_RUN = 15 # Limita il numero di chiamate API per evitare rallentamenti thread
+
     for t in trades:
         if t.get("result") is not None: continue
+        if checked_count >= MAX_CHECKS_PER_RUN: break 
         
         # Se il mercato è finito da almeno 2 minuti, controlliamo
         if time.time() > t["market_end"] + 120:
@@ -64,6 +68,7 @@ def update_trade_results():
                 if not cid: continue
                 
                 resp = requests.get(f"https://gamma-api.polymarket.com/markets?conditionId={cid}", timeout=5)
+                checked_count += 1
                 if resp.status_code == 200 and resp.json():
                     m = resp.json()[0]
                     if m.get("closed"):
@@ -75,8 +80,10 @@ def update_trade_results():
                             t["result"] = "WIN" if t["side"] == actual_side else "LOSS"
                             t["payout"] = 1.0 if t["result"] == "WIN" else 0.0
                             updated = True
-                            pnl_str = "+1.00 USDC" if t["result"] == "WIN" else "-1.10 USDC"
+                            pnl_str = f"+1.00 USDC (WIN)" if t["result"] == "WIN" else f"-1.10 USDC (LOSS)"
                             log.info(f"📊 RISULTATO: {t['market']} -> {t['result']} | {pnl_str}")
+                
+                time.sleep(0.5) # Piccolo delay antiblocco
             except Exception as e:
                 log.warning(f"Errore controllo esito per {t['market']}: {e}")
     
@@ -177,9 +184,9 @@ class NitroBotPoly:
             try:
                 now = time.time()
 
-                # 1. Refresh mercati (15s)
+                # 1. Refresh mercati (15s) - In thread separato per evitare freeze
                 if now - last_api_call > API_REFRESH_INTERVAL:
-                    cached_markets = self.watcher.find_btc_markets(limit=20)
+                    cached_markets = await asyncio.to_thread(self.watcher.find_btc_markets, limit=20)
                     last_api_call = now
 
                 # 1b. Aggiornamento saldi (5 min) - Veloce, NON BLOCCANTE
@@ -198,24 +205,28 @@ class NitroBotPoly:
                     asyncio.create_task(background_redeem())
                     last_redeem_check = now
 
-                # 1c. Update esiti e Statistiche (Ogni 5 min)
+                # 1c. Update esiti e Statistiche (Ogni 5 min) - BACKGROUND TASK
                 if now - last_results_check > RESULTS_INTERVAL or last_results_check == 0:
-                    try:
-                        res = await asyncio.to_thread(update_trade_results)
-                        self.state["stats"] = {
-                            "total": res["total"],
-                            "wins": res["wins"],
-                            "losses": res["losses"],
-                            "pnl": res["pnl"],
-                            "volume": res["volume"],
-                            "win_rate": res["win_rate"]
-                        }
-                        self.state["recent_trades"] = res["recent"]
-                        log.info(f"📈 Stats Dashboard: {res['wins']}W - {res['losses']}L | PNL: ${res['pnl']} | WR: {res['win_rate']}%")
-                        last_results_check = now
-                    except Exception as e:
-                        log.error(f"Errore aggiornamento stats: {e}")
-                        last_results_check = now # Evita loop infiniti su errore
+                    async def background_stats():
+                        try:
+                            # Passiamo i trade recenti per l'aggiornamento
+                            res = await asyncio.to_thread(update_trade_results)
+                            if res:
+                                self.state["stats"] = {
+                                    "total": res["total"],
+                                    "wins": res["wins"],
+                                    "losses": res["losses"],
+                                    "pnl": res["pnl"],
+                                    "volume": res["volume"],
+                                    "win_rate": res["win_rate"]
+                                }
+                                self.state["recent_trades"] = res["recent"]
+                                log.info(f"📈 Stats Dashboard: {res['wins']}W - {res['losses']}L | PNL: ${res['pnl']} | WR: {res['win_rate']}%")
+                        except Exception as e:
+                            log.error(f"Errore aggiornamento stats: {e}")
+
+                    asyncio.create_task(background_stats())
+                    last_results_check = now
 
                 if not cached_markets:
                     prices_log = []
