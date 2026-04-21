@@ -141,7 +141,6 @@ class NitroBotPoly:
         self.last_trade_times = {}
         self.running = True
         self.redeem_lock = asyncio.Lock() # Per prevenire esecuzioni multiple contemporanee
-        self.bet_size = config.BET_SIZE
         self.state_file = "bot_state.json"
         self.in_progress = set() # Asset attualmente in fase di trade
         self.state = {
