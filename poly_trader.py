@@ -191,12 +191,15 @@ class PolyTrader:
             # Usiamo il Limit Price ESATTO richiesto (nessun rialzo per spread)
             buy_price = round(limit_price, 2)
             
-            # Target dinamico in base al saldo: 1 di base + 1 per ogni 10 USDC (0-9 -> 1, 10-19 -> 2, 20-29 -> 3)
-            dynamic_shares = int(usdc_balance // 10) + 1
-            target_shares = float(dynamic_shares)
+            # Target dinamico in base al saldo come richiesto
+            if usdc_balance < 10.0:
+                target_shares = 1.5
+            else:
+                # Da 10 in poi -> 2, a 20 -> 3, a 30 -> 4 ecc.
+                target_shares = 2.0 + float(int((usdc_balance - 10) // 10))
+                
             cost_required = round(target_shares * buy_price, 2)
             log.info(f"   ↳ 🎯 Saldo: ${usdc_balance:.2f} -> Shares calcolate: {target_shares}")
-
             
             # Polymarket richiede un ordine minimo di 1.05 USDC
             min_bet = 1.05
@@ -208,6 +211,7 @@ class PolyTrader:
             # Verifica che il saldo (al 95%) copra l'importo richiesto
             if (usdc_balance * 0.95) < cost_required:
                 log.error(f"   ❌ Saldo insufficiente: ${usdc_balance:.2f} (richiesto ${cost_required:.2f})")
+
                 return False
                 
             size = target_shares
