@@ -118,14 +118,14 @@ class NitroBotPoly:
         bet_placed = {} # dict of asset -> list of sides bought
         last_redeem_check = 0
 
-        # === PARAMETRI STRATEGIA DOUBLE BUY (REVERSE HEDGING) ===
-        BET_AFTER_SEC = 150        # Entriamo da metà partita (150s) per seguire il trend o copririci se inverte
-        NO_BET_LAST_SEC = 0        # Nessun ordine negli ultimi 0s, operativo per hedging fino all'ultimissimo secondo
+        # === PARAMETRI STRATEGIA MOMENTUM SNIPER ===
+        BET_AFTER_SEC = 220        # Entriamo a -80s dalla fine (momento di grande direzionalità)
+        NO_BET_LAST_SEC = 0        # Nessun ordine limite in chiusura
         REDEEM_INTERVAL = 300      # Auto-redeem ogni 5 MIN (EVITA 429)
         RESULTS_INTERVAL = 300     # Check esiti ogni 5 min
         MIN_SIGNAL = 0.02          # Basta un segnale di direzionalità minima (+/- 0.02%)
-        MAX_ENTRY_PRICE = 0.58     # Acquistiamo fno a 58c. Molto margine per cross-over in caso di hedging
-        MIN_ENTRY_PRICE = 0.42     # Acquistiamo già da 42c se il favor sta arrivando dal basso
+        MAX_ENTRY_PRICE = 0.72     # Massimo ingresso a 72c (ROI ~40%)
+        MIN_ENTRY_PRICE = 0.65     # Minimo ingresso a 65c (sicurezza che sia in trend forte)
         last_results_check = 0
         last_tp_check = 0
 
@@ -235,7 +235,7 @@ class NitroBotPoly:
                     # Anche se Polymarket dà startDate vecchie, noi sappiamo che il bucket è di 300s.
                     enter_threshold = BET_AFTER_SEC 
                     
-                    status = "🎯 PRONTO" if remaining <= enter_threshold and len(bet_placed.get(asset, [])) < 2 else "⏳ ACCUMULO" if len(bet_placed.get(asset, [])) < 2 else "✅ PIAZZATA"
+                    status = "🎯 PRONTO" if remaining <= enter_threshold and len(bet_placed.get(asset, [])) < 1 else "⏳ ACCUMULO" if len(bet_placed.get(asset, [])) < 1 else "✅ PIAZZATA"
                     log.info(f"💲 {asset} ${asset_price:,.2f} | Δ {movement_pct:+.4f}% | {direction} | [{bar}] {int(remaining)}s | {status}")
 
                     live_games_data.append({
@@ -247,7 +247,7 @@ class NitroBotPoly:
                     })
 
                     # ===== 5. DECISIONE — SMART SNIPER v2 =====
-                    if len(bet_placed.get(asset, [])) < 2:
+                    if len(bet_placed.get(asset, [])) < 1:
                         if remaining > enter_threshold:
                             pass  # Accumulo
                         elif remaining < NO_BET_LAST_SEC:
@@ -288,13 +288,6 @@ class NitroBotPoly:
                                 log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ < {round(MIN_ENTRY_PRICE*100)}¢. Probabilità ancora troppo bassa. ATTESA.")
                                 pass 
                             else:
-                                # Anti-PingPong: Se stiamo per fare hedging (seconda bet), attendiamo che il trend sia confermato
-                                # e non sia solo una micro-oscillazione sull'equatore 0.50.
-                                if len(bet_placed.get(asset, [])) == 1:
-                                    last_t = self.last_trade_times.get(asset, 0)
-                                    if now - last_t < 15:
-                                        log.warning(f"   ↳ ⚠️ MICRO-OSCILLAZIONE. Attesa 15s prima di hedgare...")
-                                        continue
                                 log.info(f"   ↳ 🎯 BET {side} (Confidenza ALTISSIMA: {cost_c}%)")
                                 log.info(f"   ↳ 🔫 Invio ordine su {m['title']}...")
 
