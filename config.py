@@ -43,7 +43,7 @@ RPC_NODES = [
 ]
 POLY_RPC = RPC_NODES[1] # publicnode
 # Asset da monitorare per Prezzi e Mercati (SOLO CRYPTO)
-ASSETS = ["BTC", "ETH", "SOL"]
+ASSETS = ["BTC", "ETH"]
 DRY_RUN = False # TORNIAMO LIVE
 BET_SIZE = 1.10
 COOLDOWN_SECONDS = 300 # Attesa di 5 minuti tra scommesse sullo stesso asset
