@@ -172,12 +172,12 @@ def get_logs():
     if not os.path.exists("dashboard_log.txt"):
         return jsonify({"logs": []})
     try:
+        # Leggiamo il file senza bloccarlo (in Windows può dare problemi se aperto in scrittura)
         with open("dashboard_log.txt", "r", encoding='utf-8', errors='replace') as f:
             lines = f.readlines()
-            # Restituiamo le ultime 50 righe pulite
-            return jsonify({"logs": [l.strip() for l in lines[-50:]]})
+            return jsonify({"logs": [l.strip() for l in lines[-70:]]}) # Aumentato a 70 righe
     except Exception as e:
-        return jsonify({"logs": [f"Errore lettura log: {str(e)}"]})
+        return jsonify({"logs": [f"Errore lettura log (riprovo...): {str(e)}"]})
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -188,4 +188,5 @@ def serve(path):
         return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5050, debug=True, use_reloader=False)
+    # Abilitiamo threaded=True per gestire più richieste asincrone dalla UI senza bloccare il manager
+    app.run(host='0.0.0.0', port=5050, debug=True, use_reloader=False, threaded=True)

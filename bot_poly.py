@@ -250,7 +250,7 @@ class NitroBotPoly:
                         
                         # --- NUOVA LOGICA DETERMINAZIONE PTB ---
                         # 1. Prova PTB Ufficiale tramite Endpoint (se disponibile)
-                        official_ptb = fetch_official_ptb(m.get('slug'))
+                        official_ptb = await asyncio.to_thread(fetch_official_ptb, m.get('slug'))
                         
                         # 2. Prova estrazione da Descrizione (Gamma API)
                         desc_ptb = extract_ptb_from_text(m.get('description'))
@@ -318,16 +318,15 @@ class NitroBotPoly:
                             log.warning(f"   ↳ ⚠️ Troppo tardi ({int(remaining)}s rimasti)")
                             bet_placed[asset] = ["UP", "DOWN"] # Skip permanently for this market
                         else:
-                            # Recupero quote per determinare il prezzo di ingresso
-                            try:
-                                resp_y = requests.get("https://clob.polymarket.com/midpoint", params={"token_id": m['token_yes']}, timeout=3)
-                                price_yes = float(resp_y.json().get("mid", 0.50))
-                            except: price_yes = 0.50
-                            
-                            try:
-                                resp_n = requests.get("https://clob.polymarket.com/midpoint", params={"token_id": m['token_no']}, timeout=3)
-                                price_no = float(resp_n.json().get("mid", 0.50))
-                            except: price_no = 0.50
+                            # Recupero quote per determinare il prezzo di ingresso (In thread separato per evitare freeze)
+                            def get_midpoint(token_id):
+                                try:
+                                    r = requests.get("https://clob.polymarket.com/midpoint", params={"token_id": token_id}, timeout=3)
+                                    return float(r.json().get("mid", 0.50))
+                                except: return 0.50
+
+                            price_yes = await asyncio.to_thread(get_midpoint, m['token_yes'])
+                            price_no = await asyncio.to_thread(get_midpoint, m['token_no'])
 
                             # --- NUOVA LOGICA: SEGUE BINANCE NON LE QUOTE ---
                             if movement_pct >= 0.005:
