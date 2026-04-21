@@ -46,7 +46,7 @@ POLY_RPC = RPC_NODES[1] # publicnode
 # Asset da monitorare per Prezzi e Mercati (SOLO CRYPTO)
 ASSETS = ["BTC", "ETH"]
 DRY_RUN = False # TORNIAMO LIVE
-TARGET_SHARES = 2.0 # Imposta esattamente il numero di shares fisse per ogni ordine
+TARGET_SHARES = 3.0 # Imposta esattamente il numero di shares fisse per ogni ordine
 COOLDOWN_SECONDS = 300 # Attesa di 5 minuti tra scommesse sullo stesso asset
 # Soglie conservative
 THRESHOLDS = {

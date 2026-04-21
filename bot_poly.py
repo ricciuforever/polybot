@@ -187,7 +187,16 @@ class NitroBotPoly:
 
                 # 1. Refresh mercati (15s) - In thread separato per evitare freeze
                 if now - last_api_call > API_REFRESH_INTERVAL:
-                    cached_markets = await asyncio.to_thread(self.watcher.find_btc_markets, limit=20)
+                    async def fetch_markets():
+                        try:
+                            m = await asyncio.to_thread(self.watcher.find_btc_markets, limit=20)
+                            if m:
+                                # Update list inside the class so the next iterations use it
+                                self.cached_markets = m
+                        except Exception as e:
+                            log.error(f"Errore caricamento mercati: {e}")
+                    
+                    asyncio.create_task(fetch_markets())
                     last_api_call = now
 
                 # 1b. Aggiornamento saldi (5 min) - Veloce, NON BLOCCANTE
@@ -229,6 +238,8 @@ class NitroBotPoly:
                     asyncio.create_task(background_stats())
                     last_results_check = now
 
+                cached_markets = getattr(self, "cached_markets", [])
+                
                 if not cached_markets:
                     prices_log = []
                     for asset in config.ASSETS:
@@ -260,30 +271,19 @@ class NitroBotPoly:
                         current_market_id[asset] = m['id']
                         bet_placed[asset] = []
                         
-                        # --- NUOVA LOGICA DETERMINAZIONE PTB ---
-                        # 1. Prova PTB Ufficiale tramite Endpoint (se disponibile)
-                        official_ptb = await asyncio.to_thread(fetch_official_ptb, m.get('slug'))
+                        # Fallback veloce: preimpostiamo da Binance o Parsing per non bloccare
+                        historical_price = self.feed.get_price_at_time(asset, market_start)
+                        anchor_price[asset] = extract_ptb_from_text(m.get('description')) or extract_ptb_from_text(m.get('title')) or (historical_price if historical_price > 0 else asset_price)
+                        ptb_source = "PARSED/BINANCE"
                         
-                        # 2. Prova estrazione da Descrizione (Gamma API)
-                        desc_ptb = extract_ptb_from_text(m.get('description'))
-                        
-                        # 3. Prova estrazione da Titolo/Domanda
-                        title_ptb = extract_ptb_from_text(m.get('title'))
-                        
-                        if official_ptb:
-                            anchor_price[asset] = official_ptb
-                            ptb_source = "OFFICIAL API"
-                        elif desc_ptb:
-                            anchor_price[asset] = desc_ptb
-                            ptb_source = "DESCRIPTION TEXT"
-                        elif title_ptb:
-                            anchor_price[asset] = title_ptb
-                            ptb_source = "TITLE TEXT"
-                        else:
-                            # 4. Fallback su Binance Storico (Meno preciso ma meglio di niente)
-                            historical_price = self.feed.get_price_at_time(asset, market_start)
-                            anchor_price[asset] = historical_price if historical_price > 0 else asset_price
-                            ptb_source = "BINANCE FALLBACK"
+                        # --- NUOVA LOGICA: PTB in background ---
+                        async def bg_fetch_ptb(slug, ass, ap_dict):
+                            optb = await asyncio.to_thread(fetch_official_ptb, slug)
+                            if optb:
+                                ap_dict[ass] = optb
+                                log.info(f"   ↳ 🎯 Aggiornato PTB Ufficiale per {ass}: ${optb:,.2f}")
+                                
+                        asyncio.create_task(bg_fetch_ptb(m.get('slug'), asset, anchor_price))
                         
                         log.info(f"")
                         log.info(f"{'='*60}")
