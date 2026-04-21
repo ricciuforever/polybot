@@ -191,9 +191,12 @@ class PolyTrader:
             # Usiamo il Limit Price ESATTO richiesto (nessun rialzo per spread)
             buy_price = round(limit_price, 2)
             
-            # Target fisso: vogliamo esattamente le shares specificate (es. 2 shares)
-            target_shares = getattr(config, 'TARGET_SHARES', 2.0)
+            # Target dinamico in base al saldo: 1 di base + 1 per ogni 10 USDC (0-9 -> 1, 10-19 -> 2, 20-29 -> 3)
+            dynamic_shares = int(usdc_balance // 10) + 1
+            target_shares = float(dynamic_shares)
             cost_required = round(target_shares * buy_price, 2)
+            log.info(f"   ↳ 🎯 Saldo: ${usdc_balance:.2f} -> Shares calcolate: {target_shares}")
+
             
             # Polymarket richiede un ordine minimo di 1.05 USDC
             min_bet = 1.05
