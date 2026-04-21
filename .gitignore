@@ -15,6 +15,7 @@ ENV/
 # Logs & Data
 *.log
 dashboard_log.txt
+dashboard_log.txt.*
 trades_history.json
 bot_state.json
 data/
