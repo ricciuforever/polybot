@@ -188,21 +188,30 @@ class PolyTrader:
                 log.error(f"   ❌ Saldo insufficiente: ${usdc_balance:.2f} (minimo ${min_bet})")
                 return False
             
-            # Adatta bet_size al saldo disponibile
-            bet_size = min(config.BET_SIZE, usdc_balance * 0.95)  # Usa 95% del saldo
-            bet_size = max(bet_size, min_bet)  # Mai sotto il minimo
-            
-            log.info(f"   📋 Direzione: {direction}")
-            log.info(f"   📋 Token ID: {token_id[:20]}...")
-            log.info(f"   📋 Saldo: ${usdc_balance:.2f} | Importo: ${bet_size:.2f}")
-            
             # Usiamo il Limit Price ESATTO richiesto (nessun rialzo per spread)
             buy_price = round(limit_price, 2)
             
-            # Calcolo size basato sul prezzo limite esatto configurato
-            size = round(bet_size / buy_price, 2)
+            # Target fisso: vogliamo esattamente le shares specificate (es. 2 shares)
+            target_shares = getattr(config, 'TARGET_SHARES', 2.0)
+            cost_required = round(target_shares * buy_price, 2)
             
-            log.info(f"   📋 Size stimata: {size} shares | Prezzo ASSOLUTO limite: ${buy_price} (Limit Fill)")
+            # Polymarket richiede un ordine minimo di 1.05 USDC
+            min_bet = 1.05
+            if cost_required < min_bet:
+                target_shares = round(min_bet / buy_price, 2)
+                cost_required = min_bet
+                log.warning(f"   ⚠️ Costo troppo basso, size incrementata a {target_shares} shares per raggiungere min bet.")
+                
+            # Verifica che il saldo (al 95%) copra l'importo richiesto
+            if (usdc_balance * 0.95) < cost_required:
+                log.error(f"   ❌ Saldo insufficiente: ${usdc_balance:.2f} (richiesto ${cost_required:.2f})")
+                return False
+                
+            size = target_shares
+            
+            log.info(f"   📋 Direzione: {direction}")
+            log.info(f"   📋 Saldo: ${usdc_balance:.2f} | Importo dedotto: ${cost_required:.2f}")
+            log.info(f"   📋 Size target: {size} shares | Prezzo limite: ${buy_price} (Limit Fill)")
             
             from py_clob_client.clob_types import OrderArgs
             order_args = OrderArgs(

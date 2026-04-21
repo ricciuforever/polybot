@@ -46,7 +46,7 @@ POLY_RPC = RPC_NODES[1] # publicnode
 # Asset da monitorare per Prezzi e Mercati (SOLO CRYPTO)
 ASSETS = ["BTC", "ETH"]
 DRY_RUN = False # TORNIAMO LIVE
-BET_SIZE = 1.45 # Alzato a 1.45 per garantire 2.0 shares a quota 0.72
+TARGET_SHARES = 2.0 # Imposta esattamente il numero di shares fisse per ogni ordine
 COOLDOWN_SECONDS = 300 # Attesa di 5 minuti tra scommesse sullo stesso asset
 # Soglie conservative
 THRESHOLDS = {
@@ -58,7 +58,6 @@ ONLY_SHORT_INTERVALS = True # Cerca solo mercati con intervalli (es. 5-15 min)
 
 WINDOW_SECONDS = 60    # Finestra per il calcolo del movimento
 MIN_ODDS = 1.80
-BET_SIZE = 1.10 # 1.10 USDC.e (per superare il minimo di 1$ del CLOB)
 LOOP_INTERVAL = 5
 CHAIN_ID = 137
 

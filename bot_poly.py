@@ -369,15 +369,12 @@ class NitroBotPoly:
                             profit_c = 100 - cost_c
                             roi = (profit_c / cost_c * 100) if cost_c > 0 else 0
 
-                            log.info(f"   ↳ 📊 Check Mercato: Esito Suggerito -> {side} | Quota: {cost_c}¢ (ROI: {roi:.0f}%)")
-
                             if entry_price > MAX_ENTRY_PRICE:
-                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ > {round(MAX_ENTRY_PRICE*100)}¢. Guadagno troppo esiguo. ATTESA.")
                                 pass 
                             elif entry_price < MIN_ENTRY_PRICE:
-                                log.warning(f"   ↳ ⚠️ Quota {cost_c}¢ < {round(MIN_ENTRY_PRICE*100)}¢. Probabilità ancora troppo bassa. ATTESA.")
                                 pass 
                             else:
+                                log.info(f"   ↳ 📊 Check Mercato: Esito {side} | Quota: {cost_c}¢ (ROI: {roi:.0f}%)")
                                 # Pre-lock per evitare corse critiche del loop da 1s
                                 self.in_progress.add(asset)
                                 log.info(f"   ↳ 🎯 BET {side} (Confidenza ALTISSIMA via Binance: Δ {movement_pct:+.4f}%)")
